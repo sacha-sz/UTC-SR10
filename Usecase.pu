@@ -1,0 +1,83 @@
+@startuml Usecase
+
+left to right direction
+rectangle User {
+    actor Candidat
+    actor Recruteur
+    actor Administateur
+
+    actor Utilisateur #pink;line:red;line.bold;text:red
+}
+
+rectangle Application_recrutement {
+    Utilisateur -- (Authentification)
+    (Authentification) ..> (Connexion)
+    (Authentification) ..> (Inscription)
+
+
+    rectangle  Plateforme_Recruteur {
+        Recruteur -- (Visualisation des offres)
+        (Visualisation des offres) -- (Visualiser les offres valides)
+        (Visualisation des offres) -- (Visualiser les offres expirées)
+        (Visualisation des offres) -- (Modifier une offre)
+        (Visualisation des offres) -- (Supprimer une offre)
+        (Visualisation des offres) -- (Ajouter une offre)
+        (Ajouter une offre) #PaleGreen;line:green;text:green
+        (Supprimer une offre) #pink;line:red;text:red
+
+        Recruteur -- (Gestion des candidatures)
+        (Gestion des candidatures) -- (Rejetter une candidature)
+        (Rejetter une candidature) #pink;line:red;text:red
+        (Gestion des candidatures) -- (Accepter une candidature)
+        (Accepter une candidature) #PaleGreen;line:green;text:green
+        
+        Recruteur -- (Accéder au dossier d'un candidat)
+
+        Recruteur -- (Demandes de Recruteur)
+        (Demandes de Recruteur) -- (Visualiser les demandes de recruteur)
+        (Demandes de Recruteur) -- (Accepter une demande)
+        (Demandes de Recruteur) -- (Refuser une demande)
+        (Refuser une demande) #pink;line:red;text:red
+        (Accepter une demande) #PaleGreen;line:green;text:green
+
+    }
+
+    rectangle  Plateforme_Candidat {
+        Candidat -- (Accéder à son dossier)
+
+        Candidat -- (Afficher les offres)
+        (Afficher les offres) -- (Afficher les détails d'une offre)
+        (Afficher les offres) -- (Rechercher une offre) 
+        (Rechercher une offre) ..> (Filtre)
+
+        Candidat -- (Candidater à une offre)
+        Candidat -- (Modifier sa candidature)
+    }
+
+    rectangle Plateforme_Administrateur {
+        Administateur -- (Gestion des utilisateurs)
+        (Gestion des utilisateurs) - (Afficher les utilisateurs)
+        (Autoriser accés Administateur) - (Gestion des utilisateurs)
+        (Gestion des utilisateurs) -- (Supprimer un utilisateur)
+        (Gestion des utilisateurs) -- (Modifier un utilisateur)
+        (Gestion des utilisateurs) -- (Ajouter un utilisateur) 
+        (Ajouter un utilisateur) #PaleGreen;line:green;text:green
+        (Supprimer un utilisateur) #pink;line:red;text:red
+        (Modifier un utilisateur) #Orange;line:orange;text:White
+
+
+        Administateur -- (Gestion des organisations)
+        (Gestion des organisations) -- (Visualiser les organisations)
+        (Gestion des organisations) -- (Visualiser les demandes d'organisation)
+        (Visualiser les demandes d'organisation) -- (Visualiser les demandes d'organisation acceptées)
+        (Visualiser les demandes d'organisation) -- (Visualiser les demandes d'organisation refusées)
+
+        (Gestion des organisations) -- (Demandes de création d'organisation)
+        (Demandes de création d'organisation) -- (Accepter une demande)
+        (Demandes de création d'organisation) -- (Refuser une demande)
+        (Accepter une demande) #PaleGreen;line:green;text:green
+        (Refuser une demande) #pink;line:red;text:red
+    }
+}
+
+@enduml
