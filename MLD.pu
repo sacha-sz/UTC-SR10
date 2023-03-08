@@ -24,11 +24,6 @@ Utilisateur <|-- Candidat
 Utilisateur <|-- Recruteur
 
 class Organisation {
-    nom : string {key}
-    adresse : string
-    telephone : string
-    date_creation : date
-    statut : STATUT
 }
 
 Organisation "1" -- "0..*" Recruteur : recrute
