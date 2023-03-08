@@ -1,2 +1,2 @@
 # UTC-SR10
-:web: SR10 projet
+:mailbox_with_mail: SR10 projet
