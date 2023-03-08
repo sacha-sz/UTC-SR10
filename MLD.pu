@@ -1,0 +1,38 @@
+@startuml
+
+class Utilisateur {
+    email : string {key}
+    password : hash / string {key}
+    nom : string 
+    prenom : string
+    date_creation : date
+    telephone : string
+    statut : STATUT
+}
+
+enum STATUT {
+    ACTIF
+    INACTIF
+}
+
+class Administrateur {}
+class Candidat {}
+class Recruteur {}
+
+Utilisateur <|-- Administrateur
+Utilisateur <|-- Candidat
+Utilisateur <|-- Recruteur
+
+class Organisation {
+    nom : string {key}
+    adresse : string
+    telephone : string
+    date_creation : date
+    statut : STATUT
+}
+
+Organisation "1" -- "0..*" Recruteur : recrute
+Organisation "1" -- "0..*" Candidat : est recruté par
+
+
+@enduml
