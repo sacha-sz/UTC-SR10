@@ -1,4 +1,4 @@
-@startuml MLD
+@startuml MCD
 
 package "Gestion des utilisateurs" {
     class Utilisateur
@@ -25,8 +25,8 @@ package "Enumérations" {
 
 
 class Utilisateur {
-    email : string {Primary key}
-    password : hash / string {Primary key}
+    email : string
+    password : hash / string
     nom : string 
     prenom : string
     date_creation : date
@@ -48,14 +48,14 @@ Utilisateur <|-- Recruteur
 Administrateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
 
 class Organisation {
-    siren : string {Primary key}
+    siren : string
     Nom : string
     type : TYPE_ORGANISATION
     siege_social : string
 }
 
 class Offre_d_emploi {
-    numero : string {Primary key}
+    numero : string
     etat : ETAT_OFFRE
     date_validite : date
     indication : string
@@ -64,7 +64,6 @@ class Offre_d_emploi {
 }
 
 class Fiche_poste {
-    id_fiche : int {Primary key}
     intitule : string
     statut_poste : string
     responsable_hierarchique : string
@@ -82,7 +81,6 @@ Offre_d_emploi "1..*" -- "1" Recruteur : est éditeur de <
 
 
 class Candidature {
-    id_candidature : int {Primary key}
     date_candidature : date
     pieces_jointes : string
     modif_dossier() : void
@@ -90,7 +88,6 @@ class Candidature {
 }
 
 class description {
-    id_description : int {Primary key}
     missions : string
     activités : string
     compétences_attendu : string
