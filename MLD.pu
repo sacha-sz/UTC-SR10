@@ -1,4 +1,4 @@
-@startuml
+@startuml MLD
 
 package "Gestion des utilisateurs" {
     class Utilisateur
