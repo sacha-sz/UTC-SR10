@@ -1,18 +1,35 @@
 @startuml
 
+package "Gestion des utilisateurs" {
+    class Utilisateur
+    class Administrateur
+    class Candidat
+    class Recruteur
+}
+
+package "Gestion des organisations" {
+    class Organisation
+    class Offre_d_emploi
+    class Fiche_poste
+    class Candidature
+}
+
+
+package "Enumérations" {
+    enum STATUT_UTILISATEUR
+    enum ETAT_OFFRE
+}
+
 class Utilisateur {
-    email : string {key}
-    password : hash / string {key}
+    email : string {Primary key}
+    password : hash / string {Primary key}
     nom : string 
     prenom : string
     date_creation : date
     telephone : string
-    statut : STATUT
-}
-
-enum STATUT {
-    ACTIF
-    INACTIF
+    statut : STATUT_UTILISATEUR
+    est_admin : bool [?]
+    sexe : string [?]
 }
 
 class Administrateur {}
@@ -23,11 +40,61 @@ Utilisateur <|-- Administrateur
 Utilisateur <|-- Candidat
 Utilisateur <|-- Recruteur
 
+Administrateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
+
 class Organisation {
+    siren : string {Primary key}
+    Nom : string
+    type : string
+    siege_social : string
 }
 
-Organisation "1" -- "0..*" Recruteur : recrute
-Organisation "1" -- "0..*" Candidat : est recruté par
+class Offre_d_emploi {
+    numero : string {Primary key}
+    etat : ETAT_OFFRE
+    date_validite : date
+    indication : string
+    nombre_de_piece : unsigned int
+    modif_date_validite() : date
+}
+
+class Fiche_poste {
+    intitule : string
+    statut_poste : string
+    responsable_hierarchique : string
+    type_metier : string
+    lieu_mission : string
+    rythme : string
+    fourchette_salaire : double[2]
+    description : string
+}
 
 
+
+Offre_d_emploi "1..*" -- "1" Organisation : appartient à >
+Offre_d_emploi "1..*" -- "1" Fiche_poste : contient >
+Offre_d_emploi "1..*" -- "1" Recruteur : est éditeur de <
+
+
+class Candidature {
+    date_candidature : date
+    pieces_jointes : string
+    modif_dossier() : void
+    compléter_candidature() : void
+}
+
+Candidature "1..*" -- "1" Offre_d_emploi : concerne >
+Candidature "1..*" -- "1" Candidat : est de >
+
+
+enum STATUT_UTILISATEUR {
+    ACTIF
+    INACTIF
+}
+
+enum ETAT_OFFRE {
+    Non publiée
+    Publiée
+    Expirée
+}
 @enduml
