@@ -16,6 +16,7 @@ rectangle Application_recrutement {
 
 
     rectangle  Plateforme_Recruteur {
+        
         Recruteur -- (Visualisation des offres)
         (Visualisation des offres) -- (Visualiser les offres valides)
         (Visualisation des offres) -- (Visualiser les offres expirées)
@@ -30,8 +31,9 @@ rectangle Application_recrutement {
         (Rejetter une candidature) #pink;line:red;text:red
         (Gestion des candidatures) -- (Accepter une candidature)
         (Accepter une candidature) #PaleGreen;line:green;text:green
-        
-        Recruteur -- (Accéder au dossier d'un candidat)
+        (Gestion des candidatures) -- (Afficher la liste des candidats)
+        (Gestion des candidatures) -- (Télécharger les dossiers des candidats)
+        (Gestion des candidatures) -- (Accéder au dossier d'un candidat)
 
         Recruteur -- (Demandes de Recruteur)
         (Demandes de Recruteur) -- (Visualiser les demandes de recruteur)
@@ -39,6 +41,10 @@ rectangle Application_recrutement {
         (Demandes de Recruteur) -- (Refuser une demande)
         (Refuser une demande) #pink;line:red;text:red
         (Accepter une demande) #PaleGreen;line:green;text:green
+
+        
+        Recruteur -- (Déposer une offre)
+        (Déposer une offre) -- (Etendre la durée de validité)
 
     }
 
@@ -50,8 +56,13 @@ rectangle Application_recrutement {
         (Afficher les offres) -- (Rechercher une offre) 
         (Rechercher une offre) ..> (Filtre)
 
-        Candidat -- (Candidater à une offre)
-        Candidat -- (Modifier sa candidature)
+        Candidat -- (Gestion de candidatures)
+
+        (Gestion de candidatures) -- (Candidater à une offre)
+        (Gestion de candidatures) -- (Modifier sa candidature)
+        (Gestion de candidatures) -- (Visualiser la liste des candidatures)
+
+        (Modifier sa candidature) -- (Compléter sa candidature)
     }
 
     rectangle Plateforme_Administrateur {
