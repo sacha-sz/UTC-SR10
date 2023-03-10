@@ -63,6 +63,7 @@ rectangle Application_recrutement {
         (Gestion de candidatures) -- (Visualiser la liste des candidatures)
 
         (Modifier sa candidature) -- (Compléter sa candidature)
+        (Modifier sa candidature) -- (Supprimer sa candidature)
     }
 
     rectangle Plateforme_Administrateur {

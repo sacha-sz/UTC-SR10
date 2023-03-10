@@ -66,7 +66,6 @@ Utilisateur <|-- Candidat
 Utilisateur <|-- Recruteur
 
 Recruteur "0..1" -- "*" Recruteur : valider demande de recruteur >
-
 Administrateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
 
 class Organisation {
@@ -114,6 +113,7 @@ class description {
     activités : string
     compétences_attendu : string
 }
+
 Fiche_poste "1" -- "1" description : contient >
 
 Candidature "1..*" -- "1" Offre_d_emploi : concerne >
@@ -157,4 +157,5 @@ enum TYPE_FORMULAIRE {
     Formulaire d'ajout d'organisation
     Formulaire d'organisation existante
 }
+
 @enduml
