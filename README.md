@@ -36,6 +36,16 @@ Le projet SR10 est un projet visant la création d'un site web pour la gestion d
 │   ├── Maquette_SR10_V1.pdf
 │   ├── Maquette_SR10_V2.pdf
 │   └── TD1-sujet.pdf
+└── src
+    ├── CSS
+    │   └── X.css
+    ├── HTML
+    │   ├── X.html
+    │   └── Y.html
+    ├── JS
+    │   └── X.js
+    └── XXX
+        └── XXX
 ...
 ```
 
