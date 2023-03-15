@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Connexion</title>
+  <title>Inscription</title>
   <!-- Chargement des fichiers CSS de Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="../CSS/style.css">
@@ -13,7 +13,7 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h4>Connexion</h4>
+        <h4>Inscription</h4>
       </div>
 
       <div class="card-body">
@@ -27,6 +27,23 @@
             <label>Prénom</label>
             <input type="prenom" class="form-control" id="prenom" placeholder="Entrez votre prénom">
           </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="telephone" class="form-control" id="prenom" placeholder="Entrez votre Téléphone">
+          </div>
+          <div class="form-group">
+            <label>Sexe</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Homme</option>
+              <option>Femme</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date de naissance</label>
+            <input type="date de naissance" class="form-control" id="prenom" placeholder="Entrez votre date de naissance">
+            
+          </div>
           <button class="btn btn-primary">S'inscrire</button>
           <!-- <button class="btn btn-primary">S'inscrire</button> -->
         </form>
@@ -34,8 +51,10 @@
     </div>
   </div>
   <!-- Chargement des fichiers JavaScript de Bootstrap -->
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="../JS/inscription.js"> </script>
 </body>
 </html>
