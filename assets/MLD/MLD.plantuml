@@ -1,0 +1,83 @@
+@startuml
+
+
+
+class Utilisateur{
+    #email : string, 
+    password : hash, 
+    nom : string, 
+    prenom : string, 
+    date_naissance : date, 
+    date_creation : date, 
+    sexe : SEXE, 
+    type_utilisateur : TYPE_UTILISATEUR, 
+    statut : STATUT_UTILISATEUR
+}
+
+class Formulaire{
+    #id : int, 
+    etat : ETAT,
+    type_formulaire : TYPE_FORMULAIRE, 
+    date_creation : date, 
+    email_utilisateur : string => Utilisateur.email
+}
+
+class Organisation{
+    #siren : string, 
+    nom : string, 
+    siege_social : string, 
+    type : TYPE_ORGANISATION
+}
+
+class  Candidature{
+    #id : int, 
+    date_candidature : date, 
+    pieces_jointes : string, 
+    etat : ETAT, 
+    statut : STATUT_UTILISATEUR, 
+    email_utilisateur : string => Utilisateur.email, 
+    id_offre : int => Offre_d_emploi.id
+}
+
+class Offre_d_emploi{
+    #id : int, 
+    indication : string, 
+    nombre_de_piece : unsigned int, 
+    etat : ETAT_OFFRE, 
+    id_poste : int => Fiche_poste.id
+}
+
+class Fiche_poste{
+    #numero : int, 
+    intitule : string, 
+    statut_poste : string, 
+    responsable_hierarchique : string, 
+    type_metier : string, 
+    lieu_mission : string, 
+    rythme : string, 
+    fourchette_salaire : double[2]
+}
+
+class Description{
+    #numero : int, 
+    missions : string, 
+    acrtivités : string, 
+    competences_attendues : string
+}
+
+Utilisateur "0..1" -- "*" Utilisateur : valider demande de recruteur >
+Utilisateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
+
+Offre_d_emploi "1..*" -- "1" Organisation : appartient à >
+Offre_d_emploi "1..*" -- "1" Fiche_poste : contient >
+Offre_d_emploi "1..*" -- "1" Utilisateur : est éditeur de <
+
+Fiche_poste "1" -- "1" Description : contient >
+
+Candidature "1..*" -- "1" Offre_d_emploi : concerne >
+Candidature "1..*" -- "1" Utilisateur : est de >
+
+Utilisateur "1" -- "1" Formulaire : doit remplir >
+Formulaire "1" - "1" Organisation : concerne >
+
+@enduml
