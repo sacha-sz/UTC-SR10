@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/global.css">
+</head>
+
+<body>
+    <!-- Chargement des fichiers JavaScript de Bootstrap -->
+    <script src="../JS/inscription.js">
+    </script>
+    <script src="../JS/bootstrap.bundle.js">
+    </script>
+
+
+    <div class="container-fluid">
+        <div class="card mx-auto">
+            <div class="card-header">
+                <h4 class="text-center">Inscription</h4>
+            </div>
+
+            <div class="card-body">
+
+                <form>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input id="email" type="email" class="form-control" placeholder="exemple@gmail.com" autofocus onchange="verifMail()">
+                    </div>
+
+                    <div class="form-group">
+                      <span id="msg_email"></span>
+                    </div>  
+
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" class="form-control" id="mdp1" placeholder="Entrez votre mot de passe">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmation du mot de passe</label>
+                        <input type="password" class="form-control" id="mdp2" placeholder="Nouvelle saisie du mot de passe" onchange="verifMdp()">
+                    </div>
+
+                    <div class="form-group">
+                        <span id="msg"></span>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" id="submit"> Suivant</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
