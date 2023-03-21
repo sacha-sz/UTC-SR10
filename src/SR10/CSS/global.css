@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   display: flex;
   justify-content: center;
@@ -11,4 +12,8 @@ body {
 .card {
     margin-bottom: 25px;
     width: 50%;
+}
+
+.btn {
+  border-radius: 20px;
 }

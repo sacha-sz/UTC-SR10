@@ -65,19 +65,19 @@ class Description{
     competences_attendues : string
 }
 
-Utilisateur "0..1" -- "*" Utilisateur : valider demande de recruteur >
-Utilisateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
+' Utilisateur "0..1" -- "*" Utilisateur : valider demande de recruteur >
+' Utilisateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
 
-Offre_d_emploi "1..*" -- "1" Organisation : appartient à >
-Offre_d_emploi "1..*" -- "1" Fiche_poste : contient >
-Offre_d_emploi "1..*" -- "1" Utilisateur : est éditeur de <
+' Offre_d_emploi "1..*" -- "1" Organisation : appartient à >
+' Offre_d_emploi "1..*" -- "1" Fiche_poste : contient >
+' Offre_d_emploi "1..*" -- "1" Utilisateur : est éditeur de <
 
-Fiche_poste "1" -- "1" Description : contient >
+' Fiche_poste "1" -- "1" Description : contient >
 
-Candidature "1..*" -- "1" Offre_d_emploi : concerne >
-Candidature "1..*" -- "1" Utilisateur : est de >
+' Candidature "1..*" -- "1" Offre_d_emploi : concerne >
+' Candidature "1..*" -- "1" Utilisateur : est de >
 
-Utilisateur "1" -- "1" Formulaire : doit remplir >
-Formulaire "1" - "1" Organisation : concerne >
+' Utilisateur "1" -- "1" Formulaire : doit remplir >
+' Formulaire "1" - "1" Organisation : concerne >
 
 @enduml
