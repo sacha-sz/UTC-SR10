@@ -14,13 +14,14 @@ function verifMdp() {
 }
 
 
+
 // Verification de l'adresse email
 function verifMail() {
     // Expression régulière pour vérifier le format de l'adresse email
-    var re =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var email = document.getElementById("email").value;
 
-    if(re.test(email)) {
+    if (re.test(email)) {
         msg_email = "<p class = 'text-success'>Adresse e-mail valide</p>";
         // Activation du bouton d'envoi
         document.getElementById("submit").disabled = false;
