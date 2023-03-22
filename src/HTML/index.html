@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Connexion</title>
-  <!-- Chargement des fichiers CSS de Bootstrap -->
-  <link rel="stylesheet" href="../CSS/bootstrap.css">
-  <link rel="stylesheet" href="../CSS/global.css">
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <!-- Chargement des fichiers CSS de Bootstrap -->
+    <link rel="stylesheet" href="../CSS/bootstrap.css">
+    <link rel="stylesheet" href="../CSS/global.css">
 
 </head>
 
 <body>
-  
-  <div class="container">
-    <div class="card mx-auto">
-      <div class="card-header">
-        <h4>Connexion</h4>
-      </div>
+    <script src="../JS/inscription.js">
+    </script>
 
-      <div class="card-body">
+    <div class="container">
+        <div class="card mx-auto">
+            <div class="card-header">
+                <h4>Connexion</h4>
+            </div>
 
-        <form>
-          <div class="form-group">
-            <label>Adresse e-mail</label>
-            <input id="email" type="email" class="form-control" placeholder="Entrez votre adresse e-mail">
-          </div>
-          <div class="form-group">
-            <label>Mot de passe</label>
-            <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
-          </div>
-          <div class = "text-center mt-4">
-            <button class="btn btn-primary btn-block">Se connecter</button>
-          </div>
-        </form>
-      </div>
-    </div>
+            <div class="card-body">
 
-    <div class="card  mx-auto">
-      <div class="card-header">
-        <h4>Vous n'avez pas de compte ?</h4>
-      </div>
+                <form>
+                    <div class="form-group">
+                        <label>Adresse e-mail</label>
+                        <input id="email" type="email" class="form-control" placeholder="Entrez votre adresse e-mail" autofocus onchange="verifMail()">
+                    </div>
 
-      <div class="card-body">
-        <div class = "text-center">
-          <a href="./inscription_mail.html" class="btn btn-primary btn-block">Inscrivez-vous !</a> 
+                    <div class="form-group">
+                        <span id="msg_email"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+                    </div>
+                    <div class="text-center mt-4">
+                        <button id="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
+
+        <div class="card  mx-auto">
+            <div class="card-header">
+                <h4>Vous n'avez pas de compte ?</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="text-center">
+                    <a href="./inscription_mail.html" class="btn btn-primary btn-block">Inscrivez-vous !</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Chargement des fichiers JavaScript de Bootstrap -->
-  <script src="../JS/bootstrap.bundle.js"> </script>
+    <!-- Chargement des fichiers JavaScript de Bootstrap -->
+    <script src="../JS/bootstrap.bundle.js">
+    </script>
 
 </body>
+
 </html>
