@@ -1,83 +1,96 @@
 @startuml
 
-
-
 class Utilisateur{
-    #email : string, 
+    # email : string, 
     password : hash, 
     nom : string, 
     prenom : string, 
     date_naissance : date, 
-    date_creation : date, 
+    - date_creation : date,
+    - statut : bool,
+    telephone : string,
+    adresse_utilisateur_lat : float,
+    adresse_utilisateur_long : float,
     sexe : SEXE, 
-    type_utilisateur : TYPE_UTILISATEUR, 
-    statut : STATUT_UTILISATEUR
+    type_utilisateur : TYPE_UTILISATEUR 
 }
 
 class Formulaire{
     #id : int, 
-    etat : ETAT,
-    type_formulaire : TYPE_FORMULAIRE, 
+    etat_offre : ETAT,
     date_creation : date, 
+    type_formulaire : TYPE_FORMULAIRE, 
     email_utilisateur : string => Utilisateur.email
+    siren_orga : string => Organisation.siren
 }
 
 class Organisation{
     #siren : string, 
     nom : string, 
-    siege_social : string, 
-    type : TYPE_ORGANISATION
+    siege_social_lat : float,
+    siege_social_long : float,
+    type : string => Type_organisation.nom
+}
+
+class Type_organisation{
+    #nom : string, 
+    description : string
 }
 
 class  Candidature{
     #id : int, 
     date_candidature : date, 
-    pieces_jointes : string, 
     etat : ETAT, 
     statut : STATUT_UTILISATEUR, 
     email_utilisateur : string => Utilisateur.email, 
     id_offre : int => Offre_d_emploi.id
 }
 
-class Offre_d_emploi{
+class Pieces_jointes {
     #id : int, 
-    indication : string, 
+    nom : string,
+    type : TYPE_PIECE,
+    lien : string,
+    id_candidature : int => Candidature.id
+}
+
+class Offre_d_emploi{
+    #id : int,  
     nombre_de_piece : unsigned int, 
-    etat : ETAT_OFFRE, 
+    etat : ETAT_OFFRE,
+    date_validite : date,
+    indication_piece_jointes : string,
     id_poste : int => Fiche_poste.id
 }
 
 class Fiche_poste{
     #numero : int, 
     intitule : string, 
-    statut_poste : string, 
     responsable_hierarchique : string, 
-    type_metier : string, 
-    lieu_mission : string, 
+    lieu_mission_lat : float,
+    lieu_mission_long : float,
     rythme : string, 
-    fourchette_salaire : double[2]
+    description : string,
+    salaire_min : float,
+    salaire_max : float,
+    statut_poste : string => Statut_poste.nom
+    type_metier : string => Type_metier.nom
+}
+
+class Type_metier{
+    #nom : string, 
+    description : string
+}
+
+class Statut_poste{
+    #nom : string, 
+    description : string
 }
 
 class Description{
-    #numero : int, 
+    #numero : int => Fiche_poste.numero, 
     missions : string, 
     acrtivités : string, 
     competences_attendues : string
 }
-
-' Utilisateur "0..1" -- "*" Utilisateur : valider demande de recruteur >
-' Utilisateur "*"-- "*" Utilisateur : peut_donner_acces_admin >
-
-' Offre_d_emploi "1..*" -- "1" Organisation : appartient à >
-' Offre_d_emploi "1..*" -- "1" Fiche_poste : contient >
-' Offre_d_emploi "1..*" -- "1" Utilisateur : est éditeur de <
-
-' Fiche_poste "1" -- "1" Description : contient >
-
-' Candidature "1..*" -- "1" Offre_d_emploi : concerne >
-' Candidature "1..*" -- "1" Utilisateur : est de >
-
-' Utilisateur "1" -- "1" Formulaire : doit remplir >
-' Formulaire "1" - "1" Organisation : concerne >
-
 @enduml
