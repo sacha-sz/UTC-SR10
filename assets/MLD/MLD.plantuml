@@ -1,52 +1,51 @@
 @startuml MLD
 class Utilisateur{
-    # email : string, 
-    password : hash, 
-    nom : string, 
-    prenom : string, 
-    date_naissance : date, 
+    # email : string,
+    password : hash,
+    nom : string,
+    prenom : string,
+    date_naissance : date,
     - date_creation : date,
     - statut : bool,
     telephone : string,
     adresse_utilisateur_lat : float,
     adresse_utilisateur_long : float,
-    sexe : SEXE, 
-    type_utilisateur : TYPE_UTILISATEUR 
+    sexe : SEXE,
+    type_utilisateur : TYPE_UTILISATEUR
 }
 
 class Formulaire{
-    #id : int, 
-    etat_offre : ETAT,
-    date_creation : date, 
-    type_formulaire : TYPE_FORMULAIRE, 
+    #id : int,
+    etat_formulaire : ETAT,
+    date_creation : date,
+    type_formulaire : TYPE_FORMULAIRE,
     email_utilisateur : string => Utilisateur.email
     siren_orga : string => Organisation.siren
 }
 
 class Organisation{
-    #siren : string, 
-    nom : string, 
+    #siren : string,
+    nom : string,
     siege_social_lat : float,
     siege_social_long : float,
-    type : string => Type_organisation.nom
+    type_organisation : string => Type_organisation.nom
 }
 
 class Type_organisation{
-    #nom : string, 
+    #nom : string,
     description : string
 }
 
 class  Candidature{
-    #id : int, 
-    date_candidature : date, 
-    etat : ETAT, 
-    statut : STATUT_UTILISATEUR, 
-    email_utilisateur : string => Utilisateur.email, 
+    #id : int,
+    date_candidature : date,
+    etat : ETAT,
+    email_utilisateur : string => Utilisateur.email,
     id_offre : int => Offre_d_emploi.id
 }
 
 class Pieces_jointes {
-    #id : int, 
+    #id : int,
     nom : string,
     type : TYPE_PIECE,
     lien : string,
@@ -54,8 +53,8 @@ class Pieces_jointes {
 }
 
 class Offre_d_emploi{
-    #id : int,  
-    nombre_de_piece : unsigned int, 
+    #id : int,
+    nombre_de_piece : unsigned int,
     etat : ETAT_OFFRE,
     date_validite : date,
     indication_piece_jointes : string,
@@ -63,13 +62,12 @@ class Offre_d_emploi{
 }
 
 class Fiche_poste{
-    #numero : int, 
-    intitule : string, 
-    responsable_hierarchique : string, 
+    #numero : int,
+    intitule : string,
+    responsable_hierarchique : string,
     lieu_mission_lat : float,
     lieu_mission_long : float,
-    rythme : string, 
-    description : string,
+    rythme : string,
     salaire_min : float,
     salaire_max : float,
     statut_poste : string => Statut_poste.nom
@@ -77,19 +75,19 @@ class Fiche_poste{
 }
 
 class Type_metier{
-    #nom : string, 
+    #nom : string,
     description : string
 }
 
 class Statut_poste{
-    #nom : string, 
+    #nom : string,
     description : string
 }
 
 class Description{
-    #numero : int => Fiche_poste.numero, 
-    missions : string, 
-    acrtivités : string, 
+    #numero : int => Fiche_poste.numero,
+    missions : string,
+    acrtivités : string,
     competences_attendues : string
 }
 @enduml
