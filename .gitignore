@@ -68,3 +68,6 @@ fabric.properties
 # file: ~/.gitignore_global
 .DS_Store
 .idea
+
+# VS Code settings
+.vscode
