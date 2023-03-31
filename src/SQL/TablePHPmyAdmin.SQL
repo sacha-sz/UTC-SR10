@@ -1,4 +1,4 @@
--- Date: 2020-05-06 15:00:00
+-- Date: 2023-03-06 15:00:00
 -- Author: Sacha-sz; Tobias Savary;
 -- Description: Création des tables de la base de données
 
@@ -8,8 +8,25 @@ DROP TABLE IF EXISTS Formulaire;
 DROP TABLE IF EXISTS Organisation;
 DROP TABLE IF EXISTS Type_organisation;
 DROP TABLE IF EXISTS Candidature;
+DROP TABLE IF EXISTS Pieces_jointes;
+DROP TABLE IF EXISTS Statut_poste;
+DROP TABLE IF EXISTS Type_metier;
+DROP TABLE IF EXISTS Offre_d_emploi;
+DROP TABLE IF EXISTS Fiche_poste;
+DROP TABLE IF EXISTS Description;
 
 -- Création des tables
+CREATE TABLE Statut_poste (
+    nom VARCHAR(50) PRFFIMARY KEY,
+    description VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE Type_metier (
+    nom VARCHAR(50) PRIMARY KEY,
+    description VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE Utilisateur (
     email VARCHAR(255) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
@@ -24,10 +41,36 @@ CREATE TABLE Utilisateur (
     sexe ENUM ('HOMME', 'FEMME', 'AUTRE') NOT NULL,
     type_utilisateur ENUM ('CANDIDAT', 'RECRUTEUR', 'ADMINISTRATEUR') NOT NULL
 );
+
 CREATE TABLE Type_organisation (
     nom VARCHAR(50) PRIMARY KEY,
     description VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE Fiche_poste (
+    numero INT PRIMARY KEY,
+    intitule VARCHAR(255) NOT NULL,
+    responsable_hierarchique VARCHAR(255) NOT NULL,
+    lieu_mission_lat FLOAT NOT NULL,
+    lieu_mission_long FLOAT NOT NULL,
+    rythme VARCHAR(255) NOT NULL,
+    salaire_min FLOAT NOT NULL,
+    salaire_max FLOAT NOT NULL,
+    statut_poste VARCHAR(50) NOT NULL,
+    type_metier VARCHAR(50) NOT NULL,
+    FOREIGN KEY (statut_poste) REFERENCES Statut_poste(nom),
+    FOREIGN KEY (type_metier) REFERENCES Type_metier(nom)
+);
+
+
+CREATE TABLE Description (
+    numero INT PRIMARY KEY,
+    missions VARCHAR(255) NOT NULL,
+    activites VARCHAR(255) NOT NULL,
+    competences_attendues VARCHAR(255) NOT NULL,
+    FOREIGN KEY (numero) REFERENCES Fiche_poste(numero)
+);
+
 
 CREATE TABLE Organisation (
     siren VARCHAR(255) PRIMARY KEY,
@@ -37,6 +80,9 @@ CREATE TABLE Organisation (
     type_organisation VARCHAR(50) NOT NULL,
     FOREIGN KEY (type_organisation) REFERENCES Type_organisation(nom)
 );
+
+
+
 CREATE TABLE Formulaire (
     id INT PRIMARY KEY AUTO_INCREMENT,
     etat_formulaire ENUM ('EN COURS', 'REFUSEE', 'ACCEPTEE') NOT NULL, -- Accepté ou refusé
@@ -48,6 +94,15 @@ CREATE TABLE Formulaire (
     FOREIGN KEY (siren_orga) REFERENCES Organisation(siren)
 );
 
+CREATE TABLE Offre_d_emploi (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_de_piece INT UNSIGNED NOT NULL,
+    etat  ENUM ('NON PUBLIEE', 'PUBLIEE', 'EXPIREE') NOT NULL, 
+    date_validite DATE NOT NULL, 
+    indication_piece_jointes VARCHAR(255) NOT NULL,
+    id_poste INT NOT NULL,
+    FOREIGN KEY (id_poste) REFERENCES Fiche_poste(numero)
+);
 
 
 
@@ -70,47 +125,5 @@ CREATE TABLE Pieces_jointes (
     FOREIGN KEY (id_candidature) REFERENCES Candidature(id)
 );
 
-CREATE TABLE Offre_d_emploi (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_de_piece INT UNSIGNED NOT NULL,
-    etat  ENUM ('NON PUBLIEE', 'PUBLIEE', 'EXPIREE') NOT NULL, 
-    date_validite DATE NOT NULL, 
-    indication_piece_jointes VARCHAR(255) NOT NULL,
-    id_poste INT NOT NULL,
-    FOREIGN KEY (id_poste) REFERENCES Fiche_poste(numero)
-);
 
 
-CREATE TABLE Fiche_poste (
-    numero INT PRIMARY KEY,
-    intitule VARCHAR(255) NOT NULL,
-    responsable_hierarchique VARCHAR(255) NOT NULL,
-    lieu_mission_lat FLOAT NOT NULL,
-    lieu_mission_long FLOAT NOT NULL,
-    rythme VARCHAR(255) NOT NULL,
-    salaire_min FLOAT NOT NULL,
-    salaire_max FLOAT NOT NULL,
-    statut_poste VARCHAR(50) NOT NULL,
-    type_metier VARCHAR(50) NOT NULL,
-    FOREIGN KEY (statut_poste) REFERENCES Statut_poste(nom),
-    FOREIGN KEY (type_metier) REFERENCES Type_metier(nom)
-);
-
-CREATE TABLE Statut_poste (
-    nom VARCHAR(50) PRIMARY KEY,
-    description VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE Type_metier (
-    nom VARCHAR(50) PRIMARY KEY,
-    description VARCHAR(255) NOT NULL
-);
-
-
-CREATE TABLE Description (
-    numero INT PRIMARY KEY,
-    missions VARCHAR(255) NOT NULL,
-    activites VARCHAR(255) NOT NULL,
-    competences_attendues VARCHAR(255) NOT NULL,
-    FOREIGN KEY (numero) REFERENCES Fiche_poste(numero)
-);
