@@ -1,8 +1,41 @@
-// Vérification que les deux mots de passe sont identiques
+// *******************************
+// * Gestion de l'authentification lors de la connexion et de l'inscription
+// *******************************
+
+
+// *******************************
+// *        Communs
+// *******************************
+
+function TEST_MDP(mdp1) {
+    // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
+    var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
+    return correct_password_test.test(mdp1);
+}
+
+function TEST_MAIL(email_a_tester) {
+    // Vérification de l'adresse e-mail 
+    // Format :
+    //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //  - @
+    //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //  - .
+    //  - 2 ou 3 caractères alphanumériques
+
+    var correct_email_test = /^([a-zA-Z0-9_\.\-+]+)@([a-zA-Z0-9_\.\-+]+)\.([a-zA-Z]{2,3})$/;
+    return correct_email_test.test(email_a_tester);
+}
+// *******************************
+// *        Inscription
+// *******************************
+
+
 function verifMdp() {
+    // Vérification que les deux mots de passe sont identiques
     var mdp1 = document.getElementById("mdp1").value;
     var mdp2 = document.getElementById("mdp2").value;
     var msg;
+    
     if (mdp1 != mdp2) {
         msg = "<p class = 'text-danger'>Les deux mots de passe sont différents</p>";
         document.getElementById("mdp2").value = "";
@@ -13,26 +46,12 @@ function verifMdp() {
         document.getElementById("submit").disabled = false;
         document.getElementById("submit").className = "btn btn-primary";
     }
-    // Affichage du message
+    
     document.getElementById("msg").innerHTML = msg;
 }
 
-// Test la validité du mot de passe
-function TEST_MDP(mdp1) {
-    // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
-    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
-    return re.test(mdp1);
-}
 
-// Test la validité de l'adresse email
-function TEST_MAIL(email_a_tester) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email_a_tester);
-}
-
-
-// Verification de l'adresse email
-function verifMail() {
+function verifMail_inscription() {
     var email = document.getElementById("email").value;
     if (TEST_MAIL(email) {
         msg_email = "<p class = 'text-success'>Adresse e-mail valide</p>";
@@ -49,7 +68,6 @@ function verifMail() {
 }
 
 
-// Vérification que tous les champs sont correctement remplis pour l'inscription de l'email et du mot de passe
 function verifForm_email() {
     if (document.getElementById("email").value == '' || document.getElementById("mdp1").value == '' || document.getElementById("mdp2").value == '') {
         return false;
