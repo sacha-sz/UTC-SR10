@@ -17,6 +17,35 @@
     <script src="../JS/inscription.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logo et nom de l'entreprise -->
+            <a class="navbar-brand" href="index.html">JobHub</a>
+            <!-- Bouton pour afficher le menu sur les petits écrans -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Menu de navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="utilisateur.html">Offres d'emploi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="a_propos.html">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary" type="submit" formaction="connexion.html">Rejoignez-nous</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 
     <div class="d-flex justify-content-center align-items-center">
         <div class="centre-vertical">
@@ -62,7 +91,10 @@
             </div>
         </div>
     </div>
-
 </body>
-
+<footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright: <a class="text-black" href="index.html">JobHub</a>
+    </div>
+</footer>
 </html>
