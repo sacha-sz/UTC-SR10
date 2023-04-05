@@ -18,3 +18,17 @@ router.get('/userslist', function(req, res, next) {
         })
     });
 });
+
+/* POST users */
+router.post('/login', function(req, res, next) {
+    console.log("Connexion d'un utilisateur");
+    var email = req.body.email;
+    var password = req.body.password;
+    userModel.areValid_login(email, password, function(result) {
+        if (result) {
+            console.log("Utilisateur connecté");
+        } else {
+            res.redirect('/users/login');
+        }
+    });
+});
