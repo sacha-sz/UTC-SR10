@@ -15,18 +15,20 @@ DROP TABLE IF EXISTS Offre_d_emploi;
 DROP TABLE IF EXISTS Fiche_poste;
 DROP TABLE IF EXISTS Description;
 
--- Création des tables
+-- OK Création des tables
 CREATE TABLE Statut_poste (
     nom VARCHAR(50) PRFFIMARY KEY,
     description VARCHAR(255) NOT NULL
 );
 
 
+-- OK
 CREATE TABLE Type_metier (
     nom VARCHAR(50) PRIMARY KEY,
     description VARCHAR(255) NOT NULL
 );
 
+-- OK
 CREATE TABLE Utilisateur (
     email VARCHAR(255) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
@@ -42,11 +44,13 @@ CREATE TABLE Utilisateur (
     type_utilisateur ENUM ('CANDIDAT', 'RECRUTEUR', 'ADMINISTRATEUR') NOT NULL
 );
 
+-- OK
 CREATE TABLE Type_organisation (
     nom VARCHAR(50) PRIMARY KEY,
     description VARCHAR(255) NOT NULL
 );
 
+-- OK
 CREATE TABLE Fiche_poste (
     numero INT PRIMARY KEY,
     intitule VARCHAR(255) NOT NULL,
@@ -62,7 +66,7 @@ CREATE TABLE Fiche_poste (
     FOREIGN KEY (type_metier) REFERENCES Type_metier(nom)
 );
 
-
+-- OK
 CREATE TABLE Description (
     numero INT PRIMARY KEY,
     missions VARCHAR(255) NOT NULL,
@@ -71,7 +75,7 @@ CREATE TABLE Description (
     FOREIGN KEY (numero) REFERENCES Fiche_poste(numero)
 );
 
-
+-- OK
 CREATE TABLE Organisation (
     siren VARCHAR(255) PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
@@ -82,7 +86,7 @@ CREATE TABLE Organisation (
 );
 
 
-
+-- OK
 CREATE TABLE Formulaire (
     id INT PRIMARY KEY AUTO_INCREMENT,
     etat_formulaire ENUM ('EN COURS', 'REFUSEE', 'ACCEPTEE') NOT NULL, -- Accepté ou refusé
@@ -94,6 +98,7 @@ CREATE TABLE Formulaire (
     FOREIGN KEY (siren_orga) REFERENCES Organisation(siren)
 );
 
+-- OK
 CREATE TABLE Offre_d_emploi (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre_de_piece INT UNSIGNED NOT NULL,
@@ -105,7 +110,7 @@ CREATE TABLE Offre_d_emploi (
 );
 
 
-
+-- OK
 CREATE TABLE Candidature (
     id INT PRIMARY KEY AUTO_INCREMENT,
     date_candidature DATE NOT NULL,
@@ -116,6 +121,7 @@ CREATE TABLE Candidature (
     FOREIGN KEY (id_offre) REFERENCES Offre_d_emploi(id)
 );
 
+-- OK
 CREATE TABLE Pieces_jointes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(50) NOT NULL,
