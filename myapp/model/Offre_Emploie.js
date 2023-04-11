@@ -4,13 +4,13 @@ var db = require('./ConnexionBDD.js');
 
 module.exports = {
     read: function(numero, callback) {
-        db.query(" SELECT * FROM Fiche_poste WHERE numero= ?;", numero, function(err, results) {
+        db.query(" SELECT * FROM Fiche_poste WHERE numero= ?", numero, function(err, results) {
             if (err) throw err;
             callback(results);
         });
     },
     readall: function(callback) {
-        db.query("SELECT * from Fiche_poste;", function(err, results) {
+        db.query("SELECT * from Fiche_poste", function(err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -26,8 +26,8 @@ module.exports = {
     //         }
     //     });
     // },
-    create: function(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, callback) {
-        db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, function(err, results) {
+    creat: function(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, callback) {
+        db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, function(err, results) {
             if (err) throw err;
             callback(results);
         });
