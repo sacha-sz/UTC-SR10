@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var userModel = require('../model/Offre_Emploie');
-const Offre_Emploie = require('../model/Offre_Emploie');
+var Offre_Emploie = require('../model/Offre_Emploie');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -16,6 +15,7 @@ router.get('/offre_emploie', function(req, res, next) {
     result = Offre_Emploie.readall(function(result) {
         res.render('offre_emploie', {
             title: 'JobHub',
+            offre: result
         })
 
     });
