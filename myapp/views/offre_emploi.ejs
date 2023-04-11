@@ -121,7 +121,7 @@
             </form>
             <br>
             <!-- Offres d'emploi -->
-            <% offre_emploie.forEach((offre)=> { %>
+            <% offre.forEach((offer)=> { %>
                 <div class="container-fluid media pl-5 my-2">
                     <div class="row">
                         <div class="col-sm-auto my-auto">
@@ -135,12 +135,12 @@
                                 <div class="row">
                                     <div class="col">
                                         <h4 class="media-heading">
-                                            <%= offre.intitule %>
+                                            <%= offer.intitule %>
                                         </h4>
                                         <p>Google</p>
                                         <p>Paris</p>
                                         <p>Salaire :<span id="salaire">
-                                            <%= offre.salaire_min %> - <%= offre.salaire_max %>
+                                            <%= offer.salaire_min %> - <%= offer.salaire_max %>
                                         </span>€/mois</p>
                                         <p>Description : Job pour développer des sites web et mobile Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum doloremque placeat neque beatae enim arch
                                         </p>
