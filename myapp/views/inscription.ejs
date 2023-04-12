@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Inscription</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../CSS/global.css" />
+    <link rel="stylesheet" href="../CSS/inscription.css" />
+</head>
+
+<body>
+    <!-- Chargement des fichiers JavaScript de Bootstrap -->
+    <script src="../JS/inscription.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="d-flex justify-content-center">
+        <div class="card mx-auto centre-vertical">
+            <div class="card-header">
+                <h4>Inscription</h4>
+            </div>
+
+            <div class="card-body">
+                <form method="post" action="route">
+                    <!-- TODO : changer la route par la bonne -->
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input id="nom" type="text" class="form-control" placeholder="Entrez votre nom" />
+                    </div>
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input id="prenom" type="text" class="form-control" placeholder="Entrez votre prénom" />
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" class="form-control" id="prenom" placeholder="Entrez votre Téléphone" />
+                    </div>
+                    <div class="form-group">
+                        <label>Sexe</label>
+                        <select class="form-control" id="sexe">
+              <option>Homme</option>
+              <option>Femme</option>
+              <option>Autre</option>
+            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <input type="date" min="1900-01-01" class="form-control" id="ddn" placeholder="Entrez votre date de naissance" />
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="verifForm()">
+              S'inscrire
+            </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <p class="text-center">© 2023 - Tous droits réservés</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

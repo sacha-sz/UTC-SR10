@@ -26,12 +26,15 @@ module.exports = {
             }
         });
     },
-    creat: function(email, nom, prenom, pwd, type, callback) {
-        //todo
-        return false;
+    create: function(email, password) {
+        sql = "INSERT INTO Utilisateur(email, password) VALUES('?', '?')", email, password,
+            rows = db.query(sql, function(err, results) {
+                if (err) throw err;
+                callback(true);
+            });
     },
 
-    areValid_login : function(email, password, callback) {
+    areValid_login: function(email, password, callback) {
         sql = "SELECT * FROM Utilisateur WHERE email = ? AND password = ?";
         rows = db.query(sql, [email, password], function(err, results) {
             if (err) throw err;
