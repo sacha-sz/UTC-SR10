@@ -10,7 +10,7 @@ module.exports = {
         });
     },
     readall: function(callback) {
-        db.query("SELECT * from Fiche_poste", function(err, results) {
+        db.query("SELECT intitule, lieu_mission_lat, lieu_mission_long, salaire_min, salaire_max, missions AS missions FROM Fiche_poste JOIN Description ON Fiche_poste.numero = Description.numero ", function(err, results) {
             if (err) throw err;
             callback(results);
         });
