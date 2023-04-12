@@ -104,26 +104,26 @@ INSERT INTO Type_organisation (nom, description) VALUES ('SA', 'société anonym
 
 
 
-INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier)
+INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, email_inscription)
 VALUES
-(15, 'Développeur web', 'Chef de projet informatique', 48.8566, 2.3522, 'Temps plein', 28000, 38000, 'CDI', 'Informatique'),
-(16, 'Professeur de maths', 'Principal du collège', 47.2184, -1.5536, 'Temps partiel', 15000, 20000, 'CDD', 'Enseignement'),
-(17, 'Infirmier', 'Cadre de santé', 48.8534, 2.3488, 'Temps plein', 20000, 25000, 'CDI', 'Santé');
+(15, 'Développeur web', 'Chef de projet informatique', 48.8566, 2.3522, 'Temps plein', 28000, 38000, 'CDI', 'Informatique', 'bob@gmail.com')
+(16, 'Professeur de maths', 'Principal du collège', 47.2184, -1.5536, 'Temps partiel', 15000, 20000, 'CDD', 'Enseignement',  'bob@gmail.com'),
+(17, 'Infirmier', 'Cadre de santé', 48.8534, 2.3488, 'Temps plein', 20000, 25000, 'CDI', 'Santé',  'bob@gmail.com');
 
 
 INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES
-(1, 'Développeur web', 'Jean Dupont', 48.8566, 2.3522, 'Temps plein', 25000, 35000, 'CDI', 'Informatique'),
-(4, 'Ingénieur mécanique', 'Sophie Laurent', 48.1172, -1.6778, 'Temps plein', 40000, 50000, 'CDI', 'Mécanicien automobile'),
-(5, 'Comptable', 'Michel Garcia', 44.8378, -0.5792, 'Temps plein', 25000, 35000, 'CDI', 'Commercial'),
-(6, 'Infirmier', 'Aurélie Dupont', 47.2184, -1.5536, 'Temps partiel', 18000, 23000, 'CDD', 'Santé'),
-(7, 'Technicien de maintenance', 'Pierre Bonnet', 48.5839, 7.7455, 'Temps plein', 25000, 35000, 'CDI', 'Informatique'),
-(8, 'Juriste', 'Claire Durand', 43.6108, 3.8767, 'Temps plein', 35000, 45000, 'CDI', 'Avocat'),
-(9, 'Responsable de rayon', 'Nathalie Lefèvre', 49.8941, 2.2958, 'Temps plein', 30000, 40000, 'CDI', 'Commercial'),
-(10, "Architecte d'intérieur", 'François Moreau', 48.8566, 2.3522, 'Temps plein', 40000, 50000, 'CDI', 'Designer graphique'),
-(11, 'Développeur mobile', 'Nicolas Roux', 43.2965, 5.3698, 'Temps plein', 25000, 35000, 'CDI', 'Informatique'),
-(12, 'Chargé de communication', 'Céline Dubois', 48.1172, -1.6778, 'Temps plein', 25000, 35000, 'CDI', 'Commercial'),
-(13, 'Chef de projet informatique', 'Alexandre Leroy', 45.7640, 4.8357, 'Temps plein', 40000, 50000, 'CDI', 'Informatique'),
-(14, 'Chef de projet', 'Sophie Morel', 47.2184, -1.5536, 'Temps plein', 25000, 35000, 'CDI', 'Gestionnaire de projet');
+(1, 'Développeur web', 'Jean Dupont', 48.8566, 2.3522, 'Temps plein', 25000, 35000, 'CDI', 'Informatique', 'francois@gmail.com'),
+(4, 'Ingénieur mécanique', 'Sophie Laurent', 48.1172, -1.6778, 'Temps plein', 40000, 50000, 'CDI', 'Mécanicien automobile', 'francois@gmail.com'),
+(5, 'Comptable', 'Michel Garcia', 44.8378, -0.5792, 'Temps plein', 25000, 35000, 'CDI', 'Commercial', 'gaelle@gmail.com'),
+(6, 'Infirmier', 'Aurélie Dupont', 47.2184, -1.5536, 'Temps partiel', 18000, 23000, 'CDD', 'Santé', 'gaelle@gmail.com'),
+(7, 'Technicien de maintenance', 'Pierre Bonnet', 48.5839, 7.7455, 'Temps plein', 25000, 35000, 'CDI', 'Informatique', 'julie@gmail.com'),
+(8, 'Juriste', 'Claire Durand', 43.6108, 3.8767, 'Temps plein', 35000, 45000, 'CDI', 'Avocat', 'julie@gmail.com'),
+(9, 'Responsable de rayon', 'Nathalie Lefèvre', 49.8941, 2.2958, 'Temps plein', 30000, 40000, 'CDI', 'Commercial', 'francois@gmail.com'),
+(10, "Architecte d'intérieur", 'François Moreau', 48.8566, 2.3522, 'Temps plein', 40000, 50000, 'CDI', 'Designer graphique', 'francois@gmail.com'),
+(11, 'Développeur mobile', 'Nicolas Roux', 43.2965, 5.3698, 'Temps plein', 25000, 35000, 'CDI', 'Informatique', 'carla@gmail.com'),
+(12, 'Chargé de communication', 'Céline Dubois', 48.1172, -1.6778, 'Temps plein', 25000, 35000, 'CDI', 'Commercial', 'carla@gmail.com'),
+(13, 'Chef de projet informatique', 'Alexandre Leroy', 45.7640, 4.8357, 'Temps plein', 40000, 50000, 'CDI', 'Informatique', 'carla@gmail.com'),
+(14, 'Chef de projet', 'Sophie Morel', 47.2184, -1.5536, 'Temps plein', 25000, 35000, 'CDI', 'Gestionnaire de projet', 'carla@gmail.com');
 
 
 

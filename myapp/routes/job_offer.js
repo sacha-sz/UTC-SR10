@@ -15,8 +15,7 @@ router.get('/offre_emploie', function(req, res, next) {
     result = Offre_Emploie.readall(function(result) {
         res.render('offre_emploi', {
             title: 'JobHub',
-            offre: result
+            offre: result,
         })
-
     });
 });

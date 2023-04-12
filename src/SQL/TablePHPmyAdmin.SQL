@@ -3,21 +3,22 @@
 -- Description: Création des tables de la base de données
 
 -- Suppression des tables si elles existent déjà
-DROP TABLE IF EXISTS Utilisateur;
-DROP TABLE IF EXISTS Formulaire;
-DROP TABLE IF EXISTS Organisation;
-DROP TABLE IF EXISTS Type_organisation;
-DROP TABLE IF EXISTS Candidature;
-DROP TABLE IF EXISTS Pieces_jointes;
 DROP TABLE IF EXISTS Statut_poste;
 DROP TABLE IF EXISTS Type_metier;
-DROP TABLE IF EXISTS Offre_d_emploi;
+DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS Type_organisation;
 DROP TABLE IF EXISTS Fiche_poste;
 DROP TABLE IF EXISTS Description;
+DROP TABLE IF EXISTS Organisation;
+DROP TABLE IF EXISTS Formulaire;
+DROP TABLE IF EXISTS Offre_d_emploi;
+DROP TABLE IF EXISTS Candidature;
+DROP TABLE IF EXISTS Pieces_jointes;
+
 
 -- OK Création des tables
 CREATE TABLE Statut_poste (
-    nom VARCHAR(50) PRFFIMARY KEY,
+    nom VARCHAR(50) PRIMARY KEY,
     description VARCHAR(255) NOT NULL
 );
 
@@ -50,7 +51,7 @@ CREATE TABLE Type_organisation (
     description VARCHAR(255) NOT NULL
 );
 
--- OK
+-- pas OK
 CREATE TABLE Fiche_poste (
     numero INT PRIMARY KEY,
     intitule VARCHAR(255) NOT NULL,
@@ -62,8 +63,10 @@ CREATE TABLE Fiche_poste (
     salaire_max FLOAT NOT NULL,
     statut_poste VARCHAR(50) NOT NULL,
     type_metier VARCHAR(50) NOT NULL,
+    email_inscription VARCHAR(255) NOT NULL,
     FOREIGN KEY (statut_poste) REFERENCES Statut_poste(nom),
-    FOREIGN KEY (type_metier) REFERENCES Type_metier(nom)
+    FOREIGN KEY (type_metier) REFERENCES Type_metier(nom),
+    FOREIGN KEY (email_inscription) REFERENCES Utilisateur(email)
 );
 
 -- OK
@@ -130,6 +133,3 @@ CREATE TABLE Pieces_jointes (
     id_candidature INT NOT NULL,
     FOREIGN KEY (id_candidature) REFERENCES Candidature(id)
 );
-
-
-
