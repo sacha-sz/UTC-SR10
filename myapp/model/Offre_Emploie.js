@@ -15,6 +15,19 @@ module.exports = {
             callback(results);
         });
     },
+    getDescription: function(numero, callback) {
+        db.query("SELECT * FROM Description WHERE numero= ?", numero, function(err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+    creat: function(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, callback) {
+        db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, function(err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    }
+
     // areValid: function(email, password, callback) {
     //     sql = "SELECT pwd FROM Utilisateur WHERE email = ?";
     //     rows = db.query(sql, email, function(err, results) {
@@ -26,13 +39,6 @@ module.exports = {
     //         }
     //     });
     // },
-    creat: function(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, callback) {
-        db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, function(err, results) {
-            if (err) throw err;
-            callback(results);
-        });
-    }
-
     // areValid_login: function(email, password, callback) {
     //     sql = "SELECT * FROM Utilisateur WHERE email = ? AND password = ?";
     //     rows = db.query(sql, [email, password], function(err, results) {

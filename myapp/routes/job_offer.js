@@ -10,9 +10,19 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
-router.get('/offre_emploi', function(req, res, next) {
+router.get('/all_offers', function(req, res, next) {
     result = OffreModel.readall(function(result) {
         res.render('offre_emploi', {
+            title: 'JobHub',
+            offre: result,
+        })
+    });
+});
+
+
+router.get('/offer', function(req, res, next) {
+    result = OffreModel.read(function(result) {
+        res.render('offre', {
             title: 'JobHub',
             offre: result,
         })

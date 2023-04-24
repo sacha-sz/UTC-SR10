@@ -46,12 +46,19 @@ app.use(express.json());
 router.post('/nvUser', function(req, res, next) {
     res.render('inscription_mail')
         /*récupérer les données passées via le body de la requête post :
-        Exemple :
-        const user_fname = req.body.fname;
-        const user_lname = req.body.lname;
-        */
-        //utiliser le model pour enregistrer les données récupérées dans la BD
-    result = userModel.create(req.body.email, req.body.password, function(result) {
+        Exemple :*/
+    const mail = req.body.email;
+    const password = req.body.password;
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
+    const tel = req.body.tel;
+    const sexe = req.body.sexe;
+    const ddn = req.body.ddn;
+    const adresse = req.body.adresse;
+    const ville = req.body.ville;
+    const pays = req.body.pays;
+    //utiliser le model pour enregistrer les données récupérées dans la BD
+    result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, adresse, ville, pays, function(result) {
             if (result) {
                 console.log("Utilisateur créé");
                 res.redirect('/users/login');

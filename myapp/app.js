@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var offreRouter = require('./routes/job_offer');
 
+// app.use(express.static('public'));
 
 var app = express();
 
