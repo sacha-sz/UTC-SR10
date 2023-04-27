@@ -72,18 +72,18 @@ module.exports = {
         var lat = 000000;
         var lng = 000000;
         sql = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) VALUES (";
-        sql += email + ", ";
-        sql += password + ", ";
-        sql += nom + ", ";
-        sql += prenom + ", ";
-        sql += ddn + ", ";
-        sql += date_creation + ", ";
+        sql += "\"" + email + "\", ";
+        sql += "\"" + password + "\", ";
+        sql += "\"" + nom + "\", ";
+        sql += "\"" + prenom + "\", ";
+        sql += "\"" + ddn + "\", ";
+        sql += "\"" + date_creation + "\", ";
         sql += "true, ";
-        sql += tel + ", ";
+        sql += "\"" + tel + "\", ";
         sql += lat + ", ";
         sql += lng + ", ";
-        sql += sexe + ", ";
-        sql += "CANDIDAT);";
+        sql += "\"" + sexe + "\", ";
+        sql += "\"CANDIDAT\");";
         console.log(sql);
         rows = db.query(sql, function(err, results) {
             if (err) {
