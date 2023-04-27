@@ -19,7 +19,7 @@ router.get('/userslist', function(req, res, next) {
     });
 });
 
-router.get('/inscription_email', function(req, res, next) {
+router.get('/inscription', function(req, res, next) {
     res.render('inscription_mail')
 });
 
@@ -43,20 +43,30 @@ router.post('/login', function(req, res, next) {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-router.post('/nvUser', function(req, res, next) {
-    res.render('inscription_mail')
+router.post('/inscription', function(req, res, next) {
+    // res.render('inscription_mail')
         /*récupérer les données passées via le body de la requête post :
         Exemple :*/
     const mail = req.body.email;
+    console.log("mail = " + mail);
     const password = req.body.password;
+    console.log("password = " + password);
     const nom = req.body.nom;
+    console.log("nom = " + nom);
     const prenom = req.body.prenom;
+    console.log("prenom = " + prenom);
     const tel = req.body.tel;
+    console.log("tel = " + tel);
     const sexe = req.body.sexe;
+    console.log("sexe = " + sexe);
     const ddn = req.body.ddn;
+    console.log("ddn = " + ddn);
     const adresse = req.body.adresse;
+    console.log("adresse = " + adresse);
     const ville = req.body.ville;
+    console.log("ville = " + ville);
     const pays = req.body.pays;
+    console.log("pays = " + pays);
     //utiliser le model pour enregistrer les données récupérées dans la BD
     result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, adresse, ville, pays, function(result) {
             if (result) {
@@ -66,6 +76,5 @@ router.post('/nvUser', function(req, res, next) {
                 console.log("Utilisateur non créé");
             }
         }
-
     )
 });

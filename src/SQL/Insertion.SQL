@@ -106,12 +106,12 @@ INSERT INTO Type_organisation (nom, description) VALUES ('SA', 'société anonym
 
 INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, email_inscription)
 VALUES
-(15, 'Développeur web', 'Chef de projet informatique', 48.8566, 2.3522, 'Temps plein', 28000, 38000, 'CDI', 'Informatique', 'bob@gmail.com')
+(15, 'Développeur web', 'Chef de projet informatique', 48.8566, 2.3522, 'Temps plein', 28000, 38000, 'CDI', 'Informatique', 'bob@gmail.com'),
 (16, 'Professeur de maths', 'Principal du collège', 47.2184, -1.5536, 'Temps partiel', 15000, 20000, 'CDD', 'Enseignement',  'bob@gmail.com'),
 (17, 'Infirmier', 'Cadre de santé', 48.8534, 2.3488, 'Temps plein', 20000, 25000, 'CDI', 'Santé',  'bob@gmail.com');
 
 
-INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES
+INSERT INTO Fiche_poste (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, email_inscription) VALUES
 (1, 'Développeur web', 'Jean Dupont', 48.8566, 2.3522, 'Temps plein', 25000, 35000, 'CDI', 'Informatique', 'francois@gmail.com'),
 (4, 'Ingénieur mécanique', 'Sophie Laurent', 48.1172, -1.6778, 'Temps plein', 40000, 50000, 'CDI', 'Mécanicien automobile', 'francois@gmail.com'),
 (5, 'Comptable', 'Michel Garcia', 44.8378, -0.5792, 'Temps plein', 25000, 35000, 'CDI', 'Commercial', 'gaelle@gmail.com'),
