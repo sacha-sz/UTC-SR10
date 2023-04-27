@@ -39,38 +39,12 @@ module.exports = {
             }
         });
     },
-    // create: function(email, password, nom, prenom, tel, sexe, ddn, adresse, ville, pays) {
-    //     var ladate = new Date()
-    //     var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
-    //     sql = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur)VALUES('?', '?', '?', '?', '?', '?', ?, '?', ?, ?, '?', ?);";
-    //     rows = db.query(sql,
-    //         email,
-    //         password,
-    //         nom,
-    //         prenom,
-    //         ddn,
-    //         date_creation,
-    //         true,
-    //         tel,
-    //         getLatLngFromAddress(adresse + ', ' + ville + ', ' + pays, function(lat, lng) {
-    //             lat,
-    //         }),
-    //         getLatLngFromAddress(adresse + ', ' + ville + ', ' + pays, function(lat, lng) {
-    //             lng,
-    //         }),
-    //         sexe,
-    //         'CANDIDAT',
-    //         function(err, results) {
-    //             if (err) throw err;
-    //             callback(true);
-    //         });
-    // },
 
-    create: function(email, password, nom, prenom, tel, sexe, ddn, adresse, ville, pays, callback) {
+    create: function(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, callback) {
         var ladate = new Date();
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
-        var lat = 000000;
-        var lng = 000000;
+        var lat = latitude;
+        var lng = longitude;
         sql = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) VALUES (";
         sql += "\"" + email + "\", ";
         sql += "\"" + password + "\", ";
@@ -84,7 +58,7 @@ module.exports = {
         sql += lng + ", ";
         sql += "\"" + sexe + "\", ";
         sql += "\"CANDIDAT\");";
-        console.log(sql);
+    
         rows = db.query(sql, function(err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
