@@ -13,7 +13,7 @@ module.exports = router;
 router.get('/userslist', function(req, res, next) {
     result = userModel.readall(function(result) {
         res.render('userList', {
-            title: 'List des utilisateurs',
+            title: 'Liste des utilisateurs',
             users: result
         })
     });
@@ -44,8 +44,9 @@ router.post('/login', function(req, res, next) {
     userModel.areValid_login(email, password, function(result) {
         if (result) {
             console.log("Utilisateur connecté");
+            res.redirect('/'); // TODO : ajout message de confirmation et redirection vers la page d'accueil
         } else {
-            res.redirect('/users/login');
+            res.redirect('/users/login'); // TODO : ajout message d'erreur et redirection vers la page de connexion
         }
     });
 });

@@ -23,23 +23,25 @@ module.exports = {
         });
     },
     readall: function(callback) {
-        db.query("select * from Utilisateur", function(err, results) {
+        db.query("SELECT * FROM Utilisateur", function(err, results) {
             if (err) throw err;
             callback(results);
         });
     },
-    areValid: function(email, password, callback) {
-        sql = "SELECT pwd FROM Utilisateur WHERE email = ?";
-        rows = db.query(sql, email, function(err, results) {
+    
+    areValid_login: function(email, password, callback) {
+        sql = "SELECT password FROM Utilisateur WHERE email = \"" + email + "\"";
+        db.query(sql, function(err, results) {
             if (err) throw err;
-            if (rows.length == 1 && rows[0].pwd === password) {
-                callback(true)
+            if (results.length == 1 && results[0].password === password) {
+                callback(true);
+                console.log("Utilisateur connecté avec succès.");
             } else {
                 callback(false);
+                console.log("Erreur de connexion.");
             }
         });
     },
-
     create: function(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, callback) {
         var ladate = new Date();
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
@@ -71,15 +73,5 @@ module.exports = {
     },
 
 
-    areValid_login: function(email, password, callback) {
-        sql = "SELECT * FROM Utilisateur WHERE email = ? AND password = ?";
-        rows = db.query(sql, [email, password], function(err, results) {
-            if (err) throw err;
-            if (rows.length == 1) {
-                callback(true)
-            } else {
-                callback(false);
-            }
-        });
-    }
+
 }
