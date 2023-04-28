@@ -29,6 +29,13 @@ router.get('/inscription', function(req, res, next) {
     })
 });
 
+/* GET users Connexion */
+router.get('/login', function(req, res, next) {
+    res.render('connexion', { 
+        title: 'Connexion' });
+});
+
+
 /* POST users */
 router.post('/login', function(req, res, next) {
     console.log("Connexion d'un utilisateur");

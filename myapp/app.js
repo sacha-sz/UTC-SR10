@@ -12,6 +12,9 @@ var offreRouter = require('./routes/job_offer');
 
 var app = express();
 
+// CSS
+app.use("/CSS", express.static(__dirname + "/CSS/"));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
