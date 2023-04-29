@@ -29,7 +29,7 @@ app.post('/auth', function (req, res, next) {
     // Test que toutes les données soient correctement renseignées
     if (email == null || password == null || email == "" || password == "") {
         console.log("Données manquantes");
-        return res.redirect('/users/login');
+        return res.redirect('/login');
     }
 
     loginModel.areValid_login(email, password, function (result) {
@@ -39,7 +39,7 @@ app.post('/auth', function (req, res, next) {
             req.session.username = email;
             res.redirect('/login/home'); // TODO : ajout message de confirmation et redirection vers la page d'accueil
         } else {
-            res.redirect('/users/login'); // TODO : ajout message d'erreur et redirection vers la page de connexion
+            res.redirect('/login'); // TODO : ajout message d'erreur et redirection vers la page de connexion
         }
     });
 });
