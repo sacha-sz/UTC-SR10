@@ -59,17 +59,17 @@
                     <h4>Connexion</h4>
                 </div>
                 <div class="card-body ">
-                    <form method="POST" action="/users/login">
+                    <form method="POST" action="/login/auth">
                         <div class="mb-3">
                             <label for="email_connexion" class="form-label">Adresse mail</label>
                             <input autofocus name="email" type="email" class="form-control" id="email_connexion"
-                                placeholder="blacklist@fbi.com" autofocus>
+                                placeholder="blacklist@fbi.com" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="password_connexion" class="form-label">Mot de passe</label>
                             <input name="password" type="password" class="form-control" id="password_connexion"
-                                placeholder="hypersecure">
+                                placeholder="hypersecure" required>
                         </div>
 
                         <div class="text-center mt-4">

@@ -29,31 +29,6 @@ router.get('/inscription', function (req, res, next) {
     })
 });
 
-/* GET users Connexion */
-router.get('/login', function (req, res, next) {
-    res.render('connexion', {
-        title: 'Connexion'
-    });
-});
-
-
-/* POST users */
-router.post('/login', function (req, res, next) {
-    console.log("Connexion d'un utilisateur");
-    var email = req.body.email;
-    var password = req.body.password;
-    userModel.areValid_login(email, password, function (result) {
-        if (result) {
-            console.log("Utilisateur connecté");
-            res.redirect('/'); // TODO : ajout message de confirmation et redirection vers la page d'accueil
-        } else {
-            res.redirect('/users/login'); // TODO : ajout message d'erreur et redirection vers la page de connexion
-        }
-    });
-});
-
-
-
 //initialisation
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
