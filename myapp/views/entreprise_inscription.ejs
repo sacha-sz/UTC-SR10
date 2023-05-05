@@ -18,8 +18,7 @@
             <!-- Logo et nom de l'entreprise -->
             <a class="navbar-brand" href="index.html">JobHub</a>
             <!-- Bouton pour afficher le menu sur les petits écrans -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Menu de navigation -->
@@ -35,8 +34,7 @@
                         <a class="nav-link" href="a_propos.html">À propos</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-primary" type="submit"
-                            formaction="connexion.html">Rejoignez-nous</button>
+                        <button class="btn btn-primary" type="submit" formaction="connexion.html">Rejoignez-nous</button>
                     </li>
                 </ul>
             </div>
@@ -51,35 +49,29 @@
                     <h4>Inscrivez votre entreprise</h4>
                 </div>
                 <div class="card-body ">
-                    <form method="POST" action="XXXXX">
+                    <form method="POST" action="/entreprise/inscripion">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom :</label>
-                            <input autofocus name="name" type="text" class="form-control" id="name"
-                                placeholder="Entrez son nom">
+                            <input autofocus name="name" type="text" class="form-control" id="name" placeholder="Entrez son nom">
                         </div>
                         <div class="mb-3">
                             <label for="SIREN" class="form-label">SIREN :</label>
-                            <input name="SIREN" type="text" class="form-control" id="SIREN"
-                                placeholder="Entrez le SIREN">
+                            <input name="SIREN" type="text" class="form-control" id="SIREN" placeholder="Entrez le SIREN">
                         </div>
                         <div class="mb-3">
                             <label for="lat" class="form-label">Latitude :</label>
-                            <input name="lat" type="number" class="form-control" id="lat"
-                                placeholder="Entrez la latitude du siège social" step="0.00001"
-                        </div>
-                        <div class="mb-3">
-                            <label for="long" class="form-label">Latitude :</label>
-                            <input name="long" type="number" class="form-control" id="long"
-                                placeholder="Entrez la longitude du siège social" step="0.00001"
-                        </div>
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Inscrivez la</button>
-                        </div>
+                            <input name="lat" type="number" class="form-control" id="lat" placeholder="Entrez la latitude du siège social" step="0.00001" </div>
+                            <div class="mb-3">
+                                <label for="long" class="form-label">Latitude :</label>
+                                <input name="long" type="number" class="form-control" id="long" placeholder="Entrez la longitude du siège social" step="0.00001" </div>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Inscrivez la</button>
+                                </div>
                     </form>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </body>
 
 <footer class="bg-light text-center text-lg-start">
@@ -87,4 +79,5 @@
         © 2023 Copyright: <a class="text-black" href="index.html">JobHub</a>
     </div>
 </footer>
+
 </html>
