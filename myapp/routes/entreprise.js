@@ -10,12 +10,12 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
 /* GET Connexion page. */
-router.get('/', function(req, res, next) {
+app.get('/', function(req, res, next) {
     res.render('entreprise_inscription', { title: 'Inscription' });
     // res.render('connexion', { title: 'Connexion' });
 });
 
-router.post('/inscripion', function(req, res, next) {
+app.post('/inscripion', function(req, res, next) {
     console.log('Inscription d\'une entreprise');
     var name = req.body.name;
     var siren = req.body.SIREN;
@@ -62,4 +62,4 @@ function TEST_LONGITUDE(longitude) {
     return correct_longitude_test.test(longitude);
 }
 
-module.exports = router;
+module.exports = app;
