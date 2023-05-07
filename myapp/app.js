@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var offreRouter = require('./routes/job_offer');
 var loginRouter = require('./routes/login');
 var EntrepriseRouter = require('./routes/entreprise');
+var OffreRouter = require('./routes/offre');
 
 // app.use(express.static('public'));
 
@@ -32,7 +33,7 @@ app.use(session({
     secret: 'Je suis un secret',
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge:  1000*60*60 } // 1h
+    cookie: { maxAge: 1000 * 60 * 60 } // 1h
 }));
 
 app.use('/', indexRouter);
@@ -40,6 +41,7 @@ app.use('/users', usersRouter);
 app.use('/job_offer', offreRouter);
 app.use('/login', loginRouter);
 app.use('/entreprise', EntrepriseRouter);
+app.use('/offre', OffreRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -29,7 +29,6 @@ app.post('/inscripion', function(req, res, next) {
         console.log("Données manquantes");
         return res.redirect('/entreprise');
     }
-    // TODO : to complete
     if (!TEST_LATITUDE(lat) || !TEST_LONGITUDE(long)) {
         console.log("Coordonnées GPS invalides");
         return res.redirect('/entreprise');
