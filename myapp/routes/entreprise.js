@@ -37,7 +37,10 @@ app.post('/inscripion', function(req, res, next) {
         console.log("Coordonnées GPS invalides");
         return res.redirect('/entreprise/inscription');
     }
-    // TODO : Vérif siren
+    if(!isValidSIREN(siren)) {
+        console.log("SIREN Invalide");
+        return res.redirect('/entreprise');
+    }
     entrepriseModel.create(siren, name, lat, long, null, function(result) {
         if (result) {
             console.log("Entreprise créée");
@@ -58,6 +61,10 @@ app.post('/inscripion', function(req, res, next) {
             console.log("Données manquantes");
             return res.redirect('/entreprise');
         }
+        if(!isValidSIREN(siren)) {
+            console.log("SIREN Invalide");
+            return res.redirect('/entreprise');
+        }
 
         // Check si l'entreprise existe
         entrepriseModel.read(siren, function(result) {
@@ -76,7 +83,6 @@ app.post('/inscripion', function(req, res, next) {
                 return res.redirect('/entreprise');
             }
         });
-        // TODO : Ajouter l'utilisateur à l'entreprise
         });
 
     })
@@ -97,6 +103,36 @@ function TEST_LONGITUDE(longitude) {
     // - Un nombre décimal compris entre -180 et 180
     var correct_longitude_test = /^-?((1[0-7]|[1-9])?\d(\.\d+)?|180(\.0+)?)$/;
     return correct_longitude_test.test(longitude);
+}
+function isValidSIREN(siren) {
+    var pattern = /^[0-9]{9}$/;
+    if (!pattern.test(siren)) {
+      return false;
+    } else {
+        return true;
+    }
+}
+
+function VerifSIREN(siren) {
+    var somme = 0;
+    var tmp;
+    for (var cpt = 0; cpt < 8; cpt++) {
+        if ((cpt % 2) == 1) {
+            tmp = siren.charAt(cpt) * 2;
+            if (tmp > 9) {
+                tmp -= 9;
+            }
+        } else {
+            tmp = siren.charAt(cpt);
+        }
+        somme += parseInt(tmp);
+    }
+    somme += parseInt(siren.charAt(8));
+    if ((somme % 10) == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 module.exports = app;
