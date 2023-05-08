@@ -20,3 +20,15 @@ footer {
 .blanc {
     color: white;
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.body-content {
+    padding-top: 200px;
+    padding-bottom: 50px;
+}

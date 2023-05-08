@@ -7,6 +7,7 @@ module.exports = {
             callback(results);
         });
     },
+
     readall: function(callback) {
         db.query("SELECT * FROM Organisation; ", function(err, results) {
             if (err) throw err;
