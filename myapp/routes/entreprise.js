@@ -11,6 +11,10 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 /* GET Connexion page. */
 app.get('/', function(req, res, next) {
+    res.render('entreprise_rejoindre', { title: 'Connexion' });
+});
+
+app.get('/inscription', function(req, res, next) {
     res.render('entreprise_inscription', { title: 'Inscription' });
     // res.render('connexion', { title: 'Connexion' });
 });
@@ -27,11 +31,11 @@ app.post('/inscripion', function(req, res, next) {
     console.log(long);
     if (name == null || siren == null || name == "" || siren == "" || lat == null || lat == "" || long == null || long == "") {
         console.log("Données manquantes");
-        return res.redirect('/entreprise');
+        return res.redirect('/entreprise/inscription');
     }
     if (!TEST_LATITUDE(lat) || !TEST_LONGITUDE(long)) {
         console.log("Coordonnées GPS invalides");
-        return res.redirect('/entreprise');
+        return res.redirect('/entreprise/inscription');
     }
     // TODO : Vérif siren
     entrepriseModel.create(siren, name, lat, long, null, function(result) {
@@ -39,10 +43,30 @@ app.post('/inscripion', function(req, res, next) {
             console.log("Entreprise créée");
             res.redirect('/'); // TODO : redirect to home login/home
         } else {
-            res.redirect('/entreprise');
+            res.redirect('/entreprise/inscription');
         }
     });
 })
+
+    app.post('/rejoindre_entreprise', function(req, res, next) {
+        // TODO : Ajouter qq un a une entreprise,
+        // Comment le rentrer dans la base de données
+        var siren = req.body.SIREN;
+        console.log(siren);
+        if (siren == null || siren == "") {
+            console.log("Données manquantes");
+            return res.redirect('/entreprise');
+        }
+        entrepriseModel.read(siren, function(result) {
+        if(result.lenght == 0) {
+            console.log("Entreprise inexistante, Il faut la créer");
+            return res.redirect('/entreprise');
+        }
+        // TODO : Ajouter l'utilisateur à l'entreprise
+        });
+
+    })
+
 
 // Test que la latitude et la longitude soient valides
 function TEST_LATITUDE(latitude) {
