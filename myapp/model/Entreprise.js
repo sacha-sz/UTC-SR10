@@ -24,5 +24,17 @@ module.exports = {
             // TODO : Add comment to know if the entreprise is created or not
             callback(results);
         });
+    },
+
+    addUser : function (siren,email, callback){
+        var date = new Date();
+        var date_creation = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        sql = "INSERT INTO Formulaire VALUES (\"EN COURS\", \"" + date_creation + "\" , \"REJOINDRE\", \"" + email + "\", \"" + siren + "\")"
+        console.log(sql);
+        db.query(sql, function(err, results) {
+            if(err) throw err;
+            console.log(results);
+            callback(results);
+        });
     }
 }

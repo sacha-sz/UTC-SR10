@@ -53,15 +53,29 @@ app.post('/inscripion', function(req, res, next) {
         // Comment le rentrer dans la base de données
         var siren = req.body.SIREN;
         console.log(siren);
+        // Vérif des données entrées
         if (siren == null || siren == "") {
             console.log("Données manquantes");
             return res.redirect('/entreprise');
         }
+
+        // Check si l'entreprise existe
         entrepriseModel.read(siren, function(result) {
         if(result.lenght == 0) {
             console.log("Entreprise inexistante, Il faut la créer");
             return res.redirect('/entreprise');
         }
+
+        // Ajoute le formumaire pr ajouter un utilisateur à l'entreprise
+        entrepriseModel.addUser(siren, req.session.username ,function(result) {
+            if(result) {
+                console.log("Utilisateur ajouté à l'entreprise");
+                return res.redirect('/entreprise');
+            } else {
+                console.log("Erreur lors de l'ajout de l'utilisateur à l'entreprise");
+                return res.redirect('/entreprise');
+            }
+        });
         // TODO : Ajouter l'utilisateur à l'entreprise
         });
 
