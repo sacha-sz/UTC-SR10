@@ -11,34 +11,6 @@
 }
 
 
-/* * {
-  box-sizing: border-box;
-  transform-style: preserve-3d;
-}
-
-
-@property --swing-x {
-  initial-value: 0;
-  inherits: false;
-  syntax: '<integer>';
-}
-@property --swing-y {
-  initial-value: 0;
-  inherits: false;
-  syntax: '<integer>';
-}
-body {
-  min-height: 100vh;
-  display: flex;
-  font-family: 'Roboto', sans-serif;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  color: var(--color);
-  perspective: 1200px;
-}
-*/
 #home {
   text-transform: uppercase;
   text-decoration: none;
@@ -80,31 +52,6 @@ h1:after {
   /* transform: scale(1.05) translate3d(0, 12%, -10vmin) translate(calc((var(--swing-x, 0) * 0.05) * 1%), calc((var(--swing-y) * 0.05) * 1%)); */
   transform: translate(-50%, -50%);
 }
-
-/* .cloak {
-  animation: swing var(--speed) infinite alternate-reverse ease-in-out;
-  height: 100%;
-  width: 100%;
-  transform-origin: 50% 30%;
-  transform: rotate(calc(var(--swing-x) * -0.25deg));
-  background: radial-gradient(40% 40% at 50% 42%, transparent, #000 35%);
-}
-.cloak__wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: hidden;
-}
-.cloak__container {
-  height: 250vmax;
-  width: 250vmax;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */
 
 .info {
   text-align: center;
@@ -185,11 +132,6 @@ body {
   color: #FFF;
 }
 
-/* h1 {
-  font-size: 120px;
-  margin: 0;
-  padding: 0;
-} */
 
 p {
   font-size: 24px;

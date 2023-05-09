@@ -1,6 +1,23 @@
 var db = require('./ConnexionBDD.js');
 
 module.exports = {
+    readTypeOrganisation: function( callback) {
+        db.query("SELECT * FROM Type_organisation ", function(err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+    
+    createTypeOrganisation: function(type_organisation,description, callback) {
+        sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
+        console.log(sql);
+        db.query(sql, function(err, results) {
+            if (err) throw err;
+            console.log(results);
+            callback(results);
+        });
+    },
+
     read: function(siren, callback) {
         db.query(" SELECT * FROM Organisation WHERE siren= ?", siren, function(err, results) {
             if (err) throw err;
@@ -15,8 +32,18 @@ module.exports = {
         });
     },
 
+    createTypeOrganisation: function(type_organisation,description, callback) {
+        sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
+        console.log(sql);
+        db.query(sql, function(err, results) {
+            if (err) throw err;
+            console.log(results);
+            callback(results);
+        });
+    },
+
     create: function(siren, nom, siege_social_lat, siege_social_long, type_organisation, callback) {
-        sql = "INSERT INTO Organisation VALUES (\"" + siren + "\", \"" + nom + "\", \"" + siege_social_lat + "\", \"" + siege_social_long + "\", \"" + type_organisation + "\" )"
+        sql = "INSERT INTO Organisation VALUES (" + siren + ", \"" + nom + "\", " + siege_social_lat + ", " + siege_social_long + ", \"" + type_organisation + "\" )"
         console.log(sql);
         db.query(sql, function(err, results) {
             if (err) throw err;

@@ -15,7 +15,9 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/inscription', function(req, res, next) {
-    res.render('entreprise_inscription', { title: 'Inscription' });
+    result = entrepriseModel.readTypeOrganisation(function(result) {
+        res.render('entreprise_inscription', { title: 'Inscription', type_orga: result});
+    });
     // res.render('connexion', { title: 'Connexion' });
 });
 
@@ -25,11 +27,13 @@ app.post('/inscripion', function(req, res, next) {
     var siren = req.body.SIREN;
     var lat = req.body.lat;
     var long = req.body.long;
+    var type_organisation = req.body.type_organisation;
     console.log(name);
     console.log(siren);
     console.log(lat);
     console.log(long);
-    if (name == null || siren == null || name == "" || siren == "" || lat == null || lat == "" || long == null || long == "") {
+    console.log(type_organisation);
+    if (name == null || siren == null || name == "" || siren == "" || lat == null || lat == "" || long == null || long == "" || type_organisation == null || type_organisation == "") {
         console.log("Données manquantes");
         return res.redirect('/entreprise/inscription');
     }
@@ -41,7 +45,23 @@ app.post('/inscripion', function(req, res, next) {
         console.log("SIREN Invalide");
         return res.redirect('/entreprise');
     }
-    entrepriseModel.create(siren, name, lat, long, null, function(result) {
+    if(type_organisation == "Autre") {
+        var newType = req.body.newOrganisation;
+        var newDescription = req.body.newDescription;
+        if(newType == null || newType == "" || newDescription == null || newDescription == "") {
+            console.log("Données manquantes");
+            return res.redirect('/entreprise/inscription');
+        }
+        type_organisation = newType;
+        entrepriseModel.createTypeOrganisation(newType,newDescription, function(result) {
+            if (result) {
+                console.log("Organisation créée");
+            } else {
+                return res.redirect('/entreprise/inscription');
+            }
+        });
+    }
+    entrepriseModel.create(siren, name, lat, long, type_organisation, function(result) {
         if (result) {
             console.log("Entreprise créée");
             res.redirect('/'); // TODO : redirect to home login/home
