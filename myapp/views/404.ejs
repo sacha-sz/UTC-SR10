@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %>
+    </title>
+    <!-- Chargement des fichiers CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/global.css">
+    <link rel="stylesheet" href="/CSS/404.css">
+
+</head>
+
+<body>
+    <script src="../JS/inscription.js"></script>
+    <!-- Chargement des fichiers JavaScript de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logo et nom de l'entreprise -->
+            <a class="navbar-brand" href="/">JobHub</a>
+            <!-- Bouton pour afficher le menu sur les petits écrans -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Menu de navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Accueil</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/offres">Offres d'emploi</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/a_propos">À propos</a>
+                    </li>
+
+                    <!-- TODO : revoir ensemble -->
+                    <li class="nav-item">
+                        <a href="/login"><button class="btn btn-primary">Rejoignez-nous</button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <div id="projector"></div>
+    <div class="container">
+    <h1>404</h1>
+    <div class="cloak__wrapper">
+      <div class="cloak__container">
+        <div class="cloak"></div>
+      </div>
+    </div>
+    <div class="info">
+      <h2>We can't find that page</h2>
+      <p>We're fairly sure that page used to be here, but seems to have gone missing. We do apologise on it's behalf.</p><a href="/" id="home" target="_blank" rel="noreferrer noopener">Home</a>
+    </div>
+    <div class="shadow"></div>
+
+    </div> -->
+    <div id="projector"></div>
+    <div class="mx-auto">
+
+    <div class="container">
+      <h1>404</h1>
+      
+        <h2>We can't find that page</h2>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <p class="info">We're fairly sure that page used to be here, but seems to have gone missing. We do apologise on it's behalf.</p>
+                <a href="/" id="home">Home</a>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="shadow"></div>
+
+</body>
+<footer>
+    <div class="bg-light text-center text-lg-start">
+        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 Copyright: <a class="text-black" href="/">JobHub</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const shadow = document.querySelector('.shadow');
+
+window.addEventListener('mousemove', (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  shadow.style.backgroundPosition = `${x}px ${y}px`;
+});
+
+const projector = document.querySelector("#projector");
+
+document.addEventListener("mousemove", (e) => {
+  const x = e.clientX - projector.offsetWidth / 2;
+  const y = e.clientY - projector.offsetHeight / 2;
+  projector.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+});
+
+</script>
+
+</html>
