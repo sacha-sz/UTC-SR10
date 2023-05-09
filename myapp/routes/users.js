@@ -55,10 +55,13 @@ router.post('/inscription', function (req, res, next) {
     }
 
     // Test que le mail soit valide
-    userModel.TEST_MAIL(email, function (result) {
+    userModel.TEST_MAIL(mail, function (result) {
         if (!result) {
             console.log("Mail au mauvais format");
-            return res.redirect('/users/inscription');
+            return res.render('inscription_mail', {
+                title: "Inscription",
+                msg_email: "Mail au mauvais format"
+            })
         }
     });
 
