@@ -6,3 +6,60 @@
     min-width: 25vw;
 }
 
+
+.visibility_password {
+    position: relative;
+}
+
+.visibility_password input {
+    font-size: 1em;
+    background: transparent;
+    /* padding: 1rem 1rem; */
+    border-radius: 5px;
+    border: 2px solid #d0d0d0;
+    transition: all 0.2s;
+}
+
+.visibility_password input:focus {
+    outline: none;
+    border-color: #ff4754;
+    box-shadow: 0 0 5px #f9f9f9;
+}
+
+.visibility_password .password-icon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 20px;
+    color: #f9f9f9;
+    transition: all 0.2s;
+}
+
+.visibility_password .password-icon .visibility{
+    color : rgb(100, 100, 100);
+    display: block;
+}
+
+.visibility_password .password-icon .visililityOff{
+    color : rgb(100, 100, 100);
+    display: none;
+}
+
+.container_icon_right {
+    position: relative;
+}
+
+.icon_right {
+    display: block;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 20px;
+    color: rgb(100, 100, 100);
+    transition: all 0.2s;
+}
