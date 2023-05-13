@@ -6,10 +6,6 @@ nav {
     height: 50px;
 }
 
-footer {
-    height: 30px;
-}
-
 body {
     padding-top: 70px;
     padding-bottom: 50px;
@@ -23,6 +19,7 @@ header {
 }
 
 footer {
+    height: 30px;
     position: fixed;
     left: 0;
     bottom: 0;

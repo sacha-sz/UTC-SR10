@@ -56,7 +56,7 @@ module.exports = {
     addUser : function (siren,email, callback){
         var date = new Date();
         var date_creation = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        sql = "INSERT INTO Formulaire VALUES (\"EN COURS\", \"" + date_creation + "\" , \"REJOINDRE\", \"" + email + "\", \"" + siren + "\")"
+        sql = "INSERT INTO Formulaire (etat_formulaire, date_creation, type_formulaire, email_utilisateur, siren_orga) VALUES (\"EN COURS\", \"" + date_creation + "\" , \"REJOINDRE\", \"" + email + "\", \"" + siren + "\")"
         console.log(sql);
         db.query(sql, function(err, results) {
             if(err) throw err;
