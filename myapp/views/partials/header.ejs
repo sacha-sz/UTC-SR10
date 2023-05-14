@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
         <!-- Logo et nom de l'entreprise -->
@@ -7,20 +6,46 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- Menu de navigation -->
+                <!-- Menu de navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">Accueil</a>
+                    <a class="nav-link" aria-current="page" href="/login/home">Accueil</a> 
                 </li>
+
+                <!-- TODO : lien vers la page de recherche -->
                 <li class="nav-item">
                     <a class="nav-link" href="/offres">Offres d'emploi</a>
                 </li>
+
+                <!-- TODO : lien vers la page a_propos une fois connecté -->
                 <li class="nav-item">
                     <a class="nav-link" href="/a_propos">À propos</a>
                 </li>
+
                 <li class="nav-item">
-                    <button class="btn btn-primary" type="submit" formaction="/login">Rejoignez-nous</button>
+                    <div class="dropdown show">
+                        <button class="btn dropdown-toggle blanc" href="" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="material-symbols-outlined">
+                                account_circle
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">
+                                <h6><%= username %></h6>
+                            </div>
+                            <!-- TODO : lien vers la page de profil -->
+
+                            <!-- TODO : lien vers la page de ses candidatures -->
+                            <a class="dropdown-item">Gérer les candidatures</a>
+                            <!-- TODO : lien vers la page de ses paramètres -->
+                            <a class="dropdown-item">Paramètres</a>
+                            <a class="dropdown-item" href="/login/logout">Déconnexion</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
