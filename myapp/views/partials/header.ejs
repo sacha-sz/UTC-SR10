@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />   
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
         <!-- Logo et nom de l'entreprise -->
@@ -10,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/login/home">Accueil</a> 
+                    <a class="nav-link" aria-current="page" href="/">Accueil</a> 
                 </li>
 
                 <!-- TODO : lien vers la page de recherche -->
@@ -22,31 +24,41 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/a_propos">À propos</a>
                 </li>
+                
+                <% if (typeof username == 'undefined') { %>
+                    <li class="nav-item">
+                        <a href="/login"><button class="btn btn-primary">Rejoignez-nous</button></a>
+                    </li>
+                <% } %>
+                <% if (typeof username != 'undefined') { %>
+                    <li class="nav-item">
+                        <div class="dropdown show">
+                            <button class="btn btn-outline-dark dropdown-toggle blanc" type="button" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" 
+                                data-bs-auto-close="true"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    account_circle
+                                </span>
+                            </button>
 
-                <li class="nav-item">
-                    <div class="dropdown show">
-                        <button class="btn dropdown-toggle blanc" href="" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <span class="material-symbols-outlined">
-                                account_circle
-                            </span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">
-                                <h6><%= username %></h6>
+                            <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">
+                                    <h6><%= username %></h6>
+                                </div>
+                                <!-- TODO : lien vers la page de profil -->
+
+                                <!-- TODO : lien vers la page de ses candidatures -->
+                                <a class="dropdown-item">Gérer les candidatures</a>
+                                <!-- TODO : lien vers la page de ses paramètres -->
+                                <a class="dropdown-item">Paramètres</a>
+                                <a class="dropdown-item" href="/login/logout">Déconnexion</a>
                             </div>
-                            <!-- TODO : lien vers la page de profil -->
-
-                            <!-- TODO : lien vers la page de ses candidatures -->
-                            <a class="dropdown-item">Gérer les candidatures</a>
-                            <!-- TODO : lien vers la page de ses paramètres -->
-                            <a class="dropdown-item">Paramètres</a>
-                            <a class="dropdown-item" href="/login/logout">Déconnexion</a>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>

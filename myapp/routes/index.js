@@ -3,7 +3,16 @@ var router = express.Router();
 
 /* GET page. */
 router.get('/', function (req, res, next) {
-	res.render('index', { title: 'Accueil' });
+	if (req.session.loggedin) {
+		res.render('index', { 
+			title: 'Accueil',
+			username: req.session.username
+		});
+	} else {
+		res.render('index', { 
+			title: 'Accueil'
+		})
+	}
 });
 
 /* GET home page */
@@ -21,7 +30,16 @@ router.get('/home', function (req, res) {
 
 /* GET A propos */
 router.get('/a_propos', function (req, res, next) {
-	res.render('a_propos', { title: 'A propos' })
+	if (req.session.loggedin) {
+		res.render('a_propos', { 
+			title: 'A propos',
+			username: req.session.username
+		});
+	} else {
+		res.render('a_propos', {
+			title: 'A propos'
+		})
+	}
 });
 
 module.exports = router;

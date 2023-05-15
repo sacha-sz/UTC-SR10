@@ -10,23 +10,16 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 /* GET Connexion page. */
 app.get('/', function (req, res, next) {
-    res.render('connexion', { title: 'Connexion' });
-});
-
-/* GET home page */
-app.get('/home', function (req, res) {
-	// If the user is loggedin
-	if (req.session.loggedin) {
-		// Output username
-        res.render('logged_index', { 
+    if (req.session.loggedin) {
+        res.render('index', { 
             title: 'Accueil',
-            username: req.session.username });
-	} else {
-		// Not logged in
-        // TODO : page d'erreur
-		res.send('Tu n\'es pas connecté !');
-	}
-	res.end();
+            username: req.session.username
+        });
+    } else {
+        res.render('connexion', { 
+            title: 'Connexion',
+            msg: req.session.msg
+        })};
 });
 
 /* GET Logout */
@@ -45,7 +38,8 @@ app.post('/auth', function (req, res, next) {
     // Test que toutes les données soient correctement renseignées
     if (email == null || password == null || email == "" || password == "") {
         console.log("Données manquantes");
-        return res.redirect('/login');
+        req.session.msg = "Données manquantes";
+        res.redirect('/login');
     }
 
     loginModel.areValid_login(email, password, function (result) {
@@ -53,9 +47,11 @@ app.post('/auth', function (req, res, next) {
             console.log("Utilisateur connecté");
             req.session.loggedin = true;
             req.session.username = email;
-            res.redirect('/login/home'); // TODO : ajout message de confirmation et redirection vers la page d'accueil
+            res.redirect('/');
         } else {
-            res.redirect('/login'); // TODO : ajout message d'erreur et redirection vers la page de connexion
+            console.log("Utilisateur non connecté");
+            req.session.msg = "Utilisateur non connecté";
+            res.redirect('/login');
         }
     });
 });

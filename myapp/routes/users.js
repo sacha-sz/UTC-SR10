@@ -25,16 +25,11 @@ router.get('/inscription', function (req, res, next) {
 
     res.render('inscription', {
         title: "Inscription",
-        date: date_creation
+        date: date_creation,
     })
 });
 
-//initialisation
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 router.post('/inscription', function (req, res, next) {
-    // res.render('inscription_mail')
     /*récupérer les données passées via le body de la requête post :
     Exemple :*/
     const mail = req.body.email;
@@ -51,17 +46,16 @@ router.post('/inscription', function (req, res, next) {
     if (mail == null || password == null || nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
         mail == "" || password == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
         console.log("Données manquantes");
-        return res.redirect('/users/inscription');
+        req.session.msg = "Données manquantes";
+        res.redirect('/users/inscription');
     }
 
     // Test que le mail soit valide
     userModel.TEST_MAIL(mail, function (result) {
         if (!result) {
             console.log("Mail au mauvais format");
-            return res.render('inscription_mail', {
-                title: "Inscription",
-                msg_email: "Mail au mauvais format"
-            })
+            req.session.msg = "Mail au mauvais format";
+            res.redirect('/users/inscription');
         }
     });
 
@@ -69,7 +63,7 @@ router.post('/inscription', function (req, res, next) {
     userModel.TEST_MDP(password, function (result) {
         if (!result) {
             console.log("Mot de passe invalide");
-            return res.redirect('/users/inscription');
+            res.redirect('/users/inscription');
         }
     });
 
@@ -78,7 +72,7 @@ router.post('/inscription', function (req, res, next) {
     userModel.TEST_TEL(tel, function (result) {
         if (!result) {
             console.log("Numéro de téléphone invalide");
-            return res.redirect('/users/inscription');
+            res.redirect('/users/inscription');
         }
     });
 
@@ -86,7 +80,7 @@ router.post('/inscription', function (req, res, next) {
     userModel.TEST_COORDONNEES(latitude, longitude, function (result) {
         if (!result) {
             console.log("Coordonnées GPS invalides");
-            return res.redirect('/users/inscription');
+            res.redirect('/users/inscription');
         }
     });
 
@@ -95,7 +89,7 @@ router.post('/inscription', function (req, res, next) {
     userModel.TEST_DATE_NAISSANCE(ddn, function (result) {
         if (!result) {
             console.log("Date de naissance invalide");
-            return res.redirect('/users/inscription');
+            res.redirect('/users/inscription');
         }
     });
     
@@ -104,9 +98,10 @@ router.post('/inscription', function (req, res, next) {
     result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (result) {
         if (result) {
             console.log("Utilisateur créé");
-            res.redirect('/users/login');
+            res.redirect('/'); 
         } else {
             console.log("Utilisateur non créé");
+            res.redirect('/users/inscription');
         }
     }
     )

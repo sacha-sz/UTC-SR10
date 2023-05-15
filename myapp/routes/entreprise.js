@@ -10,18 +10,38 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
 /* GET Connexion page. */
-app.get('/', function(req, res, next) {
-    res.render('entreprise_rejoindre', { title: 'Connexion' });
+app.get('/', function (req, res, next) {
+    if (req.session.loggedin) {
+        res.render('entreprise_rejoindre', {
+            title: 'Connexion',
+            username: req.session.username
+        });
+    } else {
+        res.redirect('/users/login');
+    }
 });
 
-app.get('/inscription', function(req, res, next) {
-    result = entrepriseModel.readTypeOrganisation(function(result) {
-        res.render('entreprise_inscription', { title: 'Inscription', type_orga: result});
+app.get('/inscription', function (req, res, next) {
+    result = entrepriseModel.readTypeOrganisation(function (result) {
+        if (req.session.loggedin) {
+            if (result == null) {
+                console.log("Aucun type d'organisation");
+                res.redirect('/entreprise');
+            } else {
+                res.render('entreprise_inscription', {
+                    title: 'Inscription',
+                    type_orga: result,
+                    username: req.session.username
+                });
+            }
+        } else {
+            res.redirect('/users/login');
+        }
     });
-    // res.render('connexion', { title: 'Connexion' });
+
 });
 
-app.post('/inscripion', function(req, res, next) {
+app.post('/inscripion', function (req, res, next) {
     console.log('Inscription d\'une entreprise');
     var name = req.body.name;
     var siren = req.body.SIREN;
@@ -35,77 +55,77 @@ app.post('/inscripion', function(req, res, next) {
     console.log(type_organisation);
     if (name == null || siren == null || name == "" || siren == "" || lat == null || lat == "" || long == null || long == "" || type_organisation == null || type_organisation == "") {
         console.log("Données manquantes");
-        return res.redirect('/entreprise/inscription');
+        res.redirect('/entreprise/inscription');
     }
     if (!TEST_LATITUDE(lat) || !TEST_LONGITUDE(long)) {
         console.log("Coordonnées GPS invalides");
-        return res.redirect('/entreprise/inscription');
+        res.redirect('/entreprise/inscription');
     }
-    if(!isValidSIREN(siren)) {
+    if (!isValidSIREN(siren)) {
         console.log("SIREN Invalide");
-        return res.redirect('/entreprise');
+        res.redirect('/entreprise');
     }
-    if(type_organisation == "Autre") {
+    if (type_organisation == "Autre") {
         var newType = req.body.newOrganisation;
         var newDescription = req.body.newDescription;
-        if(newType == null || newType == "" || newDescription == null || newDescription == "") {
+        if (newType == null || newType == "" || newDescription == null || newDescription == "") {
             console.log("Données manquantes");
-            return res.redirect('/entreprise/inscription');
+            res.redirect('/entreprise/inscription');
         }
         type_organisation = newType;
-        entrepriseModel.createTypeOrganisation(newType,newDescription, function(result) {
+        entrepriseModel.createTypeOrganisation(newType, newDescription, function (result) {
             if (result) {
                 console.log("Organisation créée");
             } else {
-                return res.redirect('/entreprise/inscription');
+                res.redirect('/entreprise/inscription');
             }
         });
     }
-    entrepriseModel.create(siren, name, lat, long, type_organisation, function(result) {
+    entrepriseModel.create(siren, name, lat, long, type_organisation, function (result) {
         if (result) {
             console.log("Entreprise créée");
-            res.redirect('/'); // TODO : redirect to home login/home
+            res.redirect('/');
         } else {
             res.redirect('/entreprise/inscription');
         }
     });
 })
 
-    app.post('/rejoindre_entreprise', function(req, res, next) {
-        // TODO : Ajouter qq un a une entreprise,
-        // Comment le rentrer dans la base de données
-        var siren = req.body.SIREN;
-        console.log(siren);
-        // Vérif des données entrées
-        if (siren == null || siren == "") {
-            console.log("Données manquantes");
-            return res.redirect('/entreprise');
-        }
-        if(!isValidSIREN(siren)) {
-            console.log("SIREN Invalide");
-            return res.redirect('/entreprise');
-        }
+app.post('/rejoindre_entreprise', function (req, res, next) {
+    // TODO : Ajouter qq un a une entreprise,
+    // Comment le rentrer dans la base de données
+    var siren = req.body.SIREN;
+    console.log(siren);
+    // Vérif des données entrées
+    if (siren == null || siren == "") {
+        console.log("Données manquantes");
+        res.redirect('/entreprise');
+    }
+    if (!isValidSIREN(siren)) {
+        console.log("SIREN Invalide");
+        res.redirect('/entreprise');
+    }
 
-        // Check si l'entreprise existe
-        entrepriseModel.read(siren, function(result) {
-        if(result.lenght == 0) {
+    // Check si l'entreprise existe
+    entrepriseModel.read(siren, function (result) {
+        if (result.lenght == 0) {
             console.log("Entreprise inexistante, Il faut la créer");
-            return res.redirect('/entreprise');
+            res.redirect('/entreprise');
         }
 
         // Ajoute le formumaire pr ajouter un utilisateur à l'entreprise
-        entrepriseModel.addUser(siren, req.session.username ,function(result) {
-            if(result) {
+        entrepriseModel.addUser(siren, req.session.username, function (result) {
+            if (result) {
                 console.log("Utilisateur ajouté à l'entreprise");
-                return res.redirect('/entreprise');
+                res.redirect('/entreprise');
             } else {
                 console.log("Erreur lors de l'ajout de l'utilisateur à l'entreprise");
-                return res.redirect('/entreprise');
+                res.redirect('/entreprise');
             }
         });
-        });
+    });
 
-    })
+})
 
 
 // Test que la latitude et la longitude soient valides
@@ -127,7 +147,7 @@ function TEST_LONGITUDE(longitude) {
 function isValidSIREN(siren) {
     var pattern = /^[0-9]{9}$/;
     if (!pattern.test(siren)) {
-      return false;
+        return false;
     } else {
         return true;
     }

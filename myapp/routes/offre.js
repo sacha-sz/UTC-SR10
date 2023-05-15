@@ -10,7 +10,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
 router.get('/ajout_offre', function(req, res, next) {
-    res.render('ajout_offre', { title: 'Ajout d\'une offre' });
+    if (req.session.loggedin) {
+        res.render('ajout_offre', { 
+            title: 'Ajout d\'une offre',
+            username: req.session.username
+        });
+    } else {
+        res.redirect('/users/login');
+    }
 });
 
 router.post('/ajout', function(req, res, next) {
@@ -45,7 +52,7 @@ router.post('/ajout', function(req, res, next) {
     offreModel.create(intitule, description, responsable, lat, long, rythme, salaire, missions, activites, competences, statut, type_metier, function(result) {
         if (result) {
             console.log("Offre créée");
-            res.redirect('/'); // TODO : redirect to home login/home
+            res.redirect('/');
         } else {
             res.redirect('/offre/ajout_offre');
         }
