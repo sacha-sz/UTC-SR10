@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var userModel = require('../model/Utilisateur');
-var app = express();
+
+/// GET
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
@@ -28,6 +29,21 @@ router.get('/inscription', function (req, res, next) {
         date: date_creation,
     })
 });
+
+
+router.get('/change_profile', function (req, res, next) {
+    if (req.session.loggedin) {
+        res.render('modifier_profil', {
+            title: "Modifier le profil",
+            username: req.session.username
+        })
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+/// POST
 
 router.post('/inscription', function (req, res, next) {
     /*récupérer les données passées via le body de la requête post :

@@ -17,11 +17,20 @@ function getLatLngFromAddress(address, callback) {
 
 module.exports = {
     read: function(email, callback) {
-        db.query("SELECT * FROM Utilisateur WHERE email= ?", email, function(err, results) {
+        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        db.query(query, function(err, results) {
             if (err) throw err;
             callback(results);
         });
     },
+    getNomPrenomTelSexe : function(email, callback) {
+        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        db.query(query, function(err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+
     readall: function(callback) {
         db.query("SELECT * FROM Utilisateur", function(err, results) {
             if (err) throw err;
