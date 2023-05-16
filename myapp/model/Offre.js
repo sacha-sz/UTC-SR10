@@ -25,6 +25,7 @@ module.exports = {
             callback(results);
         });
     },
+    
     readAllStatut: function(callback) {
         db.query("SELECT * FROM Statut; ", function(err, results) {
             if (err) throw err;

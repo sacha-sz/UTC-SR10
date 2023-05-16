@@ -1,17 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var userModel = require('../model/Utilisateur');
+var app = express();
+var path = require('path');
+
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'static')));
 
 /// GET
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
 
 
-module.exports = router;
 
-router.get('/userslist', function (req, res, next) {
+app.get('/userslist', function (req, res, next) {
     result = userModel.readall(function (result) {
         res.render('userList', {
             title: 'Liste des utilisateurs',
@@ -20,10 +25,10 @@ router.get('/userslist', function (req, res, next) {
     });
 });
 
-router.get('/inscription', function (req, res, next) {
+app.get('/inscription', function (req, res, next) {
     var ladate = new Date();
     var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
-
+    
     res.render('inscription', {
         title: "Inscription",
         date: date_creation,
@@ -31,21 +36,17 @@ router.get('/inscription', function (req, res, next) {
 });
 
 
-router.get('/change_profile', function (req, res, next) {
-    if (req.session.loggedin) {
-        res.render('modifier_profil', {
-            title: "Modifier le profil",
-            username: req.session.username
-        })
-    } else {
-        res.redirect('/');
-    }
+
+app.get('/change_profile', function (req, res, next) {
+    res.render('modif', {
+        title: "CP"
+    })
 });
 
 
 /// POST
 
-router.post('/inscription', function (req, res, next) {
+app.post('/inscription', function (req, res, next) {
     /*récupérer les données passées via le body de la requête post :
     Exemple :*/
     const mail = req.body.email;
@@ -57,15 +58,15 @@ router.post('/inscription', function (req, res, next) {
     const ddn = req.body.ddn;
     const latitude = req.body.lat;
     const longitude = req.body.long;
-
+    
     // Test que toutes les données soient correctement renseignées
     if (mail == null || password == null || nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
         mail == "" || password == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
-        console.log("Données manquantes");
+            console.log("Données manquantes");
         req.session.msg = "Données manquantes";
         res.redirect('/users/inscription');
     }
-
+    
     // Test que le mail soit valide
     userModel.TEST_MAIL(mail, function (result) {
         if (!result) {
@@ -74,7 +75,7 @@ router.post('/inscription', function (req, res, next) {
             res.redirect('/users/inscription');
         }
     });
-
+    
     // Test que le mot de passe soit valide
     userModel.TEST_MDP(password, function (result) {
         if (!result) {
@@ -82,8 +83,8 @@ router.post('/inscription', function (req, res, next) {
             res.redirect('/users/inscription');
         }
     });
-
-
+    
+    
     // Test que le numéro de téléphone soit valide
     userModel.TEST_TEL(tel, function (result) {
         if (!result) {
@@ -91,7 +92,7 @@ router.post('/inscription', function (req, res, next) {
             res.redirect('/users/inscription');
         }
     });
-
+    
     // Test que la latitude et la longitude soient valides
     userModel.TEST_COORDONNEES(latitude, longitude, function (result) {
         if (!result) {
@@ -99,8 +100,8 @@ router.post('/inscription', function (req, res, next) {
             res.redirect('/users/inscription');
         }
     });
-
-
+    
+    
     // Test que la date de naissance soit valide
     userModel.TEST_DATE_NAISSANCE(ddn, function (result) {
         if (!result) {
@@ -109,7 +110,7 @@ router.post('/inscription', function (req, res, next) {
         }
     });
     
-
+    
     // utiliser le model pour enregistrer les données récupérées dans la BD
     result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (result) {
         if (result) {
@@ -122,3 +123,5 @@ router.post('/inscription', function (req, res, next) {
     }
     )
 });
+
+module.exports = app;
