@@ -79,7 +79,7 @@ app.post('/inscription', function (req, res, next) {
     // Test que toutes les données soient correctement renseignées
     if (mail == null || password == null || nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
         mail == "" || password == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
-            console.log("Données manquantes");
+        console.log("Données manquantes");
         req.session.msg = "Données manquantes";
         res.redirect('/users/inscription');
     }

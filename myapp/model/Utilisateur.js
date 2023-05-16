@@ -2,18 +2,18 @@
 
 var db = require('./ConnexionBDD.js');
 
-function getLatLngFromAddress(address, callback) {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': address }, function(results, status) {
-        if (status === 'OK') {
-            var lat = results[0].geometry.location.lat();
-            var lng = results[0].geometry.location.lng();
-            callback(lat, lng);
-        } else {
-            console.log('Erreur : ' + status);
-        }
-    });
-}
+// function getLatLngFromAddress(address, callback) {
+//     var geocoder = new google.maps.Geocoder();
+//     geocoder.geocode({ 'address': address }, function(results, status) {
+//         if (status === 'OK') {
+//             var lat = results[0].geometry.location.lat();
+//             var lng = results[0].geometry.location.lng();
+//             callback(lat, lng);
+//         } else {
+//             console.log('Erreur : ' + status);
+//         }
+//     });
+// }
 
 module.exports = {
     read: function(email, callback) {
@@ -33,6 +33,13 @@ module.exports = {
 
     readall: function(callback) {
         db.query("SELECT * FROM Utilisateur", function(err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+
+    delete: function(email, callback) {
+        db.query("DELETE FROM Utilisateur WHERE email = " + "\"" + email + "\"", function(err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -99,7 +106,7 @@ module.exports = {
         // - Commence par un + (optionnel) suivi de 1 à 3 chiffres (indicatif pays)
         // - 0 ou 1 espace (optionnel)
         // - 9 chiffres
-        var correct_tel_test = /^(\+\d{1,3})? ?\d{9}$/;
+        var correct_tel_test = /(0|\+33)[1-9]( *[0-9]{2}){4}/;
         callback(correct_tel_test.test(num_tel));
     },
 
@@ -125,32 +132,38 @@ module.exports = {
     },
 
     // Test que la date de naissance soit valide
-    TEST_DATE_NAISSANCE : function(date_naissance, callback) {
-        // Vérification de la date de naissance 
-        // Format : 
-        // - AAAA-MM-JJ où AAAA est l'année (4 chiffres), MM est le mois (de 01 à 12) et JJ est le jour (de 01 à 31)
-        var correct_date_test = /^(\d{4})-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])$/;
-
-        // Vérification de la date passée et d'au plus de 1900 ans
-        var current_year = new Date().getFullYear();
-        var date_naissance_year = parseInt(date_naissance.substring(0, 4));
-        if (date_naissance_year >= current_year - 1900) {
-            callback(false); // La date de naissance est supérieure à 1900 ans.
-        }
-
+    TEST_DATE_NAISSANCE: function(date_naissance, callback) {
+        // Vérification du format de la date de naissance
+        var correct_date_test = /^(\d{4})-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/;
+    
         var date_naissance_match = date_naissance.match(correct_date_test);
-        if (date_naissance_match == null) {
+        if (date_naissance_match === null) {
             callback(false); // Le format de la date est incorrect.
+            return;
         }
-
+    
+        // Vérification de la date de naissance
+        var date_naissance_year = parseInt(date_naissance_match[1]);
+        var current_year = (new Date()).getFullYear();
+        var min_year = current_year - 100;
+    
+        if (date_naissance_year < min_year) {
+            callback(false); // La date de naissance est supérieure à 1900 ans.
+            return;
+        }
+    
+        // Vérification de la date de naissance dans le futur
         var date_naissance_object = new Date(date_naissance_match[0]);
-        if (date_naissance_object >= new Date()) {
+        if (date_naissance_object > new Date()) {
             callback(false); // La date de naissance est dans le futur.
+            return;
         }
-
-        callback(true);
+    
+        callback(true); // La date de naissance est valide.
     },
-
+    
+    
+    
     updateNom: function(email, new_nom, callback) {
         sql = "UPDATE Utilisateur SET nom = \"" + new_nom + "\" WHERE email = \"" + email + "\";";
         rows = db.query(sql, function(err, results) {

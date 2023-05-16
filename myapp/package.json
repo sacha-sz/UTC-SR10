@@ -19,13 +19,14 @@
     "express-session": "^1.17.3",
     "formidable": "^2.1.1",
     "http-errors": "~1.6.3",
-    "jest": "^29.5.0",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "save-dev": "^0.0.1-security"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
   }
 }
