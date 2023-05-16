@@ -38,9 +38,26 @@ app.get('/inscription', function (req, res, next) {
 
 
 app.get('/change_profile', function (req, res, next) {
-    res.render('modif', {
-        title: "CP"
-    })
+    if (req.session.loggedin) {
+        result = userModel.getNomPrenomTelSexe(req.session.username, function (result) {
+            var son_nom = result[0].nom;
+            var son_prenom = result[0].prenom;
+            var son_tel = result[0].telephone;
+            var son_sexe = result[0].sexe;
+
+            res.render('modif_profil', {
+                title: "CP",
+                username: req.session.username,
+                nom: son_nom,
+                prenom: son_prenom,
+                tel: son_tel,
+                sexe: son_sexe,
+                message: "Après modifications, enregistrez en cliquant sur Appliquer"
+            })
+        })
+    } else {
+        res.redirect('/login');
+    }
 });
 
 
@@ -123,5 +140,94 @@ app.post('/inscription', function (req, res, next) {
     }
     )
 });
+
+app.post('/changed_infos', function (req, res, next) {
+    var nom = req.body.nom;
+    var prenom = req.body.prenom;
+    var tel = req.body.tel;
+    var sexe = req.body.sexe;
+
+    // Vérifie si toutes les valeurs sont nulles ou vides
+    if ((nom == null || nom == "") && (prenom == null || prenom == "") && (tel == null || tel == "") && (sexe == null || sexe == "")) {
+        console.log("Aucune modification");
+        return res.redirect('/users/change_profile');
+    }
+
+    var promises = [];
+
+    if (tel != null && tel != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.TEST_TEL(tel, function (result) {
+                    if (!result) {
+                        console.log("Numéro de téléphone invalide");
+                        resolve(false);
+                    } else {
+                        resolve(true);
+                    }
+                });
+            })
+        );
+    }
+
+    if (nom != null && nom != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updateNom(req.session.username, nom, function (result) {
+                    if (result) {
+                        console.log("Nom modifié");
+                        resolve();
+                    } else {
+                        console.log("Nom non modifié");
+                        resolve();
+                    }
+                });
+            })
+        );
+    }
+
+    if (prenom != null && prenom != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updatePrenom(req.session.username, prenom, function (result) {
+                    if (result) {
+                        console.log("Prénom modifié");
+                        resolve();
+                    } else {
+                        console.log("Prénom non modifié");
+                        resolve();
+                    }
+                });
+            })
+        );
+    }
+
+    if (sexe != null && sexe != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updateSexe(req.session.username, sexe, function (result) {
+                    if (result) {
+                        console.log("Sexe modifié");
+                        resolve();
+                    } else {
+                        console.log("Sexe non modifié");
+                        resolve();
+                    }
+                });
+            })
+        );
+    }
+
+    Promise.all(promises)
+        .then(function () {
+            res.redirect('/');
+        })
+        .catch(function (error) {
+            // Handle any errors that occurred during the asynchronous operations
+            console.error(error);
+            res.redirect('/users/change_profile');
+        });
+});
+
 
 module.exports = app;

@@ -150,4 +150,44 @@ module.exports = {
 
         callback(true);
     },
+
+    updateNom: function(email, new_nom, callback) {
+        sql = "UPDATE Utilisateur SET nom = \"" + new_nom + "\" WHERE email = \"" + email + "\";";
+        rows = db.query(sql, function(err, results) {
+            if (err) {
+                console.log("Erreur : " + err.message);
+                callback(false);
+            } else {
+                console.log("Nom modifié avec succès.");
+                callback(true);
+            }
+        });
+    },
+
+    updatePrenom: function(email, new_prenom, callback) {
+        sql = "UPDATE Utilisateur SET prenom = \"" + new_prenom + "\" WHERE email = \"" + email + "\";";
+        rows = db.query(sql, function(err, results) {
+            if (err) {
+                console.log("Erreur : " + err.message);
+                callback(false);
+            } else {
+                console.log("Prénom modifié avec succès.");
+                callback(true);
+            }
+        });
+    },
+
+    updateSexe: function(email, new_sexe, callback) {
+        sql = "UPDATE Utilisateur SET sexe = \"" + new_sexe + "\" WHERE email = \"" + email + "\";";
+        rows = db.query(sql, function(err, results) {
+            if (err) {
+                console.log("Erreur : " + err.message);
+                callback(false);
+            } else {
+                console.log("Sexe modifié avec succès.");
+                callback(true);
+            }
+        }
+    )},
 }
+
