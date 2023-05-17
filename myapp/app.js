@@ -4,7 +4,6 @@ var path = require('path');
 var logger = require('morgan');
 var express = require('express');
 var session = require('express-session');
-var bcrypt = require('bcrypt');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

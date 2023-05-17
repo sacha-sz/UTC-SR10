@@ -1,16 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
 <body>
-    <h1>
-        <%= title %>
-    </h1>
-    <table border>
-        <thead>
+    <table class="table table-striped-columns">
+        <thead class="table-dark">
             <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
+                <th>Prénom</th>
+                <th>Nom</th>
                 <th>Email</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             <% users.forEach((user)=> { %>
                 <tr>
                     <td>
@@ -27,4 +35,7 @@
         </tbody>
     </table>
 </body>
+
 <%- include('./partials/footer'); %>
+
+</html>

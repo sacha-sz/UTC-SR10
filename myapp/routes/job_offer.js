@@ -12,14 +12,15 @@ module.exports = router;
 
 router.get('/all_offers', function(req, res, next) {
     if (req.session.loggedin) {
-        result = OffreModel.readall(function(result) {
+        result = OffreModel.readAllOffers(function(result) {
             res.render('offre_emploi', {
                 title: 'JobHub',
-                offre: result,
+                offers: result,
+                username:req.session.username,
             })
         });
     } else {
-        res.redirect('/users/login');
+        res.redirect('/login');
     }
 });
 
@@ -34,6 +35,6 @@ router.get('/offer', function(req, res, next) {
         })
     });
     } else {
-        res.redirect('/users/login');
+        res.redirect('/login');
     }
 });

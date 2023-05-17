@@ -16,7 +16,7 @@ router.get('/ajout_offre', function(req, res, next) {
             username: req.session.username
         });
     } else {
-        res.redirect('/users/login');
+        res.redirect('/login');
     }
 });
 

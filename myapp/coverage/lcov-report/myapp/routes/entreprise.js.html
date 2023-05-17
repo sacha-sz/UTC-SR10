@@ -433,7 +433,7 @@ app.get('/', <span class="fstat-no" title="function not covered" >fu</span>nctio
             username: req.session.username
         });
     } else {
-<span class="cstat-no" title="statement not covered" >        res.redirect('/users/login');</span>
+<span class="cstat-no" title="statement not covered" >        res.redirect('/login');</span>
     }
 });
 &nbsp;
@@ -451,7 +451,7 @@ app.get('/inscription', <span class="fstat-no" title="function not covered" >fu<
                 });
             }
         } else {
-<span class="cstat-no" title="statement not covered" >            res.redirect('/users/login');</span>
+<span class="cstat-no" title="statement not covered" >            res.redirect('/login');</span>
         }
     });
 &nbsp;

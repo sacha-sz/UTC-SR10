@@ -16,7 +16,7 @@ app.get('/', function (req, res, next) {
             username: req.session.username
         });
     } else {
-        res.redirect('/users/login');
+        res.redirect('/login');
     }
 });
 
@@ -34,7 +34,7 @@ app.get('/inscription', function (req, res, next) {
                 });
             }
         } else {
-            res.redirect('/users/login');
+            res.redirect('/login');
         }
     });
 
