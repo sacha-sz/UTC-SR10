@@ -4,6 +4,7 @@
 ## Tobias
 
 - 16/05 -> 6h
+- 17/05 -> 2h TD + 2h perso
 
 
 

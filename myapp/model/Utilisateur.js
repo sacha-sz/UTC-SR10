@@ -18,11 +18,19 @@ var db = require('./ConnexionBDD.js');
 module.exports = {
     read: function(email, callback) {
         query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
-        db.query(query, function(err, results) {
+        
+            db.query(query, function(err, results) {
+                console.log('test1');
+        
             if (err) throw err;
+            if(results==null){
+                console.log('test');
+                throw new Error("erreur dans la requête read de Utilisateur");
+            }
             callback(results);
         });
     },
+
     getNomPrenomTelSexe : function(email, callback) {
         query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
         db.query(query, function(err, results) {
