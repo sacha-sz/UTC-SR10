@@ -21,9 +21,9 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/inscription', function (req, res, next) {
-    result = entrepriseModel.readTypeOrganisation(function (result) {
+    result = entrepriseModel.readTypeOrganisation(function (err, result) {
         if (req.session.loggedin) {
-            if (result == null) {
+            if (result == null || err) {
                 console.log("Aucun type d'organisation");
                 res.redirect('/entreprise');
             } else {

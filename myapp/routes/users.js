@@ -17,7 +17,8 @@ app.get('/', function (req, res, next) {
 
 
 app.get('/userslist', function (req, res, next) {
-    result = userModel.readall(function (result) {
+    result = userModel.readall(function (err,result) {
+        if(err) throw err;
         res.render('userList', {
             title: 'Liste des utilisateurs',
             users: result
@@ -39,7 +40,7 @@ app.get('/inscription', function (req, res, next) {
 
 app.get('/change_profile', function (req, res, next) {
     if (req.session.loggedin) {
-        result = userModel.getNomPrenomTelSexe(req.session.username, function (result) {
+        result = userModel.getNomPrenomTelSexe(req.session.username, function (err, result) {
             var son_nom = result[0].nom;
             var son_prenom = result[0].prenom;
             var son_tel = result[0].telephone;
@@ -173,7 +174,7 @@ app.post('/changed_infos', function (req, res, next) {
     if (nom != null && nom != "") {
         promises.push(
             new Promise(function (resolve) {
-                userModel.updateNom(req.session.username, nom, function (result) {
+                userModel.updateNom(req.session.username, nom, function (err, result) {
                     if (result) {
                         console.log("Nom modifié");
                         resolve();
@@ -189,7 +190,7 @@ app.post('/changed_infos', function (req, res, next) {
     if (prenom != null && prenom != "") {
         promises.push(
             new Promise(function (resolve) {
-                userModel.updatePrenom(req.session.username, prenom, function (result) {
+                userModel.updatePrenom(req.session.username, prenom, function (err, result) {
                     if (result) {
                         console.log("Prénom modifié");
                         resolve();
@@ -205,7 +206,7 @@ app.post('/changed_infos', function (req, res, next) {
     if (sexe != null && sexe != "") {
         promises.push(
             new Promise(function (resolve) {
-                userModel.updateSexe(req.session.username, sexe, function (result) {
+                userModel.updateSexe(req.session.username, sexe, function (err, result) {
                     if (result) {
                         console.log("Sexe modifié");
                         resolve();

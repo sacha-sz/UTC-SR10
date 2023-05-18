@@ -1,10 +1,16 @@
+const e = require('express');
 var db = require('./ConnexionBDD.js');
 
 module.exports = {
     readTypeOrganisation: function (callback) {
         db.query("SELECT * FROM Type_organisation ", function (err, results) {
-            if (err) throw err;
-            callback(results);
+            if (err) {
+                callback(err, null)
+            } else if (results.length == 0) {
+                callback(new TypeError("Aucun type d'organisation"), results);
+            } else {
+            callback(null,results);
+            }
         });
     },
 
