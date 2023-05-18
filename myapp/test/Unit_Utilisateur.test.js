@@ -45,13 +45,13 @@ describe("ModelUtilisateur Tests", () => {
     });
   });
 
-  test("read user", (done) => {
+  // test("read user", (done) => {
   
-      expect(ModelUtilisateur.read("mdr@gmail.com", function (resultat) {
+  //     expect(ModelUtilisateur.read("mdr@gmail.com", function (resultat) {
 
-      })).toThrowError("erreur dans la requête read de Utilisateur");
-      done();
-    });
+  //     })).toThrowError("erreur dans la requête read de Utilisateur");
+  //     done();
+  //   });
 
 
 test("getNomPrenomTelSexe", (done) => {

@@ -40,6 +40,35 @@ app.get('/inscription', function (req, res, next) {
 
 });
 
+app.get('/delete_entreprise', function (req, res, next) {
+    if (req.session.loggedin) {
+        res.render('entreprise_delete', {
+            title: 'Suppression',
+            username: req.session.username
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.post('/delete_entreprise', function (req, res, next) {
+    var siren = req.body.SIREN;
+    console.log(siren);
+    if (siren == null || siren == "") {
+        console.log("Données manquantes");
+        res.redirect('/entreprise');
+    }
+    entrepriseModel.delete(siren, function (result) {
+        if (result) {
+            console.log("Entreprise supprimée");
+            res.redirect('/');
+        } else {
+            res.redirect('/entreprise');
+        }
+    });
+});
+
+
 app.post('/inscripion', function (req, res, next) {
     console.log('Inscription d\'une entreprise');
     var name = req.body.name;
@@ -56,11 +85,11 @@ app.post('/inscripion', function (req, res, next) {
         console.log("Données manquantes");
         res.redirect('/entreprise/inscription');
     }
-    if (!TEST_LATITUDE(lat) || !TEST_LONGITUDE(long)) {
+    if (!entrepriseModel.TEST_LATITUDE(lat) || !entrepriseModel.TEST_LONGITUDE(long)) {
         console.log("Coordonnées GPS invalides");
         res.redirect('/entreprise/inscription');
     }
-    if (!isValidSIREN(siren)) {
+    if (!entrepriseModel.isValidSIREN(siren)) {
         console.log("SIREN Invalide");
         res.redirect('/entreprise');
     }
@@ -90,6 +119,8 @@ app.post('/inscripion', function (req, res, next) {
     });
 })
 
+
+
 app.post('/rejoindre_entreprise', function (req, res, next) {
     // TODO : Ajouter qq un a une entreprise,
     // Comment le rentrer dans la base de données
@@ -100,7 +131,7 @@ app.post('/rejoindre_entreprise', function (req, res, next) {
         console.log("Données manquantes");
         res.redirect('/entreprise');
     }
-    if (!isValidSIREN(siren)) {
+    if (!entrepriseModel.isValidSIREN(siren)) {
         console.log("SIREN Invalide");
         res.redirect('/entreprise');
     }
@@ -125,53 +156,5 @@ app.post('/rejoindre_entreprise', function (req, res, next) {
     });
 
 })
-
-
-// Test que la latitude et la longitude soient valides
-function TEST_LATITUDE(latitude) {
-    // Vérification de la latitude
-    // Format : 
-    // - Un nombre décimal compris entre -90 et 90
-    var correct_latitude_test = /^-?([1-8]?\d(\.\d+)?|90(\.0+)?)$/;
-    return correct_latitude_test.test(latitude);
-}
-
-function TEST_LONGITUDE(longitude) {
-    // Vérification de la longitude
-    // Format : 
-    // - Un nombre décimal compris entre -180 et 180
-    var correct_longitude_test = /^-?((1[0-7]|[1-9])?\d(\.\d+)?|180(\.0+)?)$/;
-    return correct_longitude_test.test(longitude);
-}
-function isValidSIREN(siren) {
-    var pattern = /^[0-9]{9}$/;
-    if (!pattern.test(siren)) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function VerifSIREN(siren) {
-    var somme = 0;
-    var tmp;
-    for (var cpt = 0; cpt < 8; cpt++) {
-        if ((cpt % 2) == 1) {
-            tmp = siren.charAt(cpt) * 2;
-            if (tmp > 9) {
-                tmp -= 9;
-            }
-        } else {
-            tmp = siren.charAt(cpt);
-        }
-        somme += parseInt(tmp);
-    }
-    somme += parseInt(siren.charAt(8));
-    if ((somme % 10) == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 module.exports = app;

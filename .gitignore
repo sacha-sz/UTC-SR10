@@ -71,3 +71,7 @@ fabric.properties
 
 # VS Code settings
 .vscode
+
+# Module node
+node_modules/
+

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/33</span>
+                <span class='fraction'>22/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>6/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/33</span>
+                <span class='fraction'>22/33</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -155,23 +155,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -213,25 +213,25 @@ app.get('/logout', <span class="fstat-no" title="function not covered" >fu</span
 &nbsp;
 &nbsp;
 /* POST users Connexion */
-app.post('/auth', <span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {
-<span class="cstat-no" title="statement not covered" >    console.log("Connexion d'un utilisateur");</span>
-    var email = <span class="cstat-no" title="statement not covered" >req.body.email;</span>
-    var password = <span class="cstat-no" title="statement not covered" >req.body.password;</span>
+app.post('/auth', function (req, res, next) {
+    console.log("Connexion d'un utilisateur");
+    var email = req.body.email;
+    var password = req.body.password;
 &nbsp;
     // Test que toutes les données soient correctement renseignées
-<span class="cstat-no" title="statement not covered" >    if (email == null || password == null || email == "" || password == "") {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (email == null || password == null || email == "" || password == "") {
 <span class="cstat-no" title="statement not covered" >        console.log("Données manquantes");</span>
 <span class="cstat-no" title="statement not covered" >        req.session.msg = "Données manquantes";</span>
 <span class="cstat-no" title="statement not covered" >        res.redirect('/login');</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    loginModel.areValid_login(email, password, <span class="fstat-no" title="function not covered" >fu</span>nction (result) {</span>
-<span class="cstat-no" title="statement not covered" >        if (result) {</span>
-<span class="cstat-no" title="statement not covered" >            console.log("Utilisateur connecté");</span>
-<span class="cstat-no" title="statement not covered" >            req.session.loggedin = true;</span>
-<span class="cstat-no" title="statement not covered" >            req.session.username = email;</span>
-<span class="cstat-no" title="statement not covered" >            res.redirect('/');</span>
-        } else {
+    loginModel.areValid_login(email, password, function (result) {
+        if (result) {
+            console.log("Utilisateur connecté");
+            req.session.loggedin = true;
+            req.session.username = email;
+            res.redirect('/');
+        } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >            console.log("Utilisateur non connecté");</span>
 <span class="cstat-no" title="statement not covered" >            req.session.msg = "Utilisateur non connecté";</span>
 <span class="cstat-no" title="statement not covered" >            res.redirect('/login');</span>
@@ -247,7 +247,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-16T20:50:44.478Z
+                at 2023-05-18T12:41:21.373Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
