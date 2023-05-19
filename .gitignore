@@ -73,5 +73,5 @@ fabric.properties
 .vscode
 
 # Module node
-node_modules/
+myapp/node_modules/
 
