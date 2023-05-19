@@ -15,7 +15,6 @@ beforeAll(() => {
 
   ModelUtilisateur.create(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (result) {
   });
-
 });
 
 afterAll((done) => {
@@ -27,6 +26,8 @@ afterAll((done) => {
   }
   DB.end(callback); // Ferme la connexion à la base de données après les tests
 });
+
+
 
 describe("ModelUtilisateur Tests", () => {
   test("read user", (done) => {
@@ -153,7 +154,7 @@ describe("ModelUtilisateur Tests", () => {
     });
   });
 
-  test("getNomPrenomTelSexe if erreur", () => {
+  test("read if erreur", () => {
     function testIf(err, resultat) {
       expect(() => {
         if (err) throw err; // lever l'erreur si err!=null
@@ -512,5 +513,4 @@ describe("ModelUtilisateur Tests", () => {
       done();
     });
   });
-  
 });

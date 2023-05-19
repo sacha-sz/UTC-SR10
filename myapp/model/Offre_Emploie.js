@@ -27,8 +27,11 @@ module.exports = {
         WHERE OE.etat='PUBLIEE' \
         ORDER BY OE.date_validite;";
         db.query(sql, function(err, results) {
-            if (err) throw err;
-            callback(results);
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(new TypeError("Aucun utilisateur"), results);
+            }
         });
     },
 

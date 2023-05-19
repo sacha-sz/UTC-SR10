@@ -35,7 +35,6 @@ module.exports = {
         sql += lng + ", ";
         sql += "\"" + sexe + "\", ";
         sql += "\"CANDIDAT\");";
-
         rows = db.query(sql, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
@@ -62,6 +61,7 @@ module.exports = {
 
     readall: function (callback) {
         db.query("SELECT * FROM Utilisateur", function (err, results) {
+            console.log(results);
             if (err) {
                 callback(err, null);
             } else {
@@ -82,8 +82,6 @@ module.exports = {
             }
         });
     },
-
-
 
 
     updateNom: function (email, new_nom, callback) {

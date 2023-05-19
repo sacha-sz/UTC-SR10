@@ -35,7 +35,7 @@ afterAll((done) => {
             SIREN: "111111119"
         })
         .expect(302) // Redirection attendue après la création de l'entreprise
-    DB.end(callback); // Ferme la connexion à la base de données après les tests
+    // DB.end(callback); // Ferme la connexion à la base de données après les tests
     done();
 });
 
