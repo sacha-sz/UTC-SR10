@@ -1,0 +1,32 @@
+var express = require('express');
+var router = express.Router();
+var userModel = require('../model/Utilisateur');
+var offerModel = require('../model/Offre_Emploie');
+var app = express();
+var path = require('path');
+
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'static')));
+
+
+router.get('/users', function (req, res, next) {
+    result = userModel.readall(function(err, result){
+    res.status(200).send(result);
+    // res.render('userList', { user : result });
+    });
+});
+
+// router.get('/users:id', function (req, res, next) {
+//     result = userModel.read(req.params.id, function(err, result){
+//     res.status(200).send(result);
+//     });
+// });
+
+router.get('/Offre_Emploie', function (req, res, next) {   
+    result = offerModel.readAllOffers(function(err, result){
+    res.status(200).send(result);
+    });
+});
+
+module.exports = router;

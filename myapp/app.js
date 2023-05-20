@@ -4,6 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var express = require('express');
 var session = require('express-session');
+var cors=require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,6 +12,7 @@ var offreRouter = require('./routes/job_offer');
 var loginRouter = require('./routes/login');
 var EntrepriseRouter = require('./routes/entreprise');
 var OffreRouter = require('./routes/offre');
+var apiRouter = require('./routes/api');
 
 // app.use(express.static('public'));
 
@@ -28,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use(session({
     secret: 'Je suis un secret',
@@ -42,6 +45,7 @@ app.use('/job_offer', offreRouter);
 app.use('/login', loginRouter);
 app.use('/entreprise', EntrepriseRouter);
 app.use('/offre', OffreRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
