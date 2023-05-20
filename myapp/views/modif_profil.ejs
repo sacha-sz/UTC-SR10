@@ -24,59 +24,90 @@
                         <%= message %>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                <% } %>
+                    <% } %>
 
-                <div class="card-body ">
-                    <form method="POST" action="/users/changed_infos">
+                        <div class="card-body ">
+                            <form method="POST" action="/users/changed_infos" name="form_modif_profil">
 
-                        <% if (typeof nom !=='undefined' ) { %>
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Nom :</label>
-                                    <input autofocus name="nom" type="text" class="form-control" id="name"
-                                        placeholder="Votre ancien nom : <%= nom %>">
+                                <% if (typeof nom !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nom :</label>
+                                        <input autofocus name="nom" type="text" class="form-control" id="name"
+                                            placeholder="Votre ancien nom : <%= nom %>">
+                                    </div>
+                                <% } %>
+
+                                <% if (typeof prenom !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="prenom" class="form-label">Prénom :</label>
+                                        <input autofocus name="prenom" type="text" class="form-control"
+                                            id="prenom" placeholder="Votre ancien prénom : <%= prenom %>">
+                                    </div>
+                                <% } %>
+
+                                <% if (typeof tel !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="tel" class="form-label">Téléphone :</label>
+                                        <input autofocus name="tel" type="text" class="form-control"
+                                            id="tel" placeholder="Votre ancien numéro : <%= tel %>">
+                                    </div>
+                                <% } %>
+
+                                <% if (typeof sexe !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="sexe" class="form-label">Sexe :</label>
+
+                                    <div class="form-group container_icon_right">
+                                        <select class="form-control" id="sexe" name="sexe">
+                                            <option selected disabled>Votre ancien sexe :
+                                                <%= sexe %>
+                                            </option>
+                                            <option>Homme</option>
+                                            <option>Femme</option>
+                                            <option>Autre</option>
+                                        </select>
+                                        <span class="material-symbols-outlined icon_right">
+                                            arrow_drop_down
+                                        </span>
+                                    </div>
                                 </div>
-                        <% } %>
-                        
-                        <% if (typeof prenom !=='undefined' ) { %>
-                            <div class="mb-3">
-                                <label for="prenom" class="form-label">Prénom :</label>
-                                <input autofocus name="prenom" type="text" class="form-control" id="prenom"
-                                    placeholder="Votre ancien prénom : <%= prenom %>">
-                            </div>
-                        <% } %>
-                        
-                        <% if (typeof tel !=='undefined' ) { %>
-                            <div class="mb-3">
-                                <label for="tel" class="form-label">Téléphone :</label>
-                                <input autofocus name="tel" type="text" class="form-control" id="tel"
-                                    placeholder="Votre ancien numéro : <%= tel %>">
-                            </div>
-                        <% } %>
-                        
-                        <% if (typeof sexe !=='undefined' ) { %>
-                            <div class="mb-3">
-                                <label for="sexe" class="form-label">Sexe :</label>
-                            
-                                <div class="form-group container_icon_right">
-                                    <select class="form-control" id="sexe" name="sexe">
-                                        <option selected disabled>Votre ancien sexe : <%= sexe %></option>
-                                        <option>Homme</option>
-                                        <option>Femme</option>
-                                        <option>Autre</option>
-                                    </select>
-                                    <span class="material-symbols-outlined icon_right">
-                                        arrow_drop_down
-                                    </span>
-                                </div>
-                            </div>
-                        <% } %>
+                                <% } %>
 
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Appliquer</button>
+                                <div class="row justify-content-between mt-4 text-center">
+                                    <button type="submit" value="Appliquer"
+                                        class="btn btn-primary btn-block col-4">Appliquer</button></form>
+                                    
+
+                                    <div class="dropend col-4 ">
+                                        <button type="button"
+                                            class="btn btn-danger btn-block btn-sm dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-offset="10,20"
+                                            aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Supprimer compte
+                                        </button>
+                                        <form class="dropdown-menu p-4" method="POST" action="/users/delete_user" name="form_delete_user">
+                                            <div class="mb-3 text-center">
+                                                <p>Toute suppression de votre compte est irréversible.</p>
+                                            </div>
+                                            <hr class="border border-danger border-2 opacity-50">
+                                            <div class="mb-3">
+                                                <label
+                                                    for="confirmation"
+                                                    class="form-label text-justify">Veuillez écrire : CONFIRMER</label>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    id="confirmation"
+                                                    name="confirmation"
+                                                    placeholder="...">
+                                            </div>
+                                            <button type="submit" value="Supprimer"
+                                                class="btn btn-primary btn-danger"> Suppression</button>
+                                        </form>
+                                    </div>
+                                </div>
                         </div>
-                        
-                    </form>
-                </div>
             </div>
         </div>
 </body>

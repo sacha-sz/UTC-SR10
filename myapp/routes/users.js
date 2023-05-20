@@ -1,5 +1,4 @@
 var express = require('express');
-var router = express.Router();
 var userModel = require('../model/Utilisateur');
 var app = express();
 var path = require('path');
@@ -130,8 +129,8 @@ app.post('/inscription', function (req, res, next) {
     
     
     // utiliser le model pour enregistrer les données récupérées dans la BD
-    result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (result) {
-        if (result) {
+    result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (err, result) {
+        if (result == true) {
             console.log("Utilisateur créé");
             res.redirect('/'); 
         } else {
@@ -226,6 +225,30 @@ app.post('/changed_infos', function (req, res, next) {
             res.redirect('/');
         }
     });
+});
+
+
+app.post('/delete_user', function (req, res, next) {
+    const confirmation = req.body.confirmation;
+    confirmation = confirmation.toUpperCase();
+
+    if (confirmation == "CONFIRMER") {
+        console.log("Suppression de l'utilisateur");
+        res.redirect('/');
+        // userModel.delete(req.session.username, function (err, result) {
+        //     if (result) {
+        //         console.log("Utilisateur supprimé");
+        //         req.session.destroy();
+        //         res.redirect('/');
+        //     } else {
+        //         console.log("Utilisateur non supprimé");
+        //         res.redirect('/users/delete');
+        //     }
+        // });
+    } else {
+        console.log("Utilisateur non supprimé");
+        res.redirect('/users/change_profile');
+    }
 });
 
 

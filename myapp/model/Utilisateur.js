@@ -86,7 +86,7 @@ module.exports = {
             } else {
                 if (results.affectedRows > 0) {
                     console.log("Utilisateur ajouté avec succès.");
-                    callback(err, results);
+                    callback(err, true);
                 } else {
                     console.log("Erreur : Aucun utilisateur ajouté.");
                     callback(err, false);
