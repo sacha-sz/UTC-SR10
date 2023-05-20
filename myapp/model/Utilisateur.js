@@ -95,7 +95,6 @@ module.exports = {
         });
     },
 
-<<<<<<< HEAD
     read: function (email, callback) {
         query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
         db.query(query, function (err, results) {
@@ -134,8 +133,6 @@ module.exports = {
             }
         });
     },
-=======
->>>>>>> e1f197915350d1b3b4f44f321a07d150864ccc55
 
     /// UPDATE
 
