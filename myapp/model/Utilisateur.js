@@ -17,6 +17,50 @@ var db = require('./ConnexionBDD.js');
 
 module.exports = {
 
+    /// SELECT
+
+    read: function (email, callback) {
+        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        db.query(query, function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else if (results.length == 0) {
+                callback(new TypeError("Aucun utilisateur avec cet email"), results);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+    readall: function (callback) {
+        db.query("SELECT * FROM Utilisateur", function (err, results) {
+            console.log(results);
+            if (err) {
+                callback(err, null);
+            } else if (results.length == 0) {
+                callback(new TypeError("Aucun utilisateur"), results);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+    getNomPrenomTelSexe: function (email, callback) {
+        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        db.query(query, function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else if (results.length == 0) {
+                callback(new TypeError("Aucun utilisateur avec cet email"), results);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+
+    /// INSERT
+
     create: function (email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, callback) {
         var ladate = new Date();
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
@@ -40,49 +84,19 @@ module.exports = {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                console.log("Utilisateur créé avec succès.");
-                callback(null, true);
+                if (results.affectedRows > 0) {
+                    console.log("Utilisateur ajouté avec succès.");
+                    callback(err, results);
+                } else {
+                    console.log("Erreur : Aucun utilisateur ajouté.");
+                    callback(err, false);
+                }
             }
         });
     },
 
-    read: function (email, callback) {
-        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
-        db.query(query, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
 
-    readall: function (callback) {
-        db.query("SELECT * FROM Utilisateur", function (err, results) {
-            console.log(results);
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(new TypeError("Aucun utilisateur"), results);
-            }
-        });
-    },
-
-    getNomPrenomTelSexe: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
-        db.query(query, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
-
+    /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
         sql = "UPDATE Utilisateur SET nom = \"" + new_nom + "\" WHERE email = \"" + email + "\";";
@@ -124,18 +138,28 @@ module.exports = {
         )
     },
 
+
+    /// DELETE
+
     delete: function (email, callback) {
         db.query("DELETE FROM Utilisateur WHERE email = " + "\"" + email + "\"", function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
+                if (results.affectedRows > 0) {
+                    // Utilisateur supprimé avec succès
+                    callback(null, "Utilisateur supprimé avec succès");
+                } else {
+                    // Aucun utilisateur avec cet email
+                    callback(new TypeError("Aucun utilisateur avec cet email"), null);
+                }
             }
         });
     },
-    /// Liste des fonctions utilisées dans le code ci-dessus
 
-    // Test que le mail soit valide
+    
+    /// TESTS
+    
     TEST_MAIL: function (email_a_tester, callback) {
         // Vérification de l'adresse e-mail 
         // Format :
@@ -149,14 +173,12 @@ module.exports = {
         callback(correct_email_test.test(email_a_tester));
     },
 
-    // Test que le mot de passe soit valide
     TEST_MDP: function (mdp1, callback) {
         // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
         var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
         callback(correct_password_test.test(mdp1));
     },
 
-    // Test que le numéro de téléphone soit valide
     TEST_TEL: function (num_tel, callback) {
         // Vérification du numéro de téléphone 
         // Format : 
@@ -167,7 +189,6 @@ module.exports = {
         callback(correct_tel_test.test(num_tel));
     },
 
-    // Test que la latitude et la longitude soient valides
     TEST_LATITUDE: function (latitude, callback) {
         // Vérification de la latitude
         // Format : 
@@ -193,8 +214,6 @@ module.exports = {
         });
     },
 
-
-    // Test que la date de naissance soit valide
     TEST_DATE_NAISSANCE: function (date_naissance, callback) {
         // Vérification du format de la date de naissance
         var correct_date_test = /^(\d{4})-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/;

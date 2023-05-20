@@ -177,10 +177,10 @@ app.post('/changed_infos', function (req, res, next) {
                 userModel.updateNom(req.session.username, nom, function (err, result) {
                     if (result) {
                         console.log("Nom modifié");
-                        resolve();
+                        resolve(true);
                     } else {
                         console.log("Nom non modifié");
-                        resolve();
+                        resolve(false);
                     }
                 });
             })
@@ -193,10 +193,10 @@ app.post('/changed_infos', function (req, res, next) {
                 userModel.updatePrenom(req.session.username, prenom, function (err, result) {
                     if (result) {
                         console.log("Prénom modifié");
-                        resolve();
+                        resolve(true);
                     } else {
                         console.log("Prénom non modifié");
-                        resolve();
+                        resolve(false);
                     }
                 });
             })
@@ -209,25 +209,23 @@ app.post('/changed_infos', function (req, res, next) {
                 userModel.updateSexe(req.session.username, sexe, function (err, result) {
                     if (result) {
                         console.log("Sexe modifié");
-                        resolve();
+                        resolve(true);
                     } else {
                         console.log("Sexe non modifié");
-                        resolve();
+                        resolve(false);
                     }
                 });
             })
         );
     }
 
-    Promise.all(promises)
-        .then(function () {
-            res.redirect('/');
-        })
-        .catch(function (error) {
-            // Handle any errors that occurred during the asynchronous operations
-            console.error(error);
+    Promise.all(promises).then(function (values) {
+        if (values.includes(false)) {
             res.redirect('/users/change_profile');
-        });
+        } else {
+            res.redirect('/');
+        }
+    });
 });
 
 
