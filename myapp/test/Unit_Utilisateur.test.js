@@ -134,6 +134,33 @@ describe("ModelUtilisateur Tests", () => {
     DB.query.mockRestore();
   });
 
+  test("readall with empty table", () => {
+    // Définir un tableau vide pour simuler une table vide
+    const emptyTable = [];
+  
+    // Définir une fonction de rappel de test
+    function testCallback(err, results) {
+      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
+      expect(err).toBeInstanceOf(TypeError); // Vérifier si err est une instance de TypeError
+      expect(err.message).toBe("Aucun utilisateur"); // Vérifier le message d'erreur
+      expect(results).toEqual(emptyTable); // Vérifier si results correspond au tableau vide
+    }
+  
+    // Mock de la fonction db.query pour renvoyer un tableau vide
+    jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
+      callback(null, emptyTable);
+    });
+  
+    // Appeler la fonction readall avec la fonction de rappel de test
+    ModelUtilisateur.readall(testCallback);
+  
+    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+    expect(DB.query).toHaveBeenCalledWith('SELECT * FROM Utilisateur', expect.any(Function));
+  
+    // Restaurer la fonction DB.query originale
+    DB.query.mockRestore();
+  });
+
   test("getNomPrenomTelSexe if erreur", () => {
     function testIf(err, resultat) {
       expect(() => {
@@ -229,6 +256,40 @@ describe("ModelUtilisateur Tests", () => {
       expect(resultat[0].sexe).toBe("HOMME");
       done();
     });
+  });
+
+  test("create user with no user added error", () => {
+    // Définir les valeurs des paramètres pour la création de l'utilisateur
+    const email = "test@example.com";
+    const password = "password123";
+    const nom = "Doe";
+    const prenom = "John";
+    const tel = "0123456789";
+    const sexe = "M";
+    const ddn = "1990-01-01";
+    const latitude = 0.0;
+    const longitude = 0.0;
+  
+    // Définir une fonction de rappel de test
+    function testCallback(err, success) {
+      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
+      expect(err).toBeNull(); // Vérifier si err est null
+      expect(success).toBe(false); // Vérifier si success est false
+    }
+  
+    // Mock de la fonction db.query pour renvoyer les résultats de la création
+    jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
+      callback(null, { affectedRows: 0 });
+    });
+  
+    // Appeler la fonction create avec les paramètres et la fonction de rappel de test
+    ModelUtilisateur.create(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, testCallback);
+  
+    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+    expect(DB.query).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO Utilisateur"), expect.any(Function));
+  
+    // Restaurer la fonction DB.query originale
+    DB.query.mockRestore();
   });
 
   test("DELETE_USER", (done) => {
