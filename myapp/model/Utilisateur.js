@@ -61,11 +61,13 @@ module.exports = {
 
     readall: function (callback) {
         db.query("SELECT * FROM Utilisateur", function (err, results) {
-            console.log(results);
+            // console.log(results);
             if (err) {
                 callback(err, null);
-            } else {
+            } else if (results.length == 0) {
                 callback(new TypeError("Aucun utilisateur"), results);
+            } else {
+                callback(null, results);
             }
         });
     },

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <body>
@@ -29,5 +29,59 @@
 </body>
 
 <%- include('./partials/footer'); %>
+
+</html> -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Liste des utilisateurs</title>
+</head>
+
+<body>
+    <h1>Liste des utilisateurs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        // Effectuer la requête AJAX à l'API REST
+        fetch('http://localhost:3000/api/users')
+            .then((response) => response.json())
+            .then((data) => {
+                const userTableBody = document.getElementById('userTableBody');
+
+                // Parcourir les données récupérées et les ajouter au tableau
+                data.forEach((user) => {
+                    const row = document.createElement('tr');
+                    const nomCell = document.createElement('td');
+                    nomCell.textContent = user.nom;
+                    row.appendChild(nomCell);
+
+                    const prenomCell = document.createElement('td');
+                    prenomCell.textContent = user.prenom;
+                    row.appendChild(prenomCell);
+
+                    const emailCell = document.createElement('td');
+                    emailCell.textContent = user.email;
+                    row.appendChild(emailCell);
+
+                    userTableBody.appendChild(row);
+                });
+            })
+            .catch((error) => {
+                console.error('Une erreur s\'est produite lors de la récupération des utilisateurs:', error);
+            });
+    </script>
+</body>
 
 </html>
