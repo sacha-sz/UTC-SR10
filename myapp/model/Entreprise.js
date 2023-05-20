@@ -45,13 +45,13 @@ module.exports = {
         sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
         db.query(sql, function (err, results) {
             if (err) {
-                callback(err, null);
+                callback(err, false);
             } else {
                 if (results.affectedRows > 0) {
                     console.log("Type d'organisation ajouté avec succès");
                     callback(null, true);
                 } else {
-                    callback(new TypeError("Erreur lors de l'ajout du type d'organisation"), null);
+                    callback(new TypeError("Erreur lors de l'ajout du type d'organisation"), false);
                 }
             }
         });
@@ -60,17 +60,22 @@ module.exports = {
     createTypeOrganisation: function (type_organisation, description, callback) {
         sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
         db.query(sql, function (err, results) {
-            if (err) throw err;
-            callback(results);
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
+            }
         });
     },
 
     create: function (siren, nom, siege_social_lat, siege_social_long, type_organisation, callback) {
         sql = "INSERT INTO Organisation VALUES (" + siren + ", \"" + nom + "\", " + siege_social_lat + ", " + siege_social_long + ", \"" + type_organisation + "\" )"
         db.query(sql, function (err, results) {
-            if (err) throw err;
-            // TODO : Add comment to know if the entreprise is created or not
-            callback(results);
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
+            }
         });
     },
 
@@ -97,26 +102,27 @@ module.exports = {
             } else {
                 if (results.affectedRows > 0) {
                     console.log("Type d'organisation supprimé avec succès");
-                    callback(null, "Type d'organisation supprimé");
+                    callback(null, true);
                 } else {
                     console.log("Aucun type d'organisation avec ce nom");
-                    callback(new TypeError("Aucun type d'organisation avec ce nom"), null);
+                    callback(new TypeError("Aucun type d'organisation avec ce nom"), false);
                 }
             }
         });
     },
 
     delete: function (siren, callback) {
-        db.query("DELETE FROM Organisation WHERE siren = \"" + siren + "\"", function (err, results) {
+        const sql_query = "DELETE FROM Organisation WHERE siren = \"" + siren + "\"";
+        db.query(sql_query, function (err, results) {
             if (err) {
-                callback(err, null);
+                callback(err, false);
             } else {
                 if (results.affectedRows > 0) {
                     console.log("Organisation supprimée avec succès");
-                    callback(null, "Organisation supprimée avec succès");
+                    callback(null, true);
                 } else {
                     console.log("Aucune organisation avec ce SIREN");
-                    callback(new Error("Aucune organisation avec ce SIREN"), null);
+                    callback(new Error("Aucune organisation avec ce SIREN"), false);
                 }
             }
         });

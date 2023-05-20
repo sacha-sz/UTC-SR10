@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/70</span>
+                <span class='fraction'>0/72</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/24</span>
+                <span class='fraction'>0/23</span>
             </div>
         
             
@@ -294,9 +294,7 @@
 <a name='L229'></a><a href='#L229'>229</a>
 <a name='L230'></a><a href='#L230'>230</a>
 <a name='L231'></a><a href='#L231'>231</a>
-<a name='L232'></a><a href='#L232'>232</a>
-<a name='L233'></a><a href='#L233'>233</a>
-<a name='L234'></a><a href='#L234'>234</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L232'></a><a href='#L232'>232</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -518,13 +516,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -708,10 +704,10 @@ app.post('/changed_infos', <span class="fstat-no" title="function not covered" >
 <span class="cstat-no" title="statement not covered" >                userModel.updateNom(req.session.username, nom, <span class="fstat-no" title="function not covered" >fu</span>nction (err, result) {</span>
 <span class="cstat-no" title="statement not covered" >                    if (result) {</span>
 <span class="cstat-no" title="statement not covered" >                        console.log("Nom modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(true);</span>
                     } else {
 <span class="cstat-no" title="statement not covered" >                        console.log("Nom non modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(false);</span>
                     }
                 });
             })
@@ -724,10 +720,10 @@ app.post('/changed_infos', <span class="fstat-no" title="function not covered" >
 <span class="cstat-no" title="statement not covered" >                userModel.updatePrenom(req.session.username, prenom, <span class="fstat-no" title="function not covered" >fu</span>nction (err, result) {</span>
 <span class="cstat-no" title="statement not covered" >                    if (result) {</span>
 <span class="cstat-no" title="statement not covered" >                        console.log("Prénom modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(true);</span>
                     } else {
 <span class="cstat-no" title="statement not covered" >                        console.log("Prénom non modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(false);</span>
                     }
                 });
             })
@@ -740,25 +736,23 @@ app.post('/changed_infos', <span class="fstat-no" title="function not covered" >
 <span class="cstat-no" title="statement not covered" >                userModel.updateSexe(req.session.username, sexe, <span class="fstat-no" title="function not covered" >fu</span>nction (err, result) {</span>
 <span class="cstat-no" title="statement not covered" >                    if (result) {</span>
 <span class="cstat-no" title="statement not covered" >                        console.log("Sexe modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(true);</span>
                     } else {
 <span class="cstat-no" title="statement not covered" >                        console.log("Sexe non modifié");</span>
-<span class="cstat-no" title="statement not covered" >                        resolve();</span>
+<span class="cstat-no" title="statement not covered" >                        resolve(false);</span>
                     }
                 });
             })
         );
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    Promise.all(promises)</span>
-        .then(<span class="fstat-no" title="function not covered" >fu</span>nction () {
-<span class="cstat-no" title="statement not covered" >            res.redirect('/');</span>
-        })
-        .catch(<span class="fstat-no" title="function not covered" >fu</span>nction (error) {
-            // Handle any errors that occurred during the asynchronous operations
-<span class="cstat-no" title="statement not covered" >            console.error(error);</span>
+<span class="cstat-no" title="statement not covered" >    Promise.all(promises).then(<span class="fstat-no" title="function not covered" >fu</span>nction (values) {</span>
+<span class="cstat-no" title="statement not covered" >        if (values.includes(false)) {</span>
 <span class="cstat-no" title="statement not covered" >            res.redirect('/users/change_profile');</span>
-        });
+        } else {
+<span class="cstat-no" title="statement not covered" >            res.redirect('/');</span>
+        }
+    });
 });
 &nbsp;
 &nbsp;
@@ -769,11 +763,7 @@ module.exports = app;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
-                at 2023-05-20T08:52:16.146Z
-=======
-                at 2023-05-19T12:51:54.729Z
->>>>>>> 8584b4dc053d7e22cf9e044a76121b33aa5dbf89
+                at 2023-05-20T21:29:49.136Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

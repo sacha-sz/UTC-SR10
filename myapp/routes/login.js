@@ -3,6 +3,7 @@ var router = express.Router();
 var loginModel = require('../model/Login');
 var app = express();
 var path = require('path');
+const { promises } = require('dns');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
