@@ -227,15 +227,14 @@ app.post('/changed_infos', function (req, res, next) {
     });
 });
 
-
 app.post('/delete_user', function (req, res, next) {
     let confirmation = req.body.confirmation;
     confirmation = confirmation.toUpperCase();
     console.log(confirmation);
     console.log("dans delete_user POST");
+    
     if (confirmation == "CONFIRMER") {
         console.log("Suppression de l'utilisateur");
-        res.redirect('/');
         userModel.delete(req.session.username, function (err, result) {
             if (result) {
                 console.log("Utilisateur supprimé");
@@ -251,6 +250,7 @@ app.post('/delete_user', function (req, res, next) {
         res.redirect('/users/change_profile');
     }
 });
+
 
 
 module.exports = app;
