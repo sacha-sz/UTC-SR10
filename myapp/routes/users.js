@@ -90,7 +90,10 @@ app.post('/inscription', function (req, res, next) {
                 console.log("Mail au mauvais format");
                 req.session.msg = "Mail au mauvais format";
                 res.redirect('/users/inscription');
-            } else if(password === password2) {
+            } else {
+                if(password != password2){
+                    console.error("Les mots de passe ne correspondent pas");
+                } else {
                 // Test que le mot de passe soit valide
                 userModel.TEST_MDP(password, function (result) {
                     if (!result) {
@@ -134,7 +137,9 @@ app.post('/inscription', function (req, res, next) {
                             }
                         });
                     }
+                
                 });
+            }
             }
         });
     }
