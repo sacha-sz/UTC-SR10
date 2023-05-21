@@ -229,22 +229,23 @@ app.post('/changed_infos', function (req, res, next) {
 
 
 app.post('/delete_user', function (req, res, next) {
-    const confirmation = req.body.confirmation;
+    let confirmation = req.body.confirmation;
     confirmation = confirmation.toUpperCase();
-
+    console.log(confirmation);
+    console.log("dans delete_user POST");
     if (confirmation == "CONFIRMER") {
         console.log("Suppression de l'utilisateur");
         res.redirect('/');
-        // userModel.delete(req.session.username, function (err, result) {
-        //     if (result) {
-        //         console.log("Utilisateur supprimé");
-        //         req.session.destroy();
-        //         res.redirect('/');
-        //     } else {
-        //         console.log("Utilisateur non supprimé");
-        //         res.redirect('/users/delete');
-        //     }
-        // });
+        userModel.delete(req.session.username, function (err, result) {
+            if (result) {
+                console.log("Utilisateur supprimé");
+                req.session.destroy();
+                res.redirect('/');
+            } else {
+                console.log("Utilisateur non supprimé");
+                res.redirect('/users/change_profile');
+            }
+        });
     } else {
         console.log("Utilisateur non supprimé");
         res.redirect('/users/change_profile');
