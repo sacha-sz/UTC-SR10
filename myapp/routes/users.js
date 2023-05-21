@@ -68,6 +68,7 @@ app.post('/inscription', function (req, res, next) {
     Exemple :*/
     const mail = req.body.email;
     const password = req.body.password;
+    const password2 = req.body.password2;
     const nom = req.body.nom;
     const prenom = req.body.prenom;
     const tel = req.body.tel;
@@ -77,8 +78,8 @@ app.post('/inscription', function (req, res, next) {
     const longitude = req.body.long;
 
     // Test que toutes les données soient correctement renseignées
-    if (mail == null || password == null || nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
-        mail == "" || password == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
+    if (mail == null || password == null || password2 == null ||nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
+        mail == "" || password == "" || password2 == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
         console.log("Données manquantes");
         req.session.msg = "Données manquantes";
         res.redirect('/users/inscription');
@@ -89,7 +90,7 @@ app.post('/inscription', function (req, res, next) {
                 console.log("Mail au mauvais format");
                 req.session.msg = "Mail au mauvais format";
                 res.redirect('/users/inscription');
-            } else {
+            } else if(password === password2) {
                 // Test que le mot de passe soit valide
                 userModel.TEST_MDP(password, function (result) {
                     if (!result) {
