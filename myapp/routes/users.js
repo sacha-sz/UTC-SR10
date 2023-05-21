@@ -93,6 +93,7 @@ app.post('/inscription', function (req, res, next) {
             } else {
                 if(password != password2){
                     console.error("Les mots de passe ne correspondent pas");
+                    res.redirect('/users/inscription');
                 } else {
                 // Test que le mot de passe soit valide
                 userModel.TEST_MDP(password, function (result) {
