@@ -30,7 +30,7 @@
                         <a href="/login"><button class="btn btn-primary">Rejoignez-nous</button></a>
                     </li>
                 <% } %>
-                <% if (typeof username != 'undefined') { %>
+                <% if (typeof username != 'undefined' && type_user != 'undefined') { %>
                     <li class="nav-item">
                         <div class="dropdown show">
                             <button class="btn btn-outline-dark dropdown-toggle blanc" type="button" id="dropdownMenuLink"
@@ -46,15 +46,29 @@
                             <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header">
-                                    <h6><%= username %></h6>
+                                    <h6 style="color: #9d8189;"><%= username %></h6>
                                 </div>
-                                <!-- TODO : lien vers la page de profil -->
+                                <% if (type_user != 'undefined') { %>
+                                    <a class="dropdown-item" href="/users/my_profile">Mon profil <%= type_user %></a>
+                                    <a class="dropdown-item" href="/users/change_profile">Modifier profil</a>
+
+                                    <% if (type_user == 'RECRUTEUR') { %>
+                                        <a class="dropdown-item" href="/offre/ajout_offre">Créer une offre</a>
+                                        <a class="dropdown-item" href="">Mes offres</a>
+                                        <a class="dropdown-item" href="">Mon entreprise</a>
+                                        <a class="dropdown-item" href="" style="color: #60d394 ;">Devenir administrateur</a>
+                                    <% } else if (type_user == 'ADMINISTRATEUR') { %>
+                                        <a class="dropdown-item" href="">Gestion des utilisateurs</a>
+                                        <a class="dropdown-item" href="">Gestion des entreprises</a>
+                                    <% } else if (type_user == 'CANDIDAT') { %>
+                                        <a class="dropdown-item" href="">Mes documents</a>
+                                        <a class="dropdown-item" href="">Mes candidatures</a>
+                                        <a class="dropdown-item" href="/entreprise/" style="color: #60d394 ;">Devenir recruteur</a>
+                                    <% } %>
+                                <% } %>
 
                                 <!-- TODO : lien vers la page de ses candidatures -->
-                                <a class="dropdown-item">Gérer les candidatures</a>
-                                <!-- TODO : lien vers la page de ses paramètres -->
-                                <a class="dropdown-item" href="/users/change_profile">Modifier profil</a>
-                                <a class="dropdown-item" href="/login/logout">Déconnexion</a>
+                                <a class="dropdown-item" href="/login/logout" style="color: #ee6055;">Déconnexion</a>
                             </div>
                         </div>
                     </li>

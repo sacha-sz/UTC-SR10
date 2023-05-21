@@ -31,7 +31,7 @@
 
                                 <% if (typeof nom !=='undefined' ) { %>
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Nom :</label>
+                                        <label for="name" class="form-label"><strong>Nom :</strong></label>
                                         <input autofocus name="nom" type="text" class="form-control" id="name"
                                             placeholder="Votre ancien nom : <%= nom %>">
                                     </div>
@@ -39,7 +39,7 @@
 
                                 <% if (typeof prenom !=='undefined' ) { %>
                                     <div class="mb-3">
-                                        <label for="prenom" class="form-label">Prénom :</label>
+                                        <label for="prenom" class="form-label"><strong>Prénom :</strong></label>
                                         <input autofocus name="prenom" type="text" class="form-control"
                                             id="prenom" placeholder="Votre ancien prénom : <%= prenom %>">
                                     </div>
@@ -47,7 +47,7 @@
 
                                 <% if (typeof tel !=='undefined' ) { %>
                                     <div class="mb-3">
-                                        <label for="tel" class="form-label">Téléphone :</label>
+                                        <label for="tel" class="form-label"><strong>Téléphone : </strong></label>
                                         <input autofocus name="tel" type="text" class="form-control"
                                             id="tel" placeholder="Votre ancien numéro : <%= tel %>">
                                     </div>
@@ -55,7 +55,7 @@
 
                                 <% if (typeof sexe !=='undefined' ) { %>
                                     <div class="mb-3">
-                                        <label for="sexe" class="form-label">Sexe :</label>
+                                        <label for="sexe" class="form-label"><strong>Sexe :</strong></label>
 
                                     <div class="form-group container_icon_right">
                                         <select class="form-control" id="sexe" name="sexe">
@@ -72,10 +72,11 @@
                                     </div>
                                 </div>
                                 <% } %>
+                                <br>
 
-                                <div class="row justify-content-between mt-4 text-center">
+                                <div class="row justify-content-between text-center">
                                     <button type="submit" value="Appliquer"
-                                        class="btn btn-primary btn-block col-4">Appliquer</button></form>
+                                        class="btn btn-success btn-sm btn-block col-4">Appliquer</button></form>
                                     
 
                                     <div class="dropend col-4 ">

@@ -31,7 +31,8 @@ router.get('/offer', function(req, res, next) {
         res.render('offre', {
             title: 'JobHub',
             offre: result,
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         })
     });
     } else {

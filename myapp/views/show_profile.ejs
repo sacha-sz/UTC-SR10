@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+        <link rel="stylesheet" href="/CSS/connexion.css">
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+        <div class="centre-vertical">
+            <div class="card mx-auto b-2 my-2">
+                <div class="card-header text-center">
+                    <h4>Votre profil</h4>
+                </div>
+                <div class="card-body ">
+                    <% if (typeof nom !=='undefined' ) { %>
+                        <p class="card-text text-start">
+                            <strong>Nom :</strong>
+                            <%= nom %>
+                        </p>
+                    <% } %>
+
+                    <% if (typeof prenom !=='undefined' ) { %>
+                        <p class="card-text text-start">
+                            <strong>Prénom :</strong>
+                            <%= prenom %>
+                        </p>
+                    <% } %>
+
+                    <% if (typeof tel !=='undefined' ) { %>
+                        <p class="card-text text-start">
+                            <strong>Téléphone :</strong>
+                            <%= tel %>
+                        </p>
+                    <% } %>
+
+                    <% if (typeof sexe !=='undefined' ) { %>
+                        <p class="card-text text-start">
+                            <strong>Sexe :</strong>
+                            <%= sexe %>
+                        </p>
+                    <% } %>
+
+                    <div class="text-center">
+                        <a href="/users/change_profile" class="btn btn-success">Modifier ou Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('./partials/footer'); %>
+
+</html>

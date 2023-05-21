@@ -14,7 +14,8 @@ app.get('/', function (req, res, next) {
     if (req.session.loggedin) {
         res.render('index', { 
             title: 'Accueil',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.render('connexion', { 
@@ -43,11 +44,12 @@ app.post('/auth', function (req, res, next) {
         res.redirect('/login');
     }
 
-    loginModel.areValid_login(email, password, function (result) {
-        if (result) {
+    loginModel.areValid_login(email, password, function (result, type) {
+        if (result == true && type != null) {
             console.log("Utilisateur connecté");
             req.session.loggedin = true;
             req.session.username = email;
+            req.session.type_user = type;
             res.redirect('/');
         } else {
             console.log("Utilisateur non connecté");

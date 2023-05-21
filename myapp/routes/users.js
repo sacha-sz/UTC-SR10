@@ -48,6 +48,7 @@ app.get('/change_profile', function (req, res, next) {
             res.render('modif_profil', {
                 title: "CP",
                 username: req.session.username,
+                type_user: req.session.type_user,
                 nom: son_nom,
                 prenom: son_prenom,
                 tel: son_tel,
@@ -256,6 +257,34 @@ app.post('/delete_user', function (req, res, next) {
     }
 });
 
+
+app.get('/my_profile', function (req, res, next) {
+    if (req.session.loggedin) {
+        userModel.getInfos(req.session.username, function (err, result) {
+            if (result != null) {
+                console.log("Affichage du profil de l'utilisateur");
+                res.render('show_profile', { 
+                    title: 'Mon profil', 
+                    username: req.session.username, 
+                    nom: result[0].nom, 
+                    prenom: result[0].prenom, 
+                    tel: result[0].telephone, 
+                    sexe: result[0].sexe, 
+                    ddn: result[0].date_naissance, 
+                    lat: result[0].adresse_utilisateur_lat, 
+                    long: result[0].adresse_utilisateur_long,
+                    type_user: req.session.type_user
+                });
+            } else {
+                console.log("Utilisateur non trouvé");
+                res.redirect('/');
+            }
+        });
+    } else {
+        console.log("Utilisateur non connecté");
+        res.redirect('/');
+    }
+});
 
 
 module.exports = app;

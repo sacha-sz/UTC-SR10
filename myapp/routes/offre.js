@@ -13,7 +13,8 @@ router.get('/ajout_offre', function(req, res, next) {
     if (req.session.loggedin) {
         res.render('ajout_offre', { 
             title: 'Ajout d\'une offre',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.redirect('/login');

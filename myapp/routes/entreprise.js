@@ -12,7 +12,8 @@ app.get('/', function (req, res, next) {
     if (req.session.loggedin) {
         res.render('entreprise_rejoindre', {
             title: 'Connexion',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.redirect('/login');
@@ -29,7 +30,8 @@ app.get('/inscription', function (req, res, next) {
                 res.render('entreprise_inscription', {
                     title: 'Inscription',
                     type_orga: result,
-                    username: req.session.username
+                    username: req.session.username,
+                    type_user: req.session.type_user
                 });
             }
         } else {
@@ -43,7 +45,8 @@ app.get('/delete_entreprise', function (req, res, next) {
     if (req.session.loggedin) {
         res.render('entreprise_delete', {
             title: 'Suppression',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.redirect('/login');

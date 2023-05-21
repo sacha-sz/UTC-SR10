@@ -6,7 +6,8 @@ router.get('/', function (req, res, next) {
 	if (req.session.loggedin) {
 		res.render('index', { 
 			title: 'Accueil',
-			username: req.session.username
+			username: req.session.username,
+			type_user: req.session.type_user
 		});
 	} else {
 		res.render('index', { 
@@ -33,7 +34,8 @@ router.get('/a_propos', function (req, res, next) {
 	if (req.session.loggedin) {
 		res.render('a_propos', { 
 			title: 'A propos',
-			username: req.session.username
+			username: req.session.username,
+			type_user: req.session.type_user
 		});
 	} else {
 		res.render('a_propos', {
