@@ -18,7 +18,7 @@ app.get('/gestion_utilisateur', function (req, res, next) {
                 res.status(500).send("Une erreur s'est produite");
             } else {
                 res.render('AdminGestionUsers', {
-                    title: 'Ajout d\'une offre',
+                    title: 'Liste des utilisateurs',
                     username: req.session.username,
                     type_user: req.session.type_user,
                     users: result

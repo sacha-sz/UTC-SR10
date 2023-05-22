@@ -42,7 +42,7 @@
                                     <div class="d-flex">
                                         <form action="/admin/passer_admin" method="POST">
                                             <input type="hidden" name="email" value="<%= user.email %>">
-                                            <button type="submit" class="btn btn-primary">Passer Administrateur</button>
+                                            <button type="submit" class="btn btn-danger">Passer Administrateur</button>
                                         </form>
                                     </div>
                                 </div>
@@ -51,11 +51,11 @@
                                         <div class="d-flex">
                                             <form action="/admin/passer_recruteur" method="POST">
                                                 <input type="hidden" name="email" value="<%= user.email %>">
-                                                <button type="submit" class="btn btn-primary">Passer Recruteur</button>
+                                                <button type="submit" class="btn btn-success">Passer Recruteur</button>
                                             </form>
                                             <form action="/admin/passer_admin" method="POST">
                                                 <input type="hidden" name="email" value="<%= user.email %>">
-                                                <button type="submit" class="btn btn-primary">Passer Administrateur</button>
+                                                <button type="submit" class="btn btn-danger">Passer Administrateur</button>
                                             </form>
                                         </div>
                                     </div>
