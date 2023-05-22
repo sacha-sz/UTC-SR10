@@ -13,6 +13,7 @@ var loginRouter = require('./routes/login');
 var EntrepriseRouter = require('./routes/entreprise');
 var OffreRouter = require('./routes/offre');
 var apiRouter = require('./routes/api');
+var adminRouter = require('./routes/admin');
 
 // app.use(express.static('public'));
 
@@ -46,6 +47,7 @@ app.use('/login', loginRouter);
 app.use('/entreprise', EntrepriseRouter);
 app.use('/offre', OffreRouter);
 app.use('/api', apiRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -86,7 +88,6 @@ app.use(function (err, req, res, next) {
             });
         }
     }
-
 });
 
 
