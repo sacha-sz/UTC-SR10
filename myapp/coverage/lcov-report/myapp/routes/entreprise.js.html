@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>107/107</span>
+                <span class='fraction'>100/107</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">94.82% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>58/58</span>
+                <span class='fraction'>55/58</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">94.11% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>16/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.45% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>107/107</span>
+                <span class='fraction'>100/107</span>
             </div>
         
             
@@ -252,7 +252,10 @@
 <a name='L187'></a><a href='#L187'>187</a>
 <a name='L188'></a><a href='#L188'>188</a>
 <a name='L189'></a><a href='#L189'>189</a>
-<a name='L190'></a><a href='#L190'>190</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -265,6 +268,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -287,6 +291,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -296,6 +301,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -361,19 +367,19 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -455,7 +461,8 @@ app.get('/', function (req, res, next) {
     if (req.session.loggedin) {
         res.render('entreprise_rejoindre', {
             title: 'Connexion',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.redirect('/login');
@@ -472,7 +479,8 @@ app.get('/inscription', function (req, res, next) {
                 res.render('entreprise_inscription', {
                     title: 'Inscription',
                     type_orga: result,
-                    username: req.session.username
+                    username: req.session.username,
+                    type_user: req.session.type_user
                 });
             }
         } else {
@@ -486,7 +494,8 @@ app.get('/delete_entreprise', function (req, res, next) {
     if (req.session.loggedin) {
         res.render('entreprise_delete', {
             title: 'Suppression',
-            username: req.session.username
+            username: req.session.username,
+            type_user: req.session.type_user
         });
     } else {
         res.redirect('/login');
@@ -549,15 +558,15 @@ app.post('/inscription', function (req, res, next) {
                                     } else {
                                         type_organisation = newType;
                                         entrepriseModel.createTypeOrganisation(newType, newDescription, function (err, result) {
-                                            if (result == true) {
-                                                console.log("Organisation créée");
-                                                entrepriseModel.create(siren, name, lat, long, type_organisation, function (err, result) {
-                                                    if (result == true) {
-                                                        console.log("Entreprise créée");
-                                                        res.redirect('/entreprise');
+                                            <span class="missing-if-branch" title="if path not taken" >I</span>if (result == true) {
+<span class="cstat-no" title="statement not covered" >                                                console.log("Organisation créée");</span>
+<span class="cstat-no" title="statement not covered" >                                                entrepriseModel.create(siren, name, lat, long, type_organisation, <span class="fstat-no" title="function not covered" >fu</span>nction (err, result) {</span>
+<span class="cstat-no" title="statement not covered" >                                                    if (result == true) {</span>
+<span class="cstat-no" title="statement not covered" >                                                        console.log("Entreprise créée");</span>
+<span class="cstat-no" title="statement not covered" >                                                        res.redirect('/entreprise');</span>
                                                     } else {
-                                                        console.log("Erreur lors de la création de l'organisation");
-                                                        res.redirect('/entreprise/inscription');
+<span class="cstat-no" title="statement not covered" >                                                        console.log("Erreur lors de la création de l'organisation");</span>
+<span class="cstat-no" title="statement not covered" >                                                        res.redirect('/entreprise/inscription');</span>
                                                     }
                                                 });
                                             } else {
@@ -637,7 +646,7 @@ module.exports = app;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-20T21:29:49.136Z
+                at 2023-05-23T13:26:46.670Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

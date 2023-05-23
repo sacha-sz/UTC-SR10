@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.58% </span>
+                <span class="strong">1.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/126</span>
+                <span class='fraction'>2/133</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/46</span>
+                <span class='fraction'>0/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/31</span>
+                <span class='fraction'>0/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.58% </span>
+                <span class="strong">1.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/126</span>
+                <span class='fraction'>2/133</span>
             </div>
         
             
@@ -348,7 +348,20 @@
 <a name='L283'></a><a href='#L283'>283</a>
 <a name='L284'></a><a href='#L284'>284</a>
 <a name='L285'></a><a href='#L285'>285</a>
-<a name='L286'></a><a href='#L286'>286</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -461,6 +474,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -721,7 +747,7 @@ module.exports = {
             } else {
 <span class="cstat-no" title="statement not covered" >                if (results.affectedRows &gt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >                    console.log("Utilisateur ajouté avec succès.");</span>
-<span class="cstat-no" title="statement not covered" >                    callback(err, results);</span>
+<span class="cstat-no" title="statement not covered" >                    callback(err, true);</span>
                 } else {
 <span class="cstat-no" title="statement not covered" >                    console.log("Erreur : Aucun utilisateur ajouté.");</span>
 <span class="cstat-no" title="statement not covered" >                    callback(err, false);</span>
@@ -763,6 +789,19 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >                callback(err, null);</span>
             } else <span class="cstat-no" title="statement not covered" >if (results.length == 0) {</span>
 <span class="cstat-no" title="statement not covered" >                callback(new TypeError("Aucun utilisateur avec cet email"), results);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                callback(null, results);</span>
+            }
+        });
+    },
+&nbsp;
+    getInfos: <span class="fstat-no" title="function not covered" >fu</span>nction (email, callback) {
+<span class="cstat-no" title="statement not covered" >        query = "SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = " + "\"" + email + "\"";</span>
+<span class="cstat-no" title="statement not covered" >        db.query(query, <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
+<span class="cstat-no" title="statement not covered" >            if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                callback(err, null);</span>
+            } else <span class="cstat-no" title="statement not covered" >if (results.length == 0) {</span>
+<span class="cstat-no" title="statement not covered" >                callback(new TypeError("Aucun utilisateur avec cet email"), null);</span>
             } else {
 <span class="cstat-no" title="statement not covered" >                callback(null, results);</span>
             }
@@ -925,7 +964,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-20T21:29:49.136Z
+                at 2023-05-23T13:26:46.670Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
