@@ -2,6 +2,7 @@ var express = require('express');
 // var session = require('express-session');
 var router = express.Router();
 var offreModel = require('../model/Offre');
+var offreEmploiModel = require('../model/Offre_Emploie');
 var app = express();
 var path = require('path');
 
@@ -53,6 +54,67 @@ router.get('/', async function (req, res, next) {
     }
 });
 
+router.get('/:id', function (req, res, next) {
+    const offreId = req.params.id;
+    console.log(offreId);
+    offreEmploiModel.readOffersById(offreId, function (err, result) {
+        if (result) {
+            console.log(result);
+            res.render('offre', {
+                title: 'Offre',
+                username: req.session.username,
+                type_user: req.session.type_user,
+                offre: result[0]
+            });
+        } else {
+            res.redirect('/offre');
+        }
+    });
+    // Récupérer les détails de l'offre à partir de la base de données ou d'une autre source de données
+});
+
+// router.get('/recherche', async function (req, res, next) {
+//     if (req.session.loggedin) {
+//         try {
+//             console.log("Recherche d'une offre");
+//             const searchQuery = req.query.search;
+//             const response = await fetch('http://localhost:3000/api/Offre_Emploie');
+//             const data = await response.json();
+//             console.log("data : ");
+//             console.log(data);
+//             // Filtrer les offres en fonction de la recherche
+//             const filteredData = data.filter(offre => offre.intitule.toLowerCase().includes(searchQuery.toLowerCase()));
+//             console.log("filteredData : ");
+//             console.log(filteredData);
+//             // Pagination
+//             const page = parseInt(req.query.page) || 1;
+//             const perPage = 5;
+//             const totalItems = filteredData.length;
+//             const totalPages = Math.ceil(totalItems / perPage);
+//             const startIndex = (page - 1) * perPage;
+//             const endIndex = startIndex + perPage;
+//             const paginatedData = data.slice(startIndex, endIndex);
+
+//             res.render('offre_emploi', {
+//                 title: 'Offre',
+//                 username: req.session.username,
+//                 type_user: req.session.type_user,
+//                 offres: paginatedData,
+//                 totalPages: totalPages
+//                 // Autres variables à passer à la vue
+//                 // ...
+//             });
+//         } catch (error) {
+//             console.error('Une erreur s\'est produite lors de la récupération des offres:', error);
+//             // Gérer l'erreur et renvoyer une réponse appropriée
+//             res.status(500).send('Une erreur s\'est produite lors de la récupération des offres');
+//         }
+//     } else {
+//         res.redirect('/login');
+//     }
+// });
+
+
 router.post('/ajout', function (req, res, next) {
     console.log('Ajout d\'une offre');
     var intitule = req.body.intitule;
@@ -92,53 +154,6 @@ router.post('/ajout', function (req, res, next) {
 
     });
 });
-
-
-
-// Exemple de pagination
-
-// // get paginated results
-// app.get("/users/paginate", paginatedResults(users), (req, res) => {
-//     res.json(res.paginatedResults);
-// });
-
-// function paginatedResults(model) {
-//     // middleware function
-//     return (req, res, next) => {
-//         const page = parseInt(req.query.page);
-//         const limit = parseInt(req.query.limit);
-
-//         // calculating the starting and ending index
-//         const startIndex = (page - 1) * limit;
-//         const endIndex = page * limit;
-
-//         const results = {};
-//         if (endIndex < model.length) {
-//             results.next = {
-//                 page: page + 1,
-//                 limit: limit
-//             };
-//         }
-
-//         if (startIndex > 0) {
-//             results.previous = {
-//                 page: page - 1,
-//                 limit: limit
-//             };
-//         }
-
-//         results.results = model.slice(startIndex, endIndex);
-
-//         res.paginatedResults = results;
-//         next();
-//     };
-// }
-
-// const port = 3006;
-// const url = "http://localhost:" + port;
-// app.listen(port, () => {
-//     console.log("Service endpoint= %s", url);
-// });
 
 
 module.exports = app;

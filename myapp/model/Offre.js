@@ -1,18 +1,6 @@
 var db = require('./ConnexionBDD.js');
 
 module.exports = {
-    // read: function(siren, callback) {
-    //     db.query(" SELECT * FROM Organisation WHERE siren= ?", siren, function(err, results) {
-    //         if (err) throw err;
-    //         callback(results);
-    //     });
-    // },
-    // readall: function(callback) {
-    //     db.query("SELECT * FROM Organisation; ", function(err, results) {
-    //         if (err) throw err;
-    //         callback(results);
-    //     });
-    // },
     readDescriptionById: function(id, callback) {
         db.query("SELECT * FROM Description WHERE id = \"" + id + "\"", function(err, results) {
             if (err) throw err;
@@ -32,6 +20,7 @@ module.exports = {
             callback(results);
         });
     },
+    
     create: function(intitule, description, responsable, lat, long, rythme, salaire, missions, activites, competences, statut, typemetier, callback) {
         // Crée un id et vérifie qu'il n'existe pas déjà dans la BDD
         var test_id = new Boolean(true);
