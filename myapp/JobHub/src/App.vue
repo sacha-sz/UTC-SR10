@@ -2,6 +2,7 @@
 // import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 import UsersList from './components/Users.vue';
+import OfferList from './components/Offre.vue';
 </script>
 
 <template>
@@ -17,7 +18,8 @@ import UsersList from './components/Users.vue';
       </nav>
     </div>
   </header>
-  <UsersList />
+  <OfferList />
+  <!-- <UsersList /> -->
 </template>
 
 
