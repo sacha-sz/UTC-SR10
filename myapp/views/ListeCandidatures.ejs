@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+    <link rel="stylesheet" href="../CSS/utilisateur.css">
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+<body>
+
+    <h1>Liste des Candidatures</h1>
+    <% candidatures.forEach((candidature)=> { %>
+    <div class="container-fluid media ml-5 mr-5 my-2">
+        <div class="row">
+            <div class="col">
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex">
+                                <div style="justify-content : center;">
+                                    <h4 class="media-heading">
+                                        <%= candidature.intitule %>
+                                    </h4>
+                                    <p> </p>
+
+
+                                    <p> n° Offre: <%= candidature.id_offre %>
+                                    </p>
+                                    <p> n° Candidature : <%= candidature.id_candidature %>
+                                    </p>
+                                    <p> Rythme : <%= candidature.rythme %>
+                                    </p>
+                                    <p> Salaire : <%= candidature.salaire_min %> - <%= candidature.salaire_min %>
+                                    </p>
+                                    <p> Statut_poste : <%= candidature.statut_poste %>
+                                    </p>
+                                    <p>date_candidature : <span class="date" data-date="<%= candidature.date_candidature %>"><%= candidature.date_candidature %></span>
+                                    </p>
+                                    <p>etat_candidature : <%= candidature.etat_candidature %>
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+        window.onload = function() {
+            let dates = document.querySelectorAll('.date');
+            dates.forEach(function(dateElement) {
+                let date = new Date(dateElement.getAttribute('data-date'));
+                dateElement.innerHTML = formatDate(date);
+            });
+        }
+    </script>
+    <%- include('./partials/footer'); %>
+
+</html>
