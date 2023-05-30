@@ -21,7 +21,8 @@ Total : 25h30
 - 20/05 -> 6h
 - 21/05 -> 5h
 - 24/05 -> 2h TD + 1h perso
-Total : 20h
+- 30/05 -> 2h
+Total : 22h
 
 
 
