@@ -2,7 +2,7 @@ var db = require('./ConnexionBDD.js');
 
 module.exports = {
     readall: function (callback) {
-        db.query("SELECT * FROM Utilisateur WHERE type_utilisateur = 'ADMINISTRATEUR", function (err, results) {
+        db.query("SELECT * FROM Utilisateur WHERE type_utilisateur = 'ADMINISTRATEUR';", function (err, results) {
             // console.log(results);
             if (err) {
                 callback(err, null);
@@ -15,7 +15,7 @@ module.exports = {
     },
 
     updateTypeUtilisateur: function (email, new_type, callback) {
-        sql = "UPDATE Utilisateur SET type_utilisateur = \"" + new_type + "\" WHERE email = \"" + email + "\";";
+        sql = "UPDATE Utilisateur SET type_utilisateur = \"" + mysql.escape(new_type) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
         rows = db.query(sql, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);

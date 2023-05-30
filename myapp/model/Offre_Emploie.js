@@ -1,18 +1,22 @@
 // Créer un fichier par table de la base de données
 
-var db = require('./ConnexionBDD.js');
+var db = require("./ConnexionBDD.js");
 
 module.exports = {
     read: function (numero, callback) {
-        db.query(" SELECT * FROM Fiche_poste WHERE numero= ?", numero, function (err, results) {
+        var sql_read =
+            'SELECT * FROM Fiche_poste WHERE numero = "' +
+            mysql.escape(numero) +
+            '";';
+        db.query(sql_read, function (err, results) {
             if (err) throw err;
             callback(results);
         });
     },
 
-
     readAllOffers: function (callback) {
-        var sql_read = "SELECT DISTINCT\
+        var sql_readAllOffers =
+            "SELECT DISTINCT\
             OE.id, OE.date_validite, OE.indication_piece_jointes, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
@@ -35,7 +39,7 @@ module.exports = {
             WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" \
             ORDER BY OE.date_validite;";
 
-        db.query(sql_read, function (err, results) {
+        db.query(sql_readAllOffers, function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
@@ -44,7 +48,8 @@ module.exports = {
         });
     },
     readOffersById: function (id, callback) {
-        var sql_id = "SELECT DISTINCT\
+        var sql_readOffersById =
+            "SELECT DISTINCT\
             OE.id, OE.date_validite, OE.indication_piece_jointes, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
@@ -64,9 +69,11 @@ module.exports = {
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
             ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND OE.id = '" + id + "';";
+            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND OE.id = '" +
+            mysql.escape(id) +
+            "';";
 
-        db.query(sql_id, function (err, offre) {
+        db.query(sql_readOffersById, function (err, offre) {
             if (err) {
                 callback(err, null);
             } else {
@@ -80,23 +87,62 @@ module.exports = {
     },
 
     readall: function (callback) {
-        db.query("SELECT intitule, lieu_mission_lat, lieu_mission_long, salaire_min, salaire_max, missions AS missions FROM Fiche_poste JOIN Description ON Fiche_poste.numero = Description.numero ", function (err, results) {
-            if (err) throw err;
-            callback(results);
-        });
+        db.query(
+            "SELECT intitule, lieu_mission_lat, lieu_mission_long, salaire_min, salaire_max, missions AS missions FROM Fiche_poste JOIN Description ON Fiche_poste.numero = Description.numero ;",
+            function (err, results) {
+                if (err) throw err;
+                callback(results);
+            }
+        );
     },
     getDescription: function (numero, callback) {
-        db.query("SELECT * FROM Description WHERE numero= ?", numero, function (err, results) {
+        var sql_getDescription =
+            'SELECT * FROM Description WHERE numero = "' +
+            mysql.escape(numero) +
+            '";';
+        db.query(sql_getDescription, function (err, results) {
             if (err) throw err;
             callback(results);
         });
     },
-    creat: function (numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, callback) {
-        db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier, function (err, results) {
+    creat: function (
+        numero,
+        intitule,
+        responsable_hierarchique,
+        lieu_mission_lat,
+        lieu_mission_long,
+        rythme,
+        salaire_min,
+        salaire_max,
+        statut_poste,
+        type_metier,
+        callback
+    ) {
+        var sql_creat =
+            'INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES ("' +
+            mysql.escape(numero) +
+            '", "' +
+            mysql.escape(intitule) +
+            '", "' +
+            mysql.escape(responsable_hierarchique) +
+            '", "' +
+            mysql.escape(lieu_mission_lat) +
+            '", "' +
+            mysql.escape(lieu_mission_long) +
+            '", "' +
+            mysql.escape(rythme) +
+            '", "' +
+            mysql.escape(salaire_min) +
+            '", "' +
+            mysql.escape(salaire_max) +
+            '", "' +
+            mysql.escape(statut_poste) +
+            '", "' +
+            mysql.escape(type_metier) +
+            '");';
+        db.query(sql_creat, function (err, results) {
             if (err) throw err;
             callback(results);
         });
-    }
-
-
-}
+    },
+};
