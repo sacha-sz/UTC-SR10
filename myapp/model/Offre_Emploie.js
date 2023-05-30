@@ -45,25 +45,35 @@ module.exports = {
     },
     readOffersById: function (id, callback) {
         var sql_id = "SELECT DISTINCT\
-            OE.id, OE.nombre_de_piece, OE.date_validite, OE.indication_piece_jointes, \
+            OE.id, OE.date_validite, OE.indication_piece_jointes, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
-            TM.nom AS TM_nom, TM.description AS TM_description \
+            TM.nom AS TM_nom, TM.description AS TM_description, \
+            ORG.nom AS ORG_nom, \
+            DE.missions, DE.activites, DE.competences_attendues \
             FROM Offre_d_emploi AS OE \
-            INNER JOIN Fiche_poste AS FP ON OE.id_poste = FP.numero \
-            INNER JOIN Statut_poste AS SP ON FP.statut_poste = SP.nom \
-            INNER JOIN Type_metier AS TM ON FP.type_metier = TM.nom \
-            WHERE OE.etat = 'PUBLIEE' AND OE.id = '" + id + "' \
-            ORDER BY OE.date_validite;";
+            INNER JOIN Fiche_poste AS FP \
+            ON OE.id_poste = FP.numero \
+            INNER JOIN Statut_poste AS SP \
+            ON FP.statut_poste = SP.nom \
+            INNER JOIN Type_metier AS TM \
+            ON FP.type_metier = TM.nom \
+            INNER JOIN Formulaire AS FO \
+            ON FO.email_utilisateur = FP.email_inscription \
+            INNER JOIN Description AS DE \
+            ON DE.numero = FP.id_description \
+            INNER JOIN Organisation as ORG \
+            ON ORG.siren = FO.siren_orga \
+            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND OE.id = '" + id + "';";
 
-        db.query(sql_id, function (err, results) {
+        db.query(sql_id, function (err, offre) {
             if (err) {
                 callback(err, null);
             } else {
-                if (results.length === 0) {
+                if (offre.length === 0) {
                     callback(new Error("Aucune offre trouvée"), null);
                 } else {
-                    callback(null, results);
+                    callback(null, offre);
                 }
             }
         });

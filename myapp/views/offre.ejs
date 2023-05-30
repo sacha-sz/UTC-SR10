@@ -14,25 +14,45 @@
     </script>
     <br>
     <!-- Offres d'emploi -->
-    <div class="container-fluid media pl-5 my-2">
-        <div class="row">
-            <div class="col-sm-3 my-auto">
+    <div class="container-fluid media pl-5 my-2 justify-content-center">
+        <div class="row my-auto">
+            <div class=" my-6">
+                <h2 class="media-heading font-weight-bold text-center text-success">
+                    <%= offre.intitule %>
+                </h2>
+                <br>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-6 my-auto">
                 <div class="media-left mr-3">
-                    <div class="mx-auto">
-                        <img src="https://placehold.it/250x250" class="media-object" style="width:60px">
+                    <h4 class="font-weight-bold text-center text-primary">Détails du poste</h4>
+                    <br>
+                    <p> <b class="font-weight-bold">Entreprise : </b>
+                        <%= offre.ORG_nom %>
+                    </p>
+
+                    <p> <b class="font-weight-bold">Salaire : </b>
+                        <%= offre.salaire_min %> - <%= offre.salaire_max %>€/mois
+                    </p>
+
+                    <p> <b class="font-weight-bold">Responsable : </b>
+                        <%= offre.responsable_hierarchique %>
+                    </p>
+
+                    <p> <b class="font-weight-bold">Horaires : </b>
+                        <%= offre.rythme %>
+                    </p>
+
+                    <p> <b class="font-weight-bold">Localisation : </b>
+                    <div class="text-center">
+                        <iframe height="300" frameborder="0" style="border:0" width="75%"
+                            src="https://maps.google.com/maps?q=+<%= offre.lieu_mission_lat %>+,+<%= offre.lieu_mission_long %>+&hl=fr&z=14&amp&output=embed"
+                            allowfullscreen>
+                        </iframe>
                     </div>
-
-                    <h5 class="font-weight-bold">Détails du poste</h5>
-                    <p> <b class="font-weight-bold">Entreprise : </b> ENTREPRISE</p>
-                    <p> <b class="font-weight-bold">Localisation : </b>VILLE</p>
-                    <p> <b class="font-weight-bold">Salaire : </b> <%= offre.salaire_min %> - <%= offre.salaire_max %>€/mois</p>
-                    <p> <b class="font-weight-bold">Responsable : </b> <%= offre.responsable_hierarchique %></p>
-                    <p> <b class="font-weight-bold">Horaires : </b>40h / Semaine</p>
-                    <p> <b class="font-weight-bold">Type de poste : </b><%= offre.SP_nom %></p>
-
-                    <!-- <div class="col-3 my-auto"> -->
-                    <a type="button" class="btn btn-primary" href="/candidature/formulaire_candidatures">Candidater</a>
-                    <!-- </div> -->
+                    </p>
                 </div>
             </div>
 
@@ -40,38 +60,40 @@
                 <div class="media-body">
                     <div class="row">
                         <div class="col-9">
-                            <div class=" my-6">
-                                <h4 class="media-heading font-weight-bold"><%= offre.intitule %></h4>
-                            </div>
+                            
 
-                            <h6 class="font-weight-bold"> Descriptif de mission</h6>
-                            <p> <b class="font-weight-bold text-justify">Description : </b> pour développer des sites web et mobile Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum doloremque placeat neque beatae enim arch</p>
-
-                            <p class="text-justify"> La mission a une forte dimension d'innovation. Elle implique des contacts nombreux avec les spécialistes de l'analyse de données (data scientists, data engineers, responsables du data lake, informaticiens) ou de l'innovation
-                                à la Banque de France mais également chez les différents acteurs du secteur financier. Les modes d'action peuvent revêtir un aspect expérimental. Dans ce cadre, vous serez amené (e) à : - Développer ou participer au développement
-                                d'outils améliorant l'efficacité des contrôleurs ou renouvelant les méthodes de contrôle – en mobilisant si nécessaires d’autres expertises informatiques de la Banque de France ; - Contribuer à construire, une compétence
-                                « data » à l'ACPR ; aider à identifier les besoins et les ressources pour ce faire ; - Contribuer à définir les attentes de l'Autorité en matière de gouvernance, d'auditabilité et d'explicabilité des algorithmes d'IA utilisés
-                                par les organismes financiers ; - Assister ou intervenir dans des événements relatifs au sujet (colloques scientifiques, événements de place, groupes de travail européens ou internationaux etc.)
+                            <h4 class="font-weight-bold text-primary text-center"> Descriptif de mission</h4>
+                            <p> <b class="font-weight-bold text-justify">Description : </b>
+                                <%= offre.missions %>
+                            </p>
+                            <p> <b class="font-weight-bold text-justify">Pour cela vous devrez </b> <br>
+                                <%= offre.activites %>
+                            </p>
+                            <p> <b class="font-weight-bold text-justify">Les compétences attendues</b> : <br>
+                                <%= offre.competences_attendues %>
                             </p>
 
-                            <h6 class="font-weight-bold"> Profil recherché </h6>
-                            <p class="text-justify">De formation supérieure (bac +5) dans un champ quantitatif (mathématiques, statistiques, ingénieur...) vous vous justifiez d'une première expérience professionnelle en qualité de data analyst/ data scientist. Vous avez mené
-                                des projets de machine learning, connaissez les principales techniques de modélisation en intelligence artificielle et maîtrisez les principaux langages de programmation (R/Python/Java). Vous avez suffisamment de recul
-                                sur ces techniques pour challenger d'éventuels développements dans ce domaine. Doté d’un bon relationnel, vous savez être à l'écoute des besoins métiers et votre sens du travail en équipe vous permet d’échanger avec un
-                                grand nombre d'acteurs aux profils et aux technicités variés. Créatif, ouvert aux expérimentations, vous possédez un bon sens de la communication, orale comme écrite. Un bon niveau d'anglais professionnel est requis. Type
-                                d'emploi : Temps plein, CDI Salaire : 30 000,00€ à 60 000,00€ par an Programmation : Travail en journée Lieu du poste : En présentiel</p>
+                            <h4 class="font-weight-bold text-primary text-center"> Type de métier</h4>
+                            <p> <b class="font-weight-bold text-justify"><%= offre.TM_nom %> : </b>
+                                <%= offre.TM_description %>
+                            </p>
+                            <br>
 
-                            <p class="font-weight-bold">Compétences requises : </p>
-                            <ul>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JS</li>
-                                <li>PHP</li>
-                            </ul>
+                            <h4 class="font-weight-bold text-primary text-center"> Fiche de poste</h4>
+                            <p> <b class="font-weight-bold text-justify">Nom :</b> <%= offre.SP_nom%> </p>
+                            <p> <b class="font-weight-bold text-justify">Description :</b> <%= offre.SP_description%> </p>
+                            <br>
+
                         </div>
-
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <p class="text-center">
+                    <a type="button" class="btn btn-success"
+                        href="/candidature/formulaire_candidatures">Candidater</a>
+                </p>
             </div>
         </div>
     </div>
