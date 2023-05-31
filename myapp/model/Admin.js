@@ -15,8 +15,7 @@ module.exports = {
     },
 
     updateTypeUtilisateur: function (email, new_type, callback) {
-        sql = "UPDATE Utilisateur SET type_utilisateur = \"" + mysql.escape(new_type) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
-        rows = db.query(sql, function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET type_utilisateur = \"?\" WHERE email = \"?\";", [new_type, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
