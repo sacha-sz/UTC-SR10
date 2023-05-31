@@ -2,25 +2,12 @@
 
 var db = require('./ConnexionBDD.js');
 
-// function getLatLngFromAddress(address, callback) {
-//     var geocoder = new google.maps.Geocoder();
-//     geocoder.geocode({ 'address': address }, function(results, status) {
-//         if (status === 'OK') {
-//             var lat = results[0].geometry.location.lat();
-//             var lng = results[0].geometry.location.lng();
-//             callback(lat, lng);
-//         } else {
-//             console.log('Erreur : ' + status);
-//         }
-//     });
-// }
-
 module.exports = {
 
     /// SELECT
 
     read: function (email, callback) {
-        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
         db.query(query, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -33,7 +20,7 @@ module.exports = {
     },
 
     readall: function (callback) {
-        db.query("SELECT * FROM Utilisateur", function (err, results) {
+        db.query("SELECT * FROM Utilisateur;", function (err, results) {
             console.log(results);
             if (err) {
                 callback(err, null);
@@ -46,7 +33,7 @@ module.exports = {
     },
 
     getNomPrenomTelSexe: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
         db.query(query, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -66,20 +53,20 @@ module.exports = {
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
         var lat = latitude;
         var lng = longitude;
-        sql = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) VALUES (";
-        sql += "\"" + email + "\", ";
-        sql += "\"" + password + "\", ";
-        sql += "\"" + nom + "\", ";
-        sql += "\"" + prenom + "\", ";
-        sql += "\"" + ddn + "\", ";
-        sql += "\"" + date_creation + "\", ";
-        sql += "true, ";
-        sql += "\"" + tel + "\", ";
-        sql += lat + ", ";
-        sql += lng + ", ";
-        sql += "\"" + sexe + "\", ";
-        sql += "\"CANDIDAT\");";
-        rows = db.query(sql, function (err, results) {
+        var sql_create = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) VALUES (";
+        sql_create += "\"" + mysql.escape(email) + "\", ";
+        sql_create += "\"" + mysql.escape(password) + "\", ";
+        sql_create += "\"" + mysql.escape(nom) + "\", ";
+        sql_create += "\"" + mysql.escape(prenom) + "\", ";
+        sql_create += "\"" + mysql.escape(ddn) + "\", ";
+        sql_create += "\"" + mysql.escape(date_creation) + "\", ";
+        sql_create += "true, ";
+        sql_create += "\"" + mysql.escape(tel) + "\", ";
+        sql_create += mysql.escape(lat) + ", ";
+        sql_create += mysql.escape(lng) + ", ";
+        sql_create += "\"" + mysql.escape(sexe) + "\", ";
+        sql_create += "\"CANDIDAT\");";
+        rows = db.query(sql_create, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -96,7 +83,7 @@ module.exports = {
     },
 
     read: function (email, callback) {
-        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
         db.query(query, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -109,7 +96,7 @@ module.exports = {
     },
 
     readall: function (callback) {
-        db.query("SELECT * FROM Utilisateur", function (err, results) {
+        db.query("SELECT * FROM Utilisateur;", function (err, results) {
             // console.log(results);
             if (err) {
                 callback(err, null);
@@ -122,7 +109,7 @@ module.exports = {
     },
 
     getNomPrenomTelSexe: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
         db.query(query, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -135,7 +122,7 @@ module.exports = {
     },
 
     getInfos: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = " + "\"" + email + "\"";
+        query = "SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
         db.query(query, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -150,7 +137,7 @@ module.exports = {
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
-        sql = "UPDATE Utilisateur SET nom = \"" + new_nom + "\" WHERE email = \"" + email + "\";";
+        sql = "UPDATE Utilisateur SET nom = \"" + mysql.escape(new_nom) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
         rows = db.query(sql, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
@@ -163,7 +150,7 @@ module.exports = {
     },
 
     updatePrenom: function (email, new_prenom, callback) {
-        sql = "UPDATE Utilisateur SET prenom = \"" + new_prenom + "\" WHERE email = \"" + email + "\";";
+        sql = "UPDATE Utilisateur SET prenom = \"" + mysql.escape(new_prenom) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
         rows = db.query(sql, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
@@ -176,7 +163,7 @@ module.exports = {
     },
 
     updateSexe: function (email, new_sexe, callback) {
-        sql = "UPDATE Utilisateur SET sexe = \"" + new_sexe + "\" WHERE email = \"" + email + "\";";
+        sql = "UPDATE Utilisateur SET sexe = \"" + mysql.escape(new_sexe) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
         rows = db.query(sql, function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
@@ -193,7 +180,7 @@ module.exports = {
     /// DELETE
 
     delete: function (email, callback) {
-        db.query("DELETE FROM Utilisateur WHERE email = " + "\"" + email + "\"", function (err, results) {
+        db.query("DELETE FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\"", function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
@@ -208,9 +195,9 @@ module.exports = {
         });
     },
 
-    
+
     /// TESTS
-    
+
     TEST_MAIL: function (email_a_tester, callback) {
         // Vérification de l'adresse e-mail 
         // Format :

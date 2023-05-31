@@ -4,19 +4,20 @@ var db = require('./ConnexionBDD.js');
 module.exports = {
     /// SELECT
     readTypeOrganisation: function (callback) {
-        db.query("SELECT * FROM Type_organisation ", function (err, results) {
+        db.query("SELECT * FROM Type_organisation ;", function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
                 callback(new TypeError("Aucun type d'organisation"), results);
             } else {
-            callback(null,results);
+                callback(null, results);
             }
         });
     },
 
     read: function (siren, callback) {
-        db.query(" SELECT * FROM Organisation WHERE siren= ?", siren, function (err, results) {
+        var sql_read = "SELECT * FROM Organisation WHERE siren = \"" + mysql.escape(siren) + "\";";
+        db.query(sql_read, function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -42,8 +43,8 @@ module.exports = {
 
     /// INSERT
     createTypeOrganisation: function (type_organisation, description, callback) {
-        sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
-        db.query(sql, function (err, results) {
+        var sql_createTypeOrganisation = "INSERT INTO Type_organisation VALUES (\"" + mysql.escape(type_organisation) + "\", \"" + mysql.escape(description) + "\");";
+        db.query(sql_createTypeOrganisation, function (err, results) {
             if (err) {
                 callback(err, false);
             } else {
@@ -58,8 +59,8 @@ module.exports = {
     },
 
     createTypeOrganisation: function (type_organisation, description, callback) {
-        sql = "INSERT INTO Type_organisation VALUES (\"" + type_organisation + "\", \"" + description + "\")"
-        db.query(sql, function (err, results) {
+        var sql_createTypeOrganisation = "INSERT INTO Type_organisation VALUES (\"" + mysql.escape(type_organisation) + "\", \"" + mysql.escape(description) + "\");";
+        db.query(sql_createTypeOrganisation, function (err, results) {
             if (err) {
                 callback(err, false);
             } else {
@@ -69,8 +70,8 @@ module.exports = {
     },
 
     create: function (siren, nom, siege_social_lat, siege_social_long, type_organisation, callback) {
-        sql = "INSERT INTO Organisation VALUES (" + siren + ", \"" + nom + "\", " + siege_social_lat + ", " + siege_social_long + ", \"" + type_organisation + "\" )"
-        db.query(sql, function (err, results) {
+        var sql_create = "INSERT INTO Organisation VALUES (" + mysql.escape(siren) + ", \"" + mysql.escape(nom) + "\", " + mysql.escape(siege_social_lat) + ", " + mysql.escape(siege_social_long) + ", \"" + mysql.escape(type_organisation) + "\" );";
+        db.query(sql_create, function (err, results) {
             if (err) {
                 callback(err, false);
             } else {
@@ -82,8 +83,8 @@ module.exports = {
     addUser: function (siren, email, callback) {
         var date = new Date();
         var date_creation = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        sql = "INSERT INTO Formulaire (etat_formulaire, date_creation, type_formulaire, email_utilisateur, siren_orga) VALUES (\"EN COURS\", \"" + date_creation + "\" , \"REJOINDRE\", \"" + email + "\", \"" + siren + "\")"
-        db.query(sql, function (err, results) {
+        var sql_addUser = "INSERT INTO Formulaire (etat_formulaire, date_creation, type_formulaire, email_utilisateur, siren_orga) VALUES (\"EN COURS\", \"" + mysql.escape(date_creation) + "\" , \"REJOINDRE\", \"" + mysql.escape(email) + "\", \"" + mysql.escape(siren) + "\");";
+        db.query(sql_addUser, function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
@@ -96,7 +97,7 @@ module.exports = {
     /// DELETE
 
     deleteTypeOrganisation: function (type_organisation, callback) {
-        db.query("DELETE FROM Type_organisation WHERE nom = \"" + type_organisation + "\"", function (err, results) {
+        db.query("DELETE FROM Type_organisation WHERE nom = \"" + mysql.escape(type_organisation) + "\";", function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
@@ -112,8 +113,8 @@ module.exports = {
     },
 
     delete: function (siren, callback) {
-        const sql_query = "DELETE FROM Organisation WHERE siren = \"" + siren + "\"";
-        db.query(sql_query, function (err, results) {
+        const sql_delete = "DELETE FROM Organisation WHERE siren = \"" + mysql.escape(siren) + "\";";
+        db.query(sql_delete, function (err, results) {
             if (err) {
                 callback(err, false);
             } else {
@@ -126,15 +127,15 @@ module.exports = {
                 }
             }
         });
-    },    
-    
+    },
+
 
     /// UPDATE
 
-    
+
 
     /// TEST
-    
+
 
     // Test que la latitude et la longitude soient valides
     TEST_LATITUDE: function (latitude, callback) {
