@@ -21,7 +21,7 @@
                         <%= title %>
                     </div>
                     <div class="card-body ">
-                        <form method="POST" action="/formulaire_candidatures" id="frmFileUpload"
+                        <form method="POST" action="/candidature/formulaire_candidatures" id="frmFileUpload"
                             enctype="multipart/form-data">
 
                             <input type="hidden" name="myUsername" value="<%= username %>" />
@@ -37,7 +37,7 @@
                                         <option value="">--- Type du document ---</option>
                                         <option value="CV">C.V.</option>
                                         <option value="LM">L.M.</option>
-                                        <option value="CIN">Carte d'identité</option>
+                                        <option value="CIN">Autre</option>
                                     </select>
                                 </div>
                             </div>

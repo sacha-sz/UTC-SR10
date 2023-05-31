@@ -49,10 +49,6 @@
                                 <% } else if (user.type_utilisateur=='CANDIDAT' ) { %>
                                     <div class="col-auto my-auto">
                                         <div class="d-flex">
-                                            <form action="/admin/passer_recruteur" method="POST">
-                                                <input type="hidden" name="email" value="<%= user.email %>">
-                                                <button type="submit" class="btn btn-success">Passer Recruteur</button>
-                                            </form>
                                             <form action="/admin/passer_admin" method="POST">
                                                 <input type="hidden" name="email" value="<%= user.email %>">
                                                 <button type="submit" class="btn btn-danger">Passer Administrateur</button>
