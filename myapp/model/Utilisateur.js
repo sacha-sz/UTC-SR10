@@ -7,8 +7,7 @@ module.exports = {
     /// SELECT
 
     read: function (email, callback) {
-        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
-        db.query(query, function (err, results) {
+        db.query("SELECT * FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -33,8 +32,7 @@ module.exports = {
     },
 
     getNomPrenomTelSexe: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
-        db.query(query, function (err, results) {
+        db.query("SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -83,8 +81,7 @@ module.exports = {
     },
 
     read: function (email, callback) {
-        query = "SELECT * FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
-        db.query(query, function (err, results) {
+        db.query("SELECT * FROM Utilisateur WHERE email = ?",[email] , function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -109,8 +106,7 @@ module.exports = {
     },
 
     getNomPrenomTelSexe: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
-        db.query(query, function (err, results) {
+        db.query("SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -122,8 +118,7 @@ module.exports = {
     },
 
     getInfos: function (email, callback) {
-        query = "SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\";";
-        db.query(query, function (err, results) {
+        db.query("SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = ", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -137,8 +132,7 @@ module.exports = {
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
-        sql = "UPDATE Utilisateur SET nom = \"" + mysql.escape(new_nom) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
-        rows = db.query(sql, function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =" , [new_nom, email],function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -150,8 +144,7 @@ module.exports = {
     },
 
     updatePrenom: function (email, new_prenom, callback) {
-        sql = "UPDATE Utilisateur SET prenom = \"" + mysql.escape(new_prenom) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
-        rows = db.query(sql, function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET prenom = ? WHERE email = ?" , [new_prenom, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -163,8 +156,7 @@ module.exports = {
     },
 
     updateSexe: function (email, new_sexe, callback) {
-        sql = "UPDATE Utilisateur SET sexe = \"" + mysql.escape(new_sexe) + "\" WHERE email = \"" + mysql.escape(email) + "\";";
-        rows = db.query(sql, function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET sexe = ?  WHERE email = ?",[new_sexe, email] ,function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -180,7 +172,7 @@ module.exports = {
     /// DELETE
 
     delete: function (email, callback) {
-        db.query("DELETE FROM Utilisateur WHERE email = " + "\"" + mysql.escape(email) + "\"", function (err, results) {
+        db.query("DELETE FROM Utilisateur WHERE email = ?" , [email],function (err, results) {
             if (err) {
                 callback(err, null);
             } else {

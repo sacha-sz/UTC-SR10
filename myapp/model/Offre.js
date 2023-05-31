@@ -2,7 +2,7 @@ var db = require('./ConnexionBDD.js');
 
 module.exports = {
     readDescriptionById: function (id, callback) {
-        db.query("SELECT * FROM Description WHERE id = \"" + mysql.escape(id) + "\";", function (err, results) {
+        db.query("SELECT * FROM Description WHERE id = ?;", [id] , function (err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -28,8 +28,7 @@ module.exports = {
         while (test_id) {
             console.log("test_id Dans wile");
             id = Math.floor(Math.random() * 10000) + 1
-            sql_test_id = "SELECT * FROM Offre WHERE id = " + id;
-            db.query(sql_test_id, function (err, results) {
+            db.query("SELECT * FROM Offre WHERE id = ?;", [id] , function (err, results) {
                 if (err) throw err;
                 if (results.length == 0) {
                     test_id = false;
@@ -37,25 +36,18 @@ module.exports = {
             });
         }
         // Une fois l'id créé, on peut créer les requêtes SQL
-        sqlStatut = "INSERT INTO Statut VALUES (\"" + mysql.escape(statut) + "\", \"" + mysql.escape(description) + "\");";
-        sqlDesciption = "INSERT INTO Description VALUES (" + mysql.escape(id) + ", \"" + mysql.escape(missions) + "\", \"" + mysql.escape(activites) + "\", \"" + mysql.escape(competences) + "\");";
-        sqlFP = "INSERT INTO Fiche_poste VALUES (" + mysql.escape(id) + ", \"" + mysql.escape(intitule) + "\", \"" + mysql.escape(responsable) + "\", " + mysql.escape(lat) + ", " + mysql.escape(long) + " , " + mysql.escape(rythme) + ", " + mysql.escape(salaire) + " , \"" + mysql.escape(statut) + "\", \"" + mysql.escape(typemetier) + "\");";
-        // Vérif si les requêtes sont correctes
-        console.log(sqlStatut);
-        console.log(sqlDesciption);
-        console.log(sqlFP);
         // On exécute les requêtes
-        db.query(sqlStatut, function (err, results) {
+        db.query("INSERT INTO Statut VALUES (?,?);", [statut, description] , function (err, results) {
             if (err) throw err;
             console.log(results);
             callback(results);
         });
-        db.query(sqlFP, function (err, results) {
+        db.query("INSERT INTO Description VALUES (?,?,?,?)",[id, missions, activites, competences] ,  function (err, results) {
             if (err) throw err;
             console.log(results);
             callback(results);
         });
-        db.query(sqlDesciption, function (err, results) {
+        db.query("INSERT INTO Fiche_poste VALUES (?,?,?,?,?,?,?,?,?)", [id,intitule, responsable, lat, long, rythme, salaire, statut, typemetier] , function (err, results) {
             if (err) throw err;
             console.log(results);
             callback(results);
