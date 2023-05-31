@@ -9,7 +9,7 @@ module.exports = {
         ON Offre_d_emploi.id = Candidature.id_offre\
         INNER JOIN Fiche_poste\
         ON Offre_d_emploi.id_poste = Fiche_poste.numero\
-      WHERE Candidature.email_utilisateur = \"" + mysql.escape(email) + "\";", function (err, results) {
+      WHERE Candidature.email_utilisateur = ?;", [email], function (err, results) {
       if (err) {
         callback(err, null);
       } else if (results.length == 0) {
