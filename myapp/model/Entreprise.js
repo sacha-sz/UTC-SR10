@@ -124,8 +124,7 @@ module.exports = {
     },
 
     entrepriseRecruteur : function(email, callback){
-        db.query("SELECT * FROM Organisation INNER JOIN Formulaire ON Formulaire.siren_orga = Organisation.siren WHERE Formulaire.email_utilisateur = ?", [email], function (err, results) {
-
+        db.query("SELECT * FROM Organisation INNER JOIN Formulaire ON Formulaire.siren_orga = Organisation.siren WHERE Formulaire.email_utilisateur = ? AND Formulaire.etat_formulaire='ACCEPTEE'", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
