@@ -1,6 +1,4 @@
-#
-
-
+# TODO 
 
 ### Général :  
 - [ ] Télécharger fichier pour candidature(OK)  
@@ -15,7 +13,7 @@
 
 - [ ] Détails des candidats sur une offre [TOBIAS]
 - [ ] Demande pour devenir admin(option) ?
-- [ ] Implémenter Mes offres / Mon entreprise [TOBIAS] 
+- [x] Implémenter Mes offres / Mon entreprise [TOBIAS] 
 
 
 ### Si Administrateur :  
