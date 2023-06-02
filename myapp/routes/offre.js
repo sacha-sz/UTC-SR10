@@ -22,6 +22,32 @@ router.get('/ajout_offre', function (req, res, next) {
     }
 });
 
+router.get('/offre_recruteur', function (req, res, next) {
+    if (req.session.loggedin) {
+        offreEmploiModel.getoffrebyrecruteur(req.session.username, function (err, result) {
+            if (result) {
+                // Pagination
+                const page = parseInt(req.query.page) || 1;
+                const perPage = 5;
+                const totalItems = result.length;
+                const totalPages = Math.ceil(totalItems / perPage);
+                const startIndex = (page - 1) * perPage;
+                const endIndex = startIndex + perPage;
+                const paginatedData = result.slice(startIndex, endIndex);
+                res.render('offre_recruteur', {
+                    title: 'Offre',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    offres: paginatedData,
+                    totalPages: totalPages
+                });
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
 router.get('/', async function (req, res, next) {
     if (req.session.loggedin) {
         try {
@@ -72,6 +98,7 @@ router.get('/:id', function (req, res, next) {
     });
     // Récupérer les détails de l'offre à partir de la base de données ou d'une autre source de données
 });
+
 
 // router.get('/recherche', async function (req, res, next) {
 //     if (req.session.loggedin) {
