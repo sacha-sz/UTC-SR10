@@ -73,7 +73,32 @@ router.post('/formulaire_candidatures', upload.single('myFileInput'), function (
     }
 });
 
+router.get('/mesdocuments', function (req, res, next) {
+    console.log("mes documents");  
+    if (req.session.loggedin) {
+        candidatureModel.PieceJointeUser(req.session.username, function (err, result) {
+            console.log(result);
+            if (result) {
+                console.log(result);
+                res.render('mesdocuments', {
+                    title: 'Mes documents',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    documents: result
+                });
+            } else {
+                res.status(500).send('Une erreur s\'est produite lors de la récupération des documents');
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
 router.get('/getfile', function (req, res, next) {
+    console.log("getfile");
+    console.log(req.query.fichier_cible);
     try {
         res.download('./mesfichiers/' + req.query.fichier_cible);
     } catch (error) {

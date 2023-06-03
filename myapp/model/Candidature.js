@@ -20,4 +20,17 @@ module.exports = {
     }
     )
   },
+
+  PieceJointeUser : function (email, callback) {
+    db.query("SELECT * FROM Candidature INNER JOIN Pieces_jointes ON Pieces_jointes.id_candidature = Candidature.id WHERE Candidature.email_utilisateur = ?", [email], function (err, results) {
+      if (err) {
+        callback(err, null);
+      } else if (results.length == 0) {
+        callback(new TypeError("Aucune candidature"), results);
+      } else {
+        callback(null, results);
+      }
+    }
+    )
+  }
 }
