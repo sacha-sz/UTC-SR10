@@ -6,12 +6,13 @@
  
 
 ### Si candidat :  
-- [ ] implémenter Mes documents
+- [x] implémenter Mes documents [TOBIAS]
   
 
 ### Si Recruteur :  
 
-- [ ] Détails des candidats sur une offre [TOBIAS]
+- [ ] Devenir administrateur ?
+- [ ] Détails des candidats sur une offre
 - [ ] Demande pour devenir admin(option) ?
 - [x] Implémenter Mes offres / Mon entreprise [TOBIAS] 
 
