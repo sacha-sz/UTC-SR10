@@ -19,29 +19,30 @@
         <div class="row">
             <!-- Barre de recherche et filtres -->
 
-            <form class="form-inline container-fluid">
-
+            <div class="form-inline container-fluid">
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Recherche">
-                        </div>
-                    </div>
 
-                    <div class="col">
-                        <button type="submit" class="btn ml-2"><span class="material-icons">
-                                search
-                            </span></button>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="search_field" placeholder="Recherche">
+                            <a href="/offre/recherche">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="material-icons">
+                                        search
+                                    </span>
+                                </button>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="col">
                         <div class="dropdown show">
                             <button class="btn dropdown-toggle" type="button" href="" data-bs-toggle="dropdown"
-                                role="button" id="dropdownMenuLinkFiltre" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
+                                role="button" id="dropdownMenuLinkFiltreMetiers" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 Filtre métiers
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltre">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltreMetiers">
                                 <a class="dropdown-item">Développeur</a>
                                 <a class="dropdown-item">Designer</a>
                                 <a class="dropdown-item">Comptable</a>
@@ -51,44 +52,43 @@
                     <div class="col">
                         <div class="dropdown show">
                             <button class="btn dropdown-toggle" type="button" href="" role="button"
-                                data-bs-toggle="dropdown" id="dropdownMenuLinkFiltre" data-toggle="dropdown"
+                                data-bs-toggle="dropdown" id="dropdownMenuLinkFiltreSalaires" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 Filtre salaires
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltre">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltreSalaires">
                                 <a class="dropdown-item"> moins de 1000€</a>
                                 <a class="dropdown-item">1000€-2000€</a>
                                 <a class="dropdown-item">2000€-5000€</a>
-                                < class="dropdown-item">plus de 5000€</a>
+                                <a class="dropdown-item">plus de 5000€</a>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="dropdown show">
                             <button class="btn dropdown-toggle" type="button" href="" role="button"
-                                id="dropdownMenuLinkFiltre" data-toggle="dropdown" data-bs-toggle="dropdown"
+                                id="dropdownMenuLinkTri" data-toggle="dropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 Tri
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltre">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkTri">
                                 <a class="dropdown-item">Date de modification</a>
                                 <a class="dropdown-item">Distance</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
             <br>
             <!-- Offres d'emploi -->
             <% offres.forEach((offer)=> { %>
                 <div class="container-fluid media pl-5 my-2">
                     <div class="row">
-                        <div class="col-sm-auto my-auto">
+                        <div class="col-sm-auto my-auto border-2">
                             <iframe width="200" height="200" frameborder="0" style="border:0"
                                 src="https://maps.google.com/maps?q=+<%= offer.lieu_mission_lat %>+,+<%= offer.lieu_mission_long %>+&hl=fr&z=14&amp&output=embed"
                                 allowfullscreen>
                             </iframe>
-
                         </div>
                         <div class="col">
                             <div class="media-body">
@@ -113,7 +113,10 @@
                                         </p>
                                     </div>
                                     <div class="col-3 my-auto">
-                                        <button type="button" class="btn btn-primary">Candidater</button>
+                                        <a href="/offre/<%= offer.id %>">
+                                            <button type="button" class="btn btn-success">Informations
+                                                complémentaires</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +130,6 @@
 
 
 
-    <!-- Barre de navigation en bas -->
     <!-- Barre de navigation en bas -->
     <nav class="navbar navbar-inverse bg-body navbar-fixed-bottom" style="position: static">
         <div class="container-fluid d-flex justify-content-center mb-4">
