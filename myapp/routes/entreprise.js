@@ -20,6 +20,30 @@ app.get('/', function (req, res, next) {
     }
 });
 
+app.get('/entreprise_recruteur', function (req, res, next) {
+    if (req.session.loggedin) {
+        entrepriseModel.entrepriseRecruteur(req.session.username, function (err, result) {
+            if (result) {
+                if (result == null || err) {
+                    console.log("Aucun type d'organisation");
+                    res.redirect('/entreprise');
+                } else {
+                    console.log(result);
+                    res.render('entreprise_details', {
+                        title: 'Inscription',
+                        entreprises: result,
+                        username: req.session.username,
+                        type_user: req.session.type_user
+                    });
+                }
+            } else {
+                res.redirect('/login');
+            }
+        });
+    }
+});
+
+
 app.get('/inscription', function (req, res, next) {
     result = entrepriseModel.readTypeOrganisation(function (err, result) {
         if (req.session.loggedin) {
@@ -96,13 +120,13 @@ app.post('/inscription', function (req, res, next) {
             if (result) {
                 console.log("Latitude valide");
                 entrepriseModel.TEST_LONGITUDE(long, function (result) {
-                    if (result) { 
+                    if (result) {
                         entrepriseModel.isValidSIREN(siren, function (result) {
                             if (result) {
                                 if (type_organisation == "Autre") {
-                                    var  newType = req.body.newOrganisation;
+                                    var newType = req.body.newOrganisation;
                                     var newDescription = req.body.newDescription;
-                                    
+
                                     if (newType == null || newDescription == null || newType == "" || newDescription == "") {
                                         console.log("Données manquantes");
                                         return res.redirect('/entreprise/inscription');

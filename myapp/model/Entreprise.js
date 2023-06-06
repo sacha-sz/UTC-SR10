@@ -123,6 +123,23 @@ module.exports = {
         });
     },
 
+    entrepriseRecruteur : function(email, callback){
+        db.query("SELECT * FROM Organisation INNER JOIN Formulaire ON Formulaire.siren_orga = Organisation.siren WHERE Formulaire.email_utilisateur = ? AND Formulaire.etat_formulaire='ACCEPTEE'", [email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (results.length > 0) {
+                    console.log("Organisation trouvée avec succès");
+                    callback(null, results);
+                } else {
+                    console.log("Aucune organisation avec ce SIREN");
+                    callback(new Error("Aucune entreprise trouvée"), null);
+                }
+            }
+        });
+    },
+
+
 
     /// UPDATE
 
