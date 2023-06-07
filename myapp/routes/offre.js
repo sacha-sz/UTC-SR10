@@ -99,47 +99,49 @@ router.get('/:id', function (req, res, next) {
     // Récupérer les détails de l'offre à partir de la base de données ou d'une autre source de données
 });
 
+router.get('/recherche', async function (req, res, next) {
+    if (req.session.loggedin) {
+        try {
+            console.log("Recherche d'une offre");
+            const searchQuery = req.query.search;
+            const response = await fetch('http://localhost:3000/api/Offre_Emploie');
+            const data = await response.json();
+            console.log("data : ");
+            console.log(data);
+            // Fin de la recherche
+            const filteredData = data.filter((offre) => {
+                return offre.intitule.toLowerCase().includes(searchQuery.toLowerCase());
+            });
+            console.log("filteredData : ");
+            console.log(filteredData);
 
-// router.get('/recherche', async function (req, res, next) {
-//     if (req.session.loggedin) {
-//         try {
-//             console.log("Recherche d'une offre");
-//             const searchQuery = req.query.search;
-//             const response = await fetch('http://localhost:3000/api/Offre_Emploie');
-//             const data = await response.json();
-//             console.log("data : ");
-//             console.log(data);
-//             // Filtrer les offres en fonction de la recherche
-//             const filteredData = data.filter(offre => offre.intitule.toLowerCase().includes(searchQuery.toLowerCase()));
-//             console.log("filteredData : ");
-//             console.log(filteredData);
-//             // Pagination
-//             const page = parseInt(req.query.page) || 1;
-//             const perPage = 5;
-//             const totalItems = filteredData.length;
-//             const totalPages = Math.ceil(totalItems / perPage);
-//             const startIndex = (page - 1) * perPage;
-//             const endIndex = startIndex + perPage;
-//             const paginatedData = data.slice(startIndex, endIndex);
+            // Pagination
+            const page = parseInt(req.query.page) || 1;
+            const perPage = 5;
+            const totalItems = filteredData.length;
+            const totalPages = Math.ceil(totalItems / perPage);
+            const startIndex = (page - 1) * perPage;
+            const endIndex = startIndex + perPage;
+            const paginatedData = filteredData.slice(startIndex, endIndex);
 
-//             res.render('offre_emploi', {
-//                 title: 'Offre',
-//                 username: req.session.username,
-//                 type_user: req.session.type_user,
-//                 offres: paginatedData,
-//                 totalPages: totalPages
-//                 // Autres variables à passer à la vue
-//                 // ...
-//             });
-//         } catch (error) {
-//             console.error('Une erreur s\'est produite lors de la récupération des offres:', error);
-//             // Gérer l'erreur et renvoyer une réponse appropriée
-//             res.status(500).send('Une erreur s\'est produite lors de la récupération des offres');
-//         }
-//     } else {
-//         res.redirect('/login');
-//     }
-// });
+
+            res.render('offre_emploi', {
+                title: 'Offre',
+                username: req.session.username,
+                type_user: req.session.type_user,
+                offres: paginatedData,
+                totalPages: totalPages
+            });
+        } catch (error) {
+            console.error('Une erreur s\'est produite lors de la récupération des offres:', error);
+            // Gérer l'erreur et renvoyer une réponse appropriée
+            res.status(500).send('Une erreur s\'est produite lors de la récupération des offres');
+        }
+    } else {
+        res.redirect('/login');
+    }
+});
+
 
 
 router.post('/ajout', function (req, res, next) {
