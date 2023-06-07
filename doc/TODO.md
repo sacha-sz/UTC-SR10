@@ -11,8 +11,7 @@
 
 ### Si Recruteur :  
 
-- [ ] Devenir administrateur ?
-- [ ] Détails des candidats sur une offre
+- [ ] Détails des candidats sur une offre [SACHA]
 - [ ] Demande pour devenir admin(option) ?
 - [x] Implémenter Mes offres / Mon entreprise [TOBIAS] 
 
