@@ -24,7 +24,7 @@ router.get('/users', function (req, res, next) {
 // });
 
 router.get('/Offre_Emploie', function (req, res, next) {   
-    result = offerModel.readAllOffers(function(err, result){
+    result = offerModel.readAllValidOffers(function(err, result){
     res.status(200).send(result);
     });
 });

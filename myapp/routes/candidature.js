@@ -50,26 +50,15 @@ router.get('/formulaire_candidatures', function (req, res, next) {
     }
 });
 
-router.post('/formulaire_candidatures', upload.single('myFileInput'), function (req, res, next) {
+router.post('/upload_files', upload.single('myFileInput'), function (req, res, next) {
+    req.session.uploaded_files = [];
+
     if (!req.file) {
-        res.render('formulaire_candidature', {
-            title: 'Candidatures',
-            username: req.session.username,
-            type_user: req.session.type_user,
-            files_array: req.session.uploaded_files,
-            upload_error: 'Merci de sélectionner le fichier à charger !'
-        });
+        res.redirect('/candidate/formulaire_candidatures');
     } else {
         console.log(req.file.originalname, ' => ', req.file.filename);
         req.session.uploaded_files.push(req.file.filename);
-        res.render('formulaire_candidature', {
-            title: 'Candidatures',
-            username: req.session.username,
-            type_user: req.session.type_user,
-            files_array: req.session.uploaded_files,
-            uploaded_filename: req.file.filename,
-            uploaded_original: req.file.originalname
-        });
+        res.redirect('/');
     }
 });
 

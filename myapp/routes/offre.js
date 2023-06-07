@@ -25,6 +25,7 @@ router.get('/ajout_offre', function (req, res, next) {
 router.get('/offre_recruteur', function (req, res, next) {
     if (req.session.loggedin) {
         offreEmploiModel.getoffrebyrecruteur(req.session.username, function (err, result) {
+            console.log(result);
             if (result) {
                 // Pagination
                 const page = parseInt(req.query.page) || 1;

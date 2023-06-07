@@ -19,70 +19,20 @@
         <div class="row">
             <!-- Barre de recherche et filtres -->
 
-            <div class="form-inline container-fluid">
-                <div class="row">
-                    <div class="col">
-
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="search_field" placeholder="Recherche">
-                            <a href="/offre/recherche">
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="material-icons">
-                                        search
-                                    </span>
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="dropdown show">
-                            <button class="btn dropdown-toggle" type="button" href="" data-bs-toggle="dropdown"
-                                role="button" id="dropdownMenuLinkFiltreMetiers" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Filtre métiers
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltreMetiers">
-                                <a class="dropdown-item">Développeur</a>
-                                <a class="dropdown-item">Designer</a>
-                                <a class="dropdown-item">Comptable</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="dropdown show">
-                            <button class="btn dropdown-toggle" type="button" href="" role="button"
-                                data-bs-toggle="dropdown" id="dropdownMenuLinkFiltreSalaires" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Filtre salaires
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkFiltreSalaires">
-                                <a class="dropdown-item"> moins de 1000€</a>
-                                <a class="dropdown-item">1000€-2000€</a>
-                                <a class="dropdown-item">2000€-5000€</a>
-                                <a class="dropdown-item">plus de 5000€</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="dropdown show">
-                            <button class="btn dropdown-toggle" type="button" href="" role="button"
-                                id="dropdownMenuLinkTri" data-toggle="dropdown" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Tri
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkTri">
-                                <a class="dropdown-item">Date de modification</a>
-                                <a class="dropdown-item">Distance</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Tri -->
+            <div class="col">
+                <label for="sort">Trier par :</label>
+                <select class="form-select" id="sort" onchange="sortResults(this.value)">
+                    <option value="default" selected disabled>Choisir un critère</option>
+                    <option value="date_croissant">Date du + récent au + vieux</option>
+                    <option value="date_decroissant">Date du + vieux au + récent</option>
+                    <option value="distance">Distance</option>
+                </select>
             </div>
-            <br>
+
             <!-- Offres d'emploi -->
             <% offres.forEach((offer)=> { %>
-                <div class="container-fluid media pl-5 my-2">
+                <div class="container-fluid media pl-5 my-2" data-date_validite="<%= offer.date_validite %>">
                     <div class="row">
                         <div class="col-sm-auto my-auto border-2">
                             <iframe width="200" height="200" frameborder="0" style="border:0"
@@ -106,6 +56,12 @@
                                         <p>Salaire :<span id="salaire">
                                                 <%= offer.salaire_min %> - <%= offer.salaire_max %>
                                             </span>€/mois</p>
+                                        <p>Date validité : 
+                                            <script>
+                                                var date = new Date("<%= offer.date_validite %>");
+                                                document.write(date.toLocaleDateString());
+                                            </script>
+                                        </p>
                                         <p><b>Missions : <%= offer.TM_nom %></b>
                                         <p>
                                             <%= offer.TM_description %>
@@ -144,9 +100,51 @@
     </nav>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function sortResults(value) {
+            if (value === "date_croissant") {
+                var sorted = false;
+                while (!sorted) {
+                    sorted = true;
+                    $(".media").each(function (index) {
+                        var next = $(this).next();
+                        if (next.length == 0) {
+                            return;
+                        }
+                        var nextDate = new Date(next.data("date_validite")).toISOString().split('T')[0];
+                        var thisDate = new Date($(this).data("date_validite")).toISOString().split('T')[0];
+                        if (nextDate < thisDate) {
+                            sorted = false;
+                            next.after($(this));
+                        }
+                    });
+                }
+            }else if (value === "date_decroissant") {
+                var sorted = false;
+                while (!sorted) {
+                    sorted = true;
+                    $(".media").each(function (index) {
+                        var next = $(this).next();
+                        if (next.length == 0) {
+                            return;
+                        }
+                        var nextDate = new Date(next.data("date_validite")).toISOString().split('T')[0];
+                        var thisDate = new Date($(this).data("date_validite")).toISOString().split('T')[0];
+                        if (nextDate > thisDate) {
+                            sorted = false;
+                            next.after($(this));
+                        }
+                    });
+                }
+            }else if (value === "distance") {
+            }
+        }
+    </script>
+
+
 </body>
 
 <%- include('./partials/footer'); %>

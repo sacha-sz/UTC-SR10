@@ -1,0 +1,7 @@
+{
+    "watch": ["**/*"],
+    "ext": ".ts,.js",
+    "ignore": ["*.test.ts"],
+    "legacyWatch": true,
+    "exec": "node ./bin/www"
+}

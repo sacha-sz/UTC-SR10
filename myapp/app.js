@@ -5,6 +5,8 @@ var logger = require('morgan');
 var express = require('express');
 var session = require('express-session');
 var cors = require('cors');
+var multer = require('multer');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -32,10 +34,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+app.use(cors( {
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 app.use(session({
-    secret: 'Je suis un secret',
+    secret: 'Ca cest pas grave ca cest bien, je suis un secret',
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 } // 1h
@@ -61,6 +66,7 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
+    console.log(err);
     if (res.status(404)) {
         if (req.session.loggedin) {
             res.render('404', {

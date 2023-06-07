@@ -9,8 +9,16 @@ var path = require('path');
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
+function checkAdmin(req, res, next) {
+    if (req.session.type_user == "ADMINISTRATEUR") {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
 
-app.get('/gestion_utilisateur', function (req, res, next) {
+
+app.get('/gestion_utilisateur',checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         userModel.readall(function (err, result) {
             if (err) {
@@ -31,7 +39,7 @@ app.get('/gestion_utilisateur', function (req, res, next) {
     }
 });
 
-app.get('/gestion_entreprise', function (req, res, next) {
+app.get('/gestion_entreprise', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         entrepriseModel.readall(function (err, result) {
             if (err) {
@@ -52,7 +60,7 @@ app.get('/gestion_entreprise', function (req, res, next) {
     }
 });
 
-app.post('/passer_admin', function (req, res, next) {
+app.post('/passer_admin', checkAdmin, function (req, res, next) {
     adminModel.updateTypeUtilisateur(req.body.email, "ADMINISTRATEUR", function (err, result) {
         if (err) {
             // Gérer l'erreur si nécessaire
@@ -66,14 +74,14 @@ app.post('/passer_admin', function (req, res, next) {
 
 
 
-app.post('/passer_recruteur', function (req, res, next) {
+app.post('/passer_recruteur', checkAdmin, function (req, res, next) {
     // TODO : passer le type de l'utilisateur à "RECRUTEUR"
     // Demander le siren de l'entreprise
     // Peut être faire une branchement vers entreprise ?
 });
 
 
-app.post('/delete_entreprise', function (req, res, next) {
+app.post('/delete_entreprise',checkAdmin,  function (req, res, next) {
     entrepriseModel.delete(req.body.siren, function (err, result) {
         if (err) {
             // Gérer l'erreur si nécessaire
