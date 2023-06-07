@@ -51,8 +51,18 @@ router.get('/offre_recruteur', function (req, res, next) {
 
 router.get('/', async function (req, res, next) {
     if (req.session.loggedin) {
+        console.log(req.query);
         try {
-            const response = await fetch('http://localhost:3000/api/Offre_Emploie');
+            var response;
+            if (req.query.search != undefined && req.query.sort != undefined) {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie?search=' + req.query.search + '&sort=' + req.query.sort);
+            } else if (req.query.search != undefined) {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie?search=' + req.query.search);
+            } else if (req.query.sort != undefined) {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie?sort=' + req.query.sort);
+            } else {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie');
+            }
             const data = await response.json();
 
             // Pagination

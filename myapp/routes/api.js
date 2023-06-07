@@ -11,9 +11,9 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 
 router.get('/users', function (req, res, next) {
-    result = userModel.readall(function(err, result){
-    res.status(200).send(result);
-    // res.render('userList', { user : result });
+    result = userModel.readall(function (err, result) {
+        res.status(200).send(result);
+        // res.render('userList', { user : result });
     });
 });
 
@@ -23,10 +23,44 @@ router.get('/users', function (req, res, next) {
 //     });
 // });
 
-router.get('/Offre_Emploie', function (req, res, next) {   
-    result = offerModel.readAllValidOffers(function(err, result){
-    res.status(200).send(result);
-    });
+router.get('/Offre_Emploie', function (req, res, next) {
+    if (req.query.sort != undefined && req.query.search != undefined) {
+        if (req.query.sort == "date_decroissante") {
+            result = offerModel.readAllValidOffers_desc_search(req.query.search, function (err, result) {
+                res.status(200).send(result);
+            });
+        } else if (req.query.sort == "distance_nearest") {
+            result = offerModel.readAllValidOffers_dist_search(req.query.search, function (err, result) {
+                res.status(200).send(result);
+            });
+        } else {
+            result = offerModel.readAllValidOffers_search(req.session.username, req.query.search, function (err, result) {
+                res.status(200).send(result);
+            });
+        }
+    } else if (req.query.sort != undefined) {
+        if (req.query.sort == "date_decroissante") {
+            result = offerModel.readAllValidOffers_desc(function (err, result) {
+                res.status(200).send(result);
+            });
+        } else if (req.query.sort == "distance_nearest") {
+            result = offerModel.readAllValidOffers_dist(req.session.username, function (err, result) {
+                res.status(200).send(result);
+            });
+        } else {
+            result = offerModel.readAllValidOffers(function (err, result) {
+                res.status(200).send(result);
+            });
+        }
+    } else if (req.query.search != undefined) {
+        result = offerModel.readAllValidOffers_search(req.query.search, function (err, result) {
+            res.status(200).send(result);
+        });
+    } else {
+        result = offerModel.readAllValidOffers(function (err, result) {
+            res.status(200).send(result);
+        });
+    }
 });
 
 module.exports = router;
