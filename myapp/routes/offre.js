@@ -43,6 +43,15 @@ router.get('/offre_recruteur', function (req, res, next) {
                     totalPages: totalPages
                 });
             }
+            if(err){
+                res.render('offre_recruteur', {
+                    title: 'Offre',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    offres: null,
+                    totalPages: 0
+                });
+            }
         });
     } else {
         res.redirect('/login');
