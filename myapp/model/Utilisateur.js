@@ -118,7 +118,7 @@ module.exports = {
     },
 
     getInfos: function (email, callback) {
-        db.query("SELECT nom, prenom, telephone, sexe, date_naissance, adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = ", [email], function (err, results) {
+        db.query("SELECT nom, prenom, telephone, type_utilisateur  FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {

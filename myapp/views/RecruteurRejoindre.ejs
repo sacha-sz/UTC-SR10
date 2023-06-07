@@ -13,7 +13,7 @@
 <body>
 
     <div class="container">
-        <h1 class="text-center">Liste des entreprises</h1>
+        <h1 class="text-center">Liste des personnes souhaitant rejoindre votre entreprise</h1>
         <% entreprises.forEach((entreprise)=> { %>
             <div class="container-fluid media ml-5 mr-5 my-2">
                 <div class="row">
@@ -24,13 +24,11 @@
                                     <div class="d-flex">
                                         <div style="justify-content : center;">
                                             <h4 class="media-heading">
-                                                <%= entreprise.nom %>
+                                                <%= entreprise.ORG_nom %>
                                             </h4>
-                                            <p> </p>
-                                            <p>SIREN : <%= entreprise.siren %>
-                                            </p>
-                                            <p>Type : <%= entreprise.type_organisation %>
-                                            </p>
+                                            <p>Nom du demandeur : <%= entreprise.nom %></p>
+                                            <p>Prénom du demandeur : <%= entreprise.prenom %></p>
+                                            <p>Email : <%= entreprise.email %></p>
                                         </div>
                                     </div>
                                 </div>
@@ -38,14 +36,13 @@
 
                                 <div class="col-auto my-auto">
                                     <div class="d-flex">
-                                        <form action="/admin/delete_entreprise" method="POST">
+                                        <form action="/admin/accept_entreprise" method="POST">
                                             <input type="hidden" name="siren" value="<%= entreprise.siren %>">
-                                            <button type="submit" class="btn btn-danger">Supprimer l'entreprise</button>
+                                            <input type="hidden" name="user" value="<%= entreprise.email %>">
+                                            <button type="submit" class="btn btn-success">Accepter l'entreprise</button>
                                         </form>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

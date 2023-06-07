@@ -260,6 +260,7 @@ app.post('/delete_user', function (req, res, next) {
 
 app.get('/my_profile', function (req, res, next) {
     if (req.session.loggedin) {
+        console.log(req.session.username);
         userModel.getInfos(req.session.username, function (err, result) {
             if (result != null) {
                 console.log("Affichage du profil de l'utilisateur");
