@@ -13,28 +13,26 @@ app.use(express.static(path.join(__dirname, 'static')));
 router.get('/users', function (req, res, next) {
     result = userModel.readall(function (err, result) {
         res.status(200).send(result);
-        // res.render('userList', { user : result });
     });
 });
 
-// router.get('/users:id', function (req, res, next) {
-//     result = userModel.read(req.params.id, function(err, result){
-//     res.status(200).send(result);
-//     });
-// });
 
 router.get('/Offre_Emploie', function (req, res, next) {
+    console.log(req.query);
+    console.log(req.query.lat);
+    console.log(req.query.long);
+
     if (req.query.sort != undefined && req.query.search != undefined) {
         if (req.query.sort == "date_decroissante") {
             result = offerModel.readAllValidOffers_desc_search(req.query.search, function (err, result) {
                 res.status(200).send(result);
             });
         } else if (req.query.sort == "distance_nearest") {
-            result = offerModel.readAllValidOffers_dist_search(req.query.search, function (err, result) {
+            result = offerModel.readAllValidOffers_dist_search(req.query.lat, req.query.long, req.query.search, function (err, result) {
                 res.status(200).send(result);
             });
         } else {
-            result = offerModel.readAllValidOffers_search(req.session.username, req.query.search, function (err, result) {
+            result = offerModel.readAllValidOffers_search(req.query.search, function (err, result) {
                 res.status(200).send(result);
             });
         }
@@ -44,10 +42,11 @@ router.get('/Offre_Emploie', function (req, res, next) {
                 res.status(200).send(result);
             });
         } else if (req.query.sort == "distance_nearest") {
-            result = offerModel.readAllValidOffers_dist(req.session.username, function (err, result) {
+            result = offerModel.readAllValidOffers_dist(req.query.lat, req.query.long, function (err, result) {
+                console.log(result);
                 res.status(200).send(result);
             });
-        } else {
+        } else {    
             result = offerModel.readAllValidOffers(function (err, result) {
                 res.status(200).send(result);
             });

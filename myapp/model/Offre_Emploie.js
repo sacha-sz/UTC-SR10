@@ -77,11 +77,11 @@ module.exports = {
             if (err) {
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucune offre"), results);
+                callback(null, results);
             }
         });
     },
-    
+
     readAllValidOffers_desc_search: function (query, callback) {
         var escapedQuery = '%' + query + '%';
         db.query("SELECT DISTINCT\
@@ -110,7 +110,7 @@ module.exports = {
             if (err) {
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucune offre"), results);
+                callback(null, results);
             }
         });
     },
@@ -145,58 +145,47 @@ module.exports = {
                 console.log(err);
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucune offre"), results);
+                callback(null, results);
             }
         });
     },
 
 
-    readAllValidOffers_dist: function (username, callback) {
-        console.log(username);
-        db.query("SELECT adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = ?", [username], function (err, results) {
+    readAllValidOffers_dist: function (latitude, longitude, callback) {
+        db.query("SELECT DISTINCT\
+            OE.id, OE.date_validite, OE.indication_piece_jointes, \
+            FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
+            SP.nom AS SP_nom, SP.description AS SP_description, \
+            TM.nom AS TM_nom, TM.description AS TM_description, \
+            ORG.nom AS ORG_nom, \
+            DE.missions, DE.activites, DE.competences_attendues \
+            FROM Offre_d_emploi AS OE \
+            INNER JOIN Fiche_poste AS FP \
+            ON OE.id_poste = FP.numero \
+            INNER JOIN Statut_poste AS SP \
+            ON FP.statut_poste = SP.nom \
+            INNER JOIN Type_metier AS TM \
+            ON FP.type_metier = TM.nom \
+            INNER JOIN Formulaire AS FO \
+            ON FO.email_utilisateur = FP.email_inscription \
+            INNER JOIN Description AS DE \
+            ON DE.numero = FP.id_description \
+            INNER JOIN Organisation as ORG \
+            ON ORG.siren = FO.siren_orga \
+            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = 'ACCEPTEE' AND\
+            OE.date_validite >= CAST(NOW() AS DATE) \
+            ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [latitude, longitude], function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
                 console.log(results);
-                var lat = results[0].adresse_utilisateur_lat;
-                var long = results[0].adresse_utilisateur_long;
-
-                db.query("SELECT DISTINCT\
-                OE.id, OE.date_validite, OE.indication_piece_jointes, \
-                FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
-                SP.nom AS SP_nom, SP.description AS SP_description, \
-                TM.nom AS TM_nom, TM.description AS TM_description, \
-                ORG.nom AS ORG_nom, \
-                DE.missions, DE.activites, DE.competences_attendues \
-                FROM Offre_d_emploi AS OE \
-                INNER JOIN Fiche_poste AS FP \
-                ON OE.id_poste = FP.numero \
-                INNER JOIN Statut_poste AS SP \
-                ON FP.statut_poste = SP.nom \
-                INNER JOIN Type_metier AS TM \
-                ON FP.type_metier = TM.nom \
-                INNER JOIN Formulaire AS FO \
-                ON FO.email_utilisateur = FP.email_inscription \
-                INNER JOIN Description AS DE \
-                ON DE.numero = FP.id_description \
-                INNER JOIN Organisation as ORG \
-                ON ORG.siren = FO.siren_orga \
-                WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
-                OE.date_validite >= CAST(NOW() AS DATE) \
-                ORDER BY ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [lat, long], function (err, results) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        callback(new TypeError("Aucune offre"), results);
-                    }
-                });
+                callback(null, results);
             }
         });
     },
-    
-    readAllValidOffers_dist_search: function (username, query, callback) {
-        var lat = getLat(username);
-        var long = getLong(username);
+
+
+    readAllValidOffers_dist_search: function (latitude, longitude, query, callback) {
         var escapedQuery = '%' + query + '%';
         db.query("SELECT DISTINCT\
         OE.id, OE.date_validite, OE.indication_piece_jointes, \
@@ -220,11 +209,11 @@ module.exports = {
         ON ORG.siren = FO.siren_orga \
         WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
         OE.date_validite >= CAST(NOW() AS DATE)  AND LOWER(FP.intitule) LIKE LOWER(?) \
-        ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [escapedQuery, lat, long], function (err, results) {
+        ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [escapedQuery, latitude, longitude], function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucune offre"), results);
+                callback(null, results);
             }
         });
     },
@@ -259,7 +248,7 @@ module.exports = {
             if (err) {
                 callback(err, null);
             } else {
-                callback(new TypeError("Aucune offre"), results);
+                callback(null, results);
             }
         });
     },
@@ -382,23 +371,5 @@ module.exports = {
                 }
             }
         });
-    },
-
-    getLat: function (username, callback) {
-        db.query("SELECT adresse_utilisateur_lat FROM Utilisateur WHERE email = ?;", [username], function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            callback(results);
-        }
-        );
-    },
-
-    getLong: function (username, callback) {
-        db.query("SELECT adresse_utilisateur_long FROM Utilisateur WHERE email = ?;", [username], function (err, results) {
-            if (err) throw err;
-            console.log(results);
-            callback(results);
-        }
-        );
     },
 };

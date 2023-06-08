@@ -136,12 +136,23 @@
 
     <script>
         function sortResults(value) {
-            if (value === "date_croissante") {
-                document.location.href = "/offre?sort=date_croissante";
-            }else if (value === "date_decroissante") {
-                document.location.href = "/offre?sort=date_decroissante";
-            }else if (value === "distance") {
-                document.location.href = "/offre?sort=distance_nearest";
+            var param_search = new URLSearchParams(window.location.search).get('search');
+            if (param_search === null) {
+                if (value === "date_croissante") {
+                    document.location.href = "/offre?sort=date_croissante";
+                }else if (value === "date_decroissante") {
+                    document.location.href = "/offre?sort=date_decroissante";
+                }else if (value === "distance") {
+                    document.location.href = "/offre?sort=distance_nearest&lat=<%= lat %>&long=<%= long %>";
+                }
+            }else{
+                if (value === "date_croissante") {
+                    document.location.href = "/offre?sort=date_croissante&search="+param_search;
+                }else if (value === "date_decroissante") {
+                    document.location.href = "/offre?sort=date_decroissante&search="+param_search;
+                }else if (value === "distance") {
+                    document.location.href = "/offre?sort=distance_nearest&lat=<%= lat %>&long=<%= long %>&search="+param_search;
+                }
             }
         }
     </script>

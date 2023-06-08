@@ -129,6 +129,18 @@ module.exports = {
         });
     },
 
+    getLatLong: function (email, callback) {
+        db.query("SELECT adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = ?", [email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else if (results.length == 0) {
+                callback(new TypeError("Aucun utilisateur avec cet email"), null);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
