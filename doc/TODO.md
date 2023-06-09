@@ -1,21 +1,28 @@
 # TODO 
 
 ### Général :  
-- [x] Télécharger fichier pour candidature(OK)  
-- [x] Tri des offres (filtre + recherche) [SACHA]
  
 
 ### Si candidat :  
-- [x] implémenter Mes documents [TOBIAS]
   
 
 ### Si Recruteur :  
 
-- [x] Détails des candidats sur une offre [SACHA]
 - [ ] Demande pour devenir admin(option) ?
-- [x] Implémenter Mes offres / Mon entreprise [TOBIAS] 
+- [x] Implémenter Mes offres / Mon entreprise [TOBIAS] (A vérifier)
 
 
 ### Si Administrateur :  
-- [x] Accepter la première personne qui veut rejoindre une entreprise [SACHA]
+
 - [ ] Accepter les demandes d'admin
+
+
+Tobias :
+- SIREN BDD
+- Demander siren dans l'ajout d'une offre
+- Nb tentatives mdp
+
+
+Sacha :
+- Chiffrement mdp
+- Récupérer dossier des candidats (Afficher les candidats sur une offre et possibilité de télécharger les fichiers)
