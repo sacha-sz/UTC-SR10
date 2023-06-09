@@ -18,7 +18,6 @@
 
 
 Tobias :
-- SIREN BDD
 - Demander siren dans l'ajout d'une offre
 - Nb tentatives mdp
 

@@ -18,10 +18,17 @@ app.get('/', function (req, res, next) {
             type_user: req.session.type_user
         });
     } else {
-        res.render('connexion', {
-            title: 'Connexion',
-            msg: req.session.msg
-        });
+        if (req.session.tempsRestant === undefined) {
+            res.render('connexion', {
+                title: 'Connexion',
+                msg: req.session.msg
+            });
+        } else {
+            res.render('connexion', {
+                title: 'Connexion',
+                msg: `Trop de tentatives de connexion. Veuillez réessayer dans ${req.session.tempsRestant} minute(s).`
+            });
+        }
     }
 });
 
@@ -38,59 +45,54 @@ app.post('/auth', function (req, res, next) {
     var password = req.body.password;
 
     // Test que toutes les données soient correctement renseignées
-    if (email == null || password == null || email == "" || password == "") {
+    if (email == null || email == "") {
         console.log("Données manquantes");
-        req.session.msg = "Données manquantes";
-        res.redirect('/login');
-    } else {
-        if (req.session.failedAttempts > 3) {
-            console.log("Trop de tentatives de connexion");
-            var currentTime = new Date().getTime();
-            var lastAttemptTime = req.session.lastAttemptTime || currentTime;
-            var timeDiff = currentTime - lastAttemptTime;
-            var minutesElapsed = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        req.session.msg = "Email Invalide";
+        return res.redirect('/login');
+    } else if (password == null || password == "") {
+        console.log("Données manquantes");
+        req.session.msg = "Mot de passe Invalide";
+        return res.redirect('/login');
+    }
 
-            if (minutesElapsed < 1) {
-                // Attendez une minute avant de permettre à l'utilisateur de réessayer
-                var remainingTime = 1 - minutesElapsed;
-                res.render('connexion', {
-                    title: 'Connexion',
-                    msg: `Trop de tentatives de connexion. Veuillez réessayer dans ${remainingTime} minute(s).`
-                });
-                return;
+    loginModel.areValid_login(email, password, function (result, type) {
+        if (result == true && type != null) {
+            console.log("Utilisateur connecté");
+            req.session.loggedin = true;
+            req.session.username = email;
+            req.session.type_user = type;
+            return res.redirect('/');
+        } else {
+            console.log("Utilisateur non connecté");
+            // Incrémentez le compteur de tentatives échouées
+            req.session.failedAttempts = req.session.failedAttempts || 0;
+            req.session.failedAttempts++;
+            console.error("Tentatives de connexion échouées: " + req.session.failedAttempts);
+
+            if (req.session.failedAttempts > 2) {
+                var currentTime = new Date().getTime();
+                var lastAttemptTime = req.session.lastAttemptTime || currentTime;
+                var timeDiff = currentTime - lastAttemptTime;
+                var minutesElapsed = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+                if (minutesElapsed < req.session.failedAttempts - 1) {
+                    // Attendez le nombre d'essais ratés + 1 en minutes avant de permettre à l'utilisateur de réessayer
+                    var remainingTime = req.session.failedAttempts - minutesElapsed;
+                    req.session.tempsRestant = remainingTime;
+                    return res.redirect('/login');
+                } else {
+                    // Réinitialisez le compteur de tentatives échouées et mettez à jour le dernier temps d'essai
+                    req.session.failedAttempts = 1;
+                    req.session.lastAttemptTime = currentTime + (1000 * 60); // Ajoute une minute supplémentaire
+                    return res.redirect('/login');
+                }
             } else {
-                // Réinitialisez le compteur de tentatives échouées
-                req.session.failedAttempts = 0;
-                req.session.lastAttemptTime = currentTime + (1000 * 60); // Ajoute une minute à l'heure actuelle
+                req.session.lastAttemptTime = new Date().getTime();
+                return res.redirect('/login');
             }
         }
-
-        loginModel.areValid_login(email, password, function (result, type) {
-            if (result == true && type != null) {
-                console.log("Utilisateur connecté");
-                req.session.loggedin = true;
-                req.session.username = email;
-                req.session.type_user = type;
-                // req.session.failedAttempts = 0; // Réinitialisez le compteur de tentatives échouées
-                res.redirect('/');
-            } else {
-                console.log("Utilisateur non connecté");
-                if(req.session.failedAttempts === undefined){
-                    req.session.failedAttempts = 1;
-                } else {
-                    req.session.failedAttempts++;
-                }
-                console.log(req.session.failedAttempts);
-                req.session.lastAttemptTime = new Date().getTime();
-                if (req.session.failedAttempts >= 3) {
-                    req.session.msg = "Trop de tentatives de connexion";
-                } else {
-                    req.session.msg = "Utilisateur non connecté";
-                }
-                res.redirect('/login');
-            }
-        });
-    }
+    });
 });
+
 
 module.exports = app;
