@@ -6,6 +6,7 @@ var offreEmploiModel = require('../model/Offre_Emploie');
 var userModel = require('../model/Utilisateur');
 var app = express();
 var path = require('path');
+const { stat } = require('fs');
 
 
 app.use(express.json());
@@ -15,13 +16,17 @@ router.get('/ajout_offre', function (req, res, next) {
     if (req.session.loggedin) {
         offreModel.readAllStatut(function (result) {
             console.log(result);
-        res.render('ajout_offre', {
-            title: 'Ajout d\'une offre',
-            username: req.session.username,
-            type_user: req.session.type_user,
-            statuts: result
+            offreModel.readSIRENUser(req.session.username, function (siren) {
+                console.log(siren);
+                res.render('ajout_offre', {
+                    title: 'Ajout d\'une offre',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    statuts: result,
+                    sirens: siren
+                });
+            });
         });
-    });
     } else {
         res.redirect('/login');
     }
@@ -48,7 +53,7 @@ router.get('/offre_recruteur', function (req, res, next) {
                     totalPages: totalPages
                 });
             }
-            if(err){
+            if (err) {
                 res.render('offre_recruteur', {
                     title: 'Offre',
                     username: req.session.username,
@@ -103,8 +108,8 @@ router.get('/', async function (req, res, next) {
                         title: 'Offre',
                         username: req.session.username,
                         type_user: req.session.type_user,
-                        lat : latitude,
-                        long : longitude,
+                        lat: latitude,
+                        long: longitude,
                         offres: paginatedData,
                         totalPages: totalPages
                     });
@@ -191,16 +196,18 @@ router.post('/ajout', function (req, res, next) {
     console.log('Ajout d\'une offre');
     var intitule = req.body.intitule;
     var description = req.body.description;
-    var responsable = req.session.username;
+    var responsable = req.body.responsable;
     var lat = req.body.lat;
     var long = req.body.long;
     var rythme = req.body.rythme;
-    var salaire = req.body.salaire;
+    var salaire_min = req.body.salaire_min;
+    var salaire_max = req.body.salaire_max;
     var missions = req.body.missions;
     var activites = req.body.activites;
     var competences = req.body.competences;
     var statut = req.body.statut;
     var type_metier = req.body.type_metier;
+    const siren = req.body.siren;
     console.log(intitule);
     console.log(description);
     console.log(responsable);
@@ -212,14 +219,15 @@ router.post('/ajout', function (req, res, next) {
     console.log(activites);
     console.log(competences);
     console.log(statut);
-    if (intitule == null || intitule == "" || description == null || description == "" || responsable == null || responsable == "" || lat == null || lat == "" || long == null || long == "" || rythme == null || rythme == "" || salaire == null || salaire == "" || missions == null || missions == "" || activites == null || activites == "" || competences == null || competences == "" || statut == null || statut == "" || type_metier == null || type_metier == "") {
+    console.log(siren);
+    if (intitule == null || intitule == "" || description == null || description == "" || responsable == null || responsable == "" || lat == null || lat == "" || long == null || long == "" || rythme == null || rythme == "" || salaire == null || salaire == "" || missions == null || missions == "" || activites == null || activites == "" || competences == null || competences == "" || statut == null || statut == "" || type_metier == null || type_metier == ""|| siren == null || siren == "") {
         console.log("Elements manquants manquant");
         return res.redirect('/offre/ajout_offre');
     }
-    if(statut == "Autre"){
+    if (statut == "Autre") {
         const newStatut = req.body.newNom;
         const newStatutDescription = req.body.newDescription;
-        if(newStatut == null || newStatut == "" || newStatutDescription == null || newStatutDescription == ""){
+        if (newStatut == null || newStatut == "" || newStatutDescription == null || newStatutDescription == "") {
             console.log("Elements manquants manquant");
             return res.redirect('/offre/ajout_offre');
         }
@@ -230,10 +238,11 @@ router.post('/ajout', function (req, res, next) {
                 res.redirect('/offre/ajout_offre');
             }
         }
-        );    
+        );
         // A compléter 
+        statut = newStatut;
     }
-    offreModel.create(intitule, description, responsable, lat, long, rythme, salaire, missions, activites, competences, statut, type_metier, function (result) {
+    offreModel.create(intitule, responsable, lat, long,description, rythme, salaire_min, salaire_max,statut,type_metier, req.session.username, missions, activites, competences,   function (result) {
         if (result) {
             console.log("Offre créée");
             res.redirect('/');

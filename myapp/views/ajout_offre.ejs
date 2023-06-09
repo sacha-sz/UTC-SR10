@@ -28,6 +28,11 @@
                                     placeholder="Entrez l'intitulé du poste">
                             </div>
                             <div class="mb-3">
+                                <label for="responsable" class="form-label">Responsable :</label>
+                                <input autofocus name="responsable" type="text" class="form-control" id="responsable"
+                                    placeholder="Entrez le nom du responsable">
+                            </div>
+                            <div class="mb-3">
                                 <label for="lat" class="form-label">Latitude :</label>
                                 <input name="lat" type="number" class="form-control" id="lat"
                                     placeholder="Entrez la latitude du siège social" step="0.00001">
@@ -43,9 +48,14 @@
                                     placeholder="Entrez le rythme (ex : 35h/semaine)" step="0.5">
                             </div>
                             <div class="mb-3">
-                                <label for="salaire" class="form-label">Salaire :</label>
-                                <input autofocus name="salaire" type="number" class="form-control" id="salaire"
-                                    placeholder="Entrez le salaire (ex : 1950 €/mois)" step="1">
+                                <label for="salaire_min" class="form-label">Salaire minimum :</label>
+                                <input autofocus name="salaire_min" type="number" class="form-control" id="salaire_min"
+                                    placeholder="Entrez le salaire minimum (ex : 1950 €/mois)" step="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="salaire_max" class="form-label">Salaire maximum :</label>
+                                <input autofocus name="salaire_max" type="number" class="form-control" id="salaire_max"
+                                    placeholder="Entrez le Salaire maximum (ex : 1950 €/mois)" step="1">
                             </div>
                             <div class="mb-3">
                                 <label for="missions" class="form-label">Missions :</label>
@@ -74,6 +84,16 @@
                             </div> -->
                             <!-- Gestion du statut -->
                             <div class="mb-3">
+                                <label for="siren" class="form-label">Siren de l'entreprise :</label>
+                                <select id="siren" name="siren" class="form-select">
+                                    <% sirens.forEach((siren)=> { %>
+                                        <option>
+                                            <%= siren.siren_orga %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="statut" class="form-label">Statut :</label>
                                 <select id="statut" name="statut" class="form-select">
                                     <% statuts.forEach((statut)=> { %>
@@ -89,7 +109,7 @@
                                 <div class="mb-3">
                                     <label for="newNom" class="form-label">Statut :</label>
                                     <input name="newNom" class="form-control" id="newNom" rows="3"
-                                        placeholder="Le nouveau statut">
+                                        placeholder="Entrez le nouveau statut">
                                 </div>
                                 <div class="mb-3">
                                     <label for="newDescription" class="form-label">Description :</label>
