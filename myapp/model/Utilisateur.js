@@ -1,6 +1,6 @@
 // Créer un fichier par table de la base de données
-
 var db = require('./ConnexionBDD.js');
+var pass = require('./Pass.js');
 
 module.exports = {
 
@@ -51,37 +51,27 @@ module.exports = {
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
         var lat = latitude;
         var lng = longitude;
-        var sql_create = "INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) VALUES (";
-        sql_create += "\"" + mysql.escape(email) + "\", ";
-        sql_create += "\"" + mysql.escape(password) + "\", ";
-        sql_create += "\"" + mysql.escape(nom) + "\", ";
-        sql_create += "\"" + mysql.escape(prenom) + "\", ";
-        sql_create += "\"" + mysql.escape(ddn) + "\", ";
-        sql_create += "\"" + mysql.escape(date_creation) + "\", ";
-        sql_create += "true, ";
-        sql_create += "\"" + mysql.escape(tel) + "\", ";
-        sql_create += mysql.escape(lat) + ", ";
-        sql_create += mysql.escape(lng) + ", ";
-        sql_create += "\"" + mysql.escape(sexe) + "\", ";
-        sql_create += "\"CANDIDAT\");";
-        rows = db.query(sql_create, function (err, results) {
-            if (err) {
-                console.log("Erreur : " + err.message);
-                callback(err, false);
-            } else {
-                if (results.affectedRows > 0) {
-                    console.log("Utilisateur ajouté avec succès.");
-                    callback(err, true);
-                } else {
-                    console.log("Erreur : Aucun utilisateur ajouté.");
+        pass.generateHash(password, function (hash) {
+            rows = db.query("INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) \
+            VALUES(?, ?, ?, ?, ?, ?, true, ?, ?, ?, ?, 'CANDIDAT');", [email, hash, nom, prenom, ddn, date_creation, tel, lat, lng, sexe], function (err, results) {
+                if (err) {
+                    console.log("Erreur : " + err.message);
                     callback(err, false);
+                } else {
+                    if (results.affectedRows > 0) {
+                        console.log("Utilisateur ajouté avec succès.");
+                        callback(err, true);
+                    } else {
+                        console.log("Erreur : Aucun utilisateur ajouté.");
+                        callback(err, false);
+                    }
                 }
-            }
+            });
         });
     },
 
     read: function (email, callback) {
-        db.query("SELECT * FROM Utilisateur WHERE email = ?",[email] , function (err, results) {
+        db.query("SELECT * FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else if (results.length == 0) {
@@ -144,7 +134,7 @@ module.exports = {
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
-        rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =" , [new_nom, email],function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =", [new_nom, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -156,7 +146,7 @@ module.exports = {
     },
 
     updatePrenom: function (email, new_prenom, callback) {
-        rows = db.query("UPDATE Utilisateur SET prenom = ? WHERE email = ?" , [new_prenom, email], function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET prenom = ? WHERE email = ?", [new_prenom, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -168,7 +158,7 @@ module.exports = {
     },
 
     updateSexe: function (email, new_sexe, callback) {
-        rows = db.query("UPDATE Utilisateur SET sexe = ?  WHERE email = ?",[new_sexe, email] ,function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET sexe = ?  WHERE email = ?", [new_sexe, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
@@ -184,7 +174,7 @@ module.exports = {
     /// DELETE
 
     delete: function (email, callback) {
-        db.query("DELETE FROM Utilisateur WHERE email = ?" , [email],function (err, results) {
+        db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
