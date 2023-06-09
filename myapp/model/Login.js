@@ -6,9 +6,6 @@ module.exports = {
         db.query("SELECT password, type_utilisateur FROM Utilisateur WHERE email = ?;", [email], function (err, results) {
             if (err) throw err;
             var hash = results[0].password;
-            pass.generateHash(password, function (hash) {
-                console.log(hash);
-            });
 
             if (results.length == 1) {
                 pass.comparePassword(password, hash, function (result) {
