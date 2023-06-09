@@ -228,7 +228,7 @@ app.post('/changed_infos', function (req, res, next) {
         if (values.includes(false)) {
             res.redirect('/users/change_profile');
         } else {
-            res.redirect('/');
+            res.redirect('/users/change_profile');
         }
     });
 });

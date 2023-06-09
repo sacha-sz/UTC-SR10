@@ -15,11 +15,13 @@
     <h1 class="text-center">Mes candidatures</h1>
     <% if (candidatures.length===0) { %>
         <div class="container">
-            <div class="alert alert-danger text-center" role="alert">
+            <div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
                 Il semble que vous n'ayez pas encore postulé à une offre d'emploi.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="alert alert-success text-center" role="alert">
+            <div class="alert alert-success alert-dismissible text-center fade show" role="alert">
                 Pourquoi ne pas commencer dès maintenant ?
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="text-center">
                 <a href="/offre" class="btn btn-m" role="button"><img src="../IMG/yoda.png" alt="Yoda"> </a>

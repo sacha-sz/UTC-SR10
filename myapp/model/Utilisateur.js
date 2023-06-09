@@ -134,7 +134,7 @@ module.exports = {
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
-        rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =", [new_nom, email], function (err, results) {
+        rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =?", [new_nom, email], function (err, results) {
             if (err) {
                 console.log("Erreur : " + err.message);
                 callback(err, false);
