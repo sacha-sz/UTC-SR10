@@ -23,25 +23,29 @@ app.get('/', function (req, res, next) {
 app.get('/entreprise_recruteur', function (req, res, next) {
     if (req.session.loggedin) {
         entrepriseModel.entrepriseRecruteur(req.session.username, function (err, result) {
-            if (result) {
-                if (result == null || err) {
-                    console.log("Aucun type d'organisation");
-                    res.redirect('/entreprise');
-                } else {
-                    console.log(result);
-                    res.render('entreprise_details', {
-                        title: 'Inscription',
-                        entreprises: result,
-                        username: req.session.username,
-                        type_user: req.session.type_user
-                    });
-                }
+            if (result == null || err) {
+                console.log("Aucun type d'organisation");
+                res.render('entreprise_details', {
+                    title: 'Entreprises',
+                    entreprises: null,
+                    username: req.session.username,
+                    type_user: req.session.type_user
+                });
             } else {
-                res.redirect('/login');
+                console.log(result);
+                res.render('entreprise_details', {
+                    title: 'Entreprises',
+                    entreprises: result,
+                    username: req.session.username,
+                    type_user: req.session.type_user
+                });
             }
         });
+    } else {
+        res.redirect('/login');
     }
 });
+
 
 
 app.get('/inscription', function (req, res, next) {

@@ -19,7 +19,20 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <br>
+
+    <% if (entreprises === null) { %>
+        <div class="container">
+            <h1 class="text-center">Mes Entreprises</h1>
+            <div class="alert alert-danger text-center" role="alert">
+                Erreur, vous n'avez pas d'entreprise
+            </div>
+        </div>
+        <% } else { %>
+
+
+
     <!-- Offres d'emploi -->
+    <h1 class="text-center">Mes Entreprises</h1>
     <div class="container-fluid media pl-5 my-2 justify-content-center">
         <% entreprises.forEach((entreprise) => { %>
         <div class="row my-auto">
@@ -62,6 +75,7 @@
         <div class="row justify-content-center entreprise-line"></div>
         <% }) %>
     </div>
+    <% } %>
     <!-- Barre de navigation en bas -->
 
 </body>
