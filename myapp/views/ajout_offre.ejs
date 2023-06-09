@@ -118,6 +118,32 @@
                                 </div>
                             </div>
                             <!-- Fin gestion statut -->
+                            <!-- Type metier -->
+                            <div class="mb-3">
+                                <label for="type_metier" class="form-label">Type métier de l'entreprise :</label>
+                                <select id="type_metier" name="type_metier" class="form-select">
+                                    <% type_metiers.forEach((TM)=> { %>
+                                        <option>
+                                            <%= TM.nom %>
+                                        </option>
+                                        <% }) %>
+                                        <option>Autre</option>
+                                </select>
+                            </div>
+                            <div class="addtype_metier" style="display: none;">
+                                <h4>Création de votre nouveau Type métier :</h4>
+                                <div class="mb-3">
+                                    <label for="newNomTM" class="form-label">Statut :</label>
+                                    <input name="newNomTM" class="form-control" id="newNomTM" rows="3"
+                                        placeholder="Entrez le nouveau Type métier">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDescriptionTM" class="form-label">Description :</label>
+                                    <input name="newDescriptionTM" class="form-control" id="newDescriptionTM" rows="3"
+                                        placeholder="Entrez une description du Type métier">
+                                </div>
+                            </div>
+                            <!-- fin type metier  -->
                             <div class=" text-center mt-4 ">
                                 <button type="submit " class="btn btn-primary btn-block ">Ajouter l'offre</button>
                             </div>
@@ -137,6 +163,13 @@
             document.getElementsByClassName("addStatut")[0].style.display = "block";
         } else {
             document.getElementsByClassName("addStatut")[0].style.display = "none";
+        }
+    });
+    document.getElementById("type_metier").addEventListener("change", function() {
+        if (document.getElementById("type_metier").value == "Autre") {
+            document.getElementsByClassName("addtype_metier")[0].style.display = "block";
+        } else {
+            document.getElementsByClassName("addtype_metier")[0].style.display = "none";
         }
     });
 </script>
