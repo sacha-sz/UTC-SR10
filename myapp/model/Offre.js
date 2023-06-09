@@ -20,7 +20,13 @@ module.exports = {
             callback(results);
         });
     },
-
+    readSIRENUser : function(user, callback){
+        db.query("SELECT siren_orga FROM `Formulaire` WHERE email_utilisateur=?", [user], function (err, results) {
+            if (err) throw err;
+            callback(results);
+        });
+    },
+    
     create: function (intitule, description, responsable, lat, long, rythme, salaire, missions, activites, competences, statut, typemetier, callback) {
         // Crée un id et vérifie qu'il n'existe pas déjà dans la BDD
         var test_id = new Boolean(true);
