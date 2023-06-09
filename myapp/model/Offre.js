@@ -15,7 +15,7 @@ module.exports = {
     },
 
     readAllStatut: function (callback) {
-        db.query("SELECT * FROM Statut; ", function (err, results) {
+        db.query("SELECT * FROM Statut_poste; ", function (err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -48,6 +48,13 @@ module.exports = {
             callback(results);
         });
         db.query("INSERT INTO Fiche_poste VALUES (?,?,?,?,?,?,?,?,?)", [id,intitule, responsable, lat, long, rythme, salaire, statut, typemetier] , function (err, results) {
+            if (err) throw err;
+            console.log(results);
+            callback(results);
+        });
+    },
+    createStatut : function (statut, description, callback) {
+        db.query("INSERT INTO Statut VALUES (?,?);", [statut, description] , function (err, results) {
             if (err) throw err;
             console.log(results);
             callback(results);

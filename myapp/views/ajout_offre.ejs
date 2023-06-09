@@ -24,49 +24,80 @@
                         <form method="POST" action="/offre/ajout">
                             <div class="mb-3">
                                 <label for="intitule" class="form-label">Intitulé :</label>
-                                <input autofocus name="intitule" type="text" class="form-control" id="intitule" placeholder="Entrez l'intitulé du poste">
-                            </div>
-                            <div class="mb-3">
-                                <label for="responsable" class="form-label">Responsable :</label>
-                                <input autofocus name="responsable" type="text" class="form-control" id="responsable" placeholder="Entrez le Responsable hierarchique">
+                                <input autofocus name="intitule" type="text" class="form-control" id="intitule"
+                                    placeholder="Entrez l'intitulé du poste">
                             </div>
                             <div class="mb-3">
                                 <label for="lat" class="form-label">Latitude :</label>
-                                <input name="lat" type="number" class="form-control" id="lat" placeholder="Entrez la latitude du siège social" step="0.00001">
+                                <input name="lat" type="number" class="form-control" id="lat"
+                                    placeholder="Entrez la latitude du siège social" step="0.00001">
                             </div>
                             <div class="mb-3">
                                 <label for="long" class="form-label">Latitude :</label>
-                                <input name="long" type="number" class="form-control" id="long" placeholder="Entrez la longitude du siège social" step="0.00001">
+                                <input name="long" type="number" class="form-control" id="long"
+                                    placeholder="Entrez la longitude du siège social" step="0.00001">
                             </div>
                             <div class="mb-3">
                                 <label for="rythme" class="form-label">Rythme :</label>
-                                <input autofocus name="rythme" type="number" class="form-control" id="rythme" placeholder="Entrez le rythme (ex : 35h/semaine)" step="0.5">
+                                <input autofocus name="rythme" type="number" class="form-control" id="rythme"
+                                    placeholder="Entrez le rythme (ex : 35h/semaine)" step="0.5">
                             </div>
                             <div class="mb-3">
                                 <label for="salaire" class="form-label">Salaire :</label>
-                                <input autofocus name="salaire" type="number" class="form-control" id="salaire" placeholder="Entrez le salaire (ex : 1950 €/mois)" step="1">
+                                <input autofocus name="salaire" type="number" class="form-control" id="salaire"
+                                    placeholder="Entrez le salaire (ex : 1950 €/mois)" step="1">
                             </div>
                             <div class="mb-3">
                                 <label for="missions" class="form-label">Missions :</label>
-                                <input autofocus name="missions" type="text" class="form-control" id="missions" placeholder="Entrez les Missions">
+                                <input autofocus name="missions" type="text" class="form-control" id="missions"
+                                    placeholder="Entrez les Missions">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description :</label>
-                                <input autofocus name="description" type="text" class="form-control" id="description" placeholder="Entrez la Description">
+                                <input autofocus name="description" type="text" class="form-control" id="description"
+                                    placeholder="Entrez la Description">
                             </div>
                             <div class="mb-3">
                                 <label for="activites" class="form-label">Activités :</label>
-                                <input autofocus name="activites" type="text" class="form-control" id="activites" placeholder="Entrez les Activités">
+                                <input autofocus name="activites" type="text" class="form-control" id="activites"
+                                    placeholder="Entrez les Activités">
                             </div>
                             <div class="mb-3">
                                 <label for="competences" class="form-label">Compétences :</label>
-                                <input autofocus name="competences" type="text" class="form-control" id="competences" placeholder="Entrez les Compétences attendues">
+                                <input autofocus name="competences" type="text" class="form-control" id="competences"
+                                    placeholder="Entrez les Compétences attendues">
                             </div>
+                            <!-- <div class="mb-3">
+                                <label for="statut" class="form-label">Statut :</label>
+                                <input autofocus name="statut" type="text" class="form-control" id="statut"
+                                    placeholder="Entrez les Statut du poste">
+                            </div> -->
+                            <!-- Gestion du statut -->
                             <div class="mb-3">
                                 <label for="statut" class="form-label">Statut :</label>
-                                <input autofocus name="statut" type="text" class="form-control" id="statut" placeholder="Entrez les Statut du poste">
+                                <select id="statut" name="statut" class="form-select">
+                                    <% statuts.forEach((statut)=> { %>
+                                        <option>
+                                            <%= statut.nom %>
+                                        </option>
+                                        <% }) %>
+                                            <option>Autre</option>
+                                </select>
                             </div>
-
+                            <div class="addStatut" style="display: none;">
+                                <h4>Création de votre nouveau statut :</h4>
+                                <div class="mb-3">
+                                    <label for="newNom" class="form-label">Statut :</label>
+                                    <input name="newNom" class="form-control" id="newNom" rows="3"
+                                        placeholder="Le nouveau statut">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newDescription" class="form-label">Description :</label>
+                                    <input name="newDescription" class="form-control" id="newDescription" rows="3"
+                                        placeholder="Entrez une description du statut">
+                                </div>
+                            </div>
+                            <!-- Fin gestion statut -->
                             <div class=" text-center mt-4 ">
                                 <button type="submit " class="btn btn-primary btn-block ">Ajouter l'offre</button>
                             </div>
@@ -79,5 +110,15 @@
 </body>
 
 <%- include('./partials/footer'); %>
+
+<script>
+    document.getElementById("statut").addEventListener("change", function() {
+        if (document.getElementById("statut").value == "Autre") {
+            document.getElementsByClassName("addStatut")[0].style.display = "block";
+        } else {
+            document.getElementsByClassName("addStatut")[0].style.display = "none";
+        }
+    });
+</script>
 
 </html>

@@ -13,11 +13,15 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 router.get('/ajout_offre', function (req, res, next) {
     if (req.session.loggedin) {
+        offreModel.readAllStatut(function (result) {
+            console.log(result);
         res.render('ajout_offre', {
             title: 'Ajout d\'une offre',
             username: req.session.username,
-            type_user: req.session.type_user
+            type_user: req.session.type_user,
+            statuts: result
         });
+    });
     } else {
         res.redirect('/login');
     }
@@ -187,7 +191,7 @@ router.post('/ajout', function (req, res, next) {
     console.log('Ajout d\'une offre');
     var intitule = req.body.intitule;
     var description = req.body.description;
-    var responsable = req.body.responsable;
+    var responsable = req.session.username;
     var lat = req.body.lat;
     var long = req.body.long;
     var rythme = req.body.rythme;
@@ -212,6 +216,23 @@ router.post('/ajout', function (req, res, next) {
         console.log("Elements manquants manquant");
         return res.redirect('/offre/ajout_offre');
     }
+    if(statut == "Autre"){
+        const newStatut = req.body.newNom;
+        const newStatutDescription = req.body.newDescription;
+        if(newStatut == null || newStatut == "" || newStatutDescription == null || newStatutDescription == ""){
+            console.log("Elements manquants manquant");
+            return res.redirect('/offre/ajout_offre');
+        }
+        offreModel.createStatut(newStatut, newStatutDescription, function (result) {
+            if (result) {
+                console.log("Statut créé");
+            } else {
+                res.redirect('/offre/ajout_offre');
+            }
+        }
+        );    
+        // A compléter 
+    }
     offreModel.create(intitule, description, responsable, lat, long, rythme, salaire, missions, activites, competences, statut, type_metier, function (result) {
         if (result) {
             console.log("Offre créée");
@@ -219,7 +240,6 @@ router.post('/ajout', function (req, res, next) {
         } else {
             res.redirect('/offre/ajout_offre');
         }
-
     });
 });
 
