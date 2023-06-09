@@ -101,6 +101,37 @@ app.post('/delete_entreprise', function (req, res, next) {
     }
 });
 
+app.get('/gestion', function (req, res, next) {
+    if (req.session.loggedin) {
+        entrepriseModel.getAsking(req.session.username, function (err, result) {
+            if (err) {
+                // Gérer l'erreur si nécessaire
+                console.log(err);
+                res.status(500).send("Une erreur s'est produite");
+            } else {
+                res.render('RecruteurRejoindre', {
+                    title: 'Liste des demandes',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    entreprises: result
+                });
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.post('/accepte_adhesion', function(req, res, next) {
+    entrepriseModel.formulaire_accept(req.body.siren, req.body.user, function (err) {
+        if (err) {
+            console.log(err);
+            throw err;
+        } else {
+            res.redirect('/admin/gestion_new_entreprise');
+        }
+    });
+}),
 
 app.post('/inscription', function (req, res, next) {
     console.log('Inscription d\'une entreprise');

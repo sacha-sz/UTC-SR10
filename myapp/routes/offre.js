@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var offreModel = require('../model/Offre');
 var offreEmploiModel = require('../model/Offre_Emploie');
+var userModel = require('../model/Utilisateur');
 var app = express();
 var path = require('path');
 
@@ -61,7 +62,24 @@ router.get('/offre_recruteur', function (req, res, next) {
 router.get('/', async function (req, res, next) {
     if (req.session.loggedin) {
         try {
-            const response = await fetch('http://localhost:3000/api/Offre_Emploie');
+            var response;
+            if (req.query.search != undefined && req.query.sort != undefined) {
+                if (req.query.lat != undefined && req.query.long != undefined && req.query.sort == "distance_nearest") {
+                    response = await fetch('http://localhost:3000/api/Offre_Emploie?search=' + req.query.search + '&sort=' + req.query.sort + '&lat=' + req.query.lat + '&long=' + req.query.long);
+                } else {
+                    response = await fetch('http://localhost:3000/api/Offre_Emploie?search=' + req.query.search + '&sort=' + req.query.sort);
+                }
+            } else if (req.query.search != undefined) {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie?search=' + req.query.search);
+            } else if (req.query.sort != undefined) {
+                if (req.query.lat != undefined && req.query.long != undefined && req.query.sort == "distance_nearest") {
+                    response = await fetch('http://localhost:3000/api/Offre_Emploie?sort=' + req.query.sort + '&lat=' + req.query.lat + '&long=' + req.query.long);
+                } else {
+                    response = await fetch('http://localhost:3000/api/Offre_Emploie?sort=' + req.query.sort);
+                }
+            } else {
+                response = await fetch('http://localhost:3000/api/Offre_Emploie');
+            }
             const data = await response.json();
 
             // Pagination
@@ -72,13 +90,24 @@ router.get('/', async function (req, res, next) {
             const startIndex = (page - 1) * perPage;
             const endIndex = startIndex + perPage;
             const paginatedData = data.slice(startIndex, endIndex);
+            userModel.getLatLong(req.session.username, function (err, result) {
+                if (result) {
+                    var latitude = result[0].adresse_utilisateur_lat;
+                    var longitude = result[0].adresse_utilisateur_long;
 
-            res.render('offre_emploi', {
-                title: 'Offre',
-                username: req.session.username,
-                type_user: req.session.type_user,
-                offres: paginatedData,
-                totalPages: totalPages
+                    res.render('offre_emploi', {
+                        title: 'Offre',
+                        username: req.session.username,
+                        type_user: req.session.type_user,
+                        lat : latitude,
+                        long : longitude,
+                        offres: paginatedData,
+                        totalPages: totalPages
+                    });
+                }
+                if (err) {
+                    console.log(err);
+                }
             });
         } catch (error) {
             console.error('Une erreur s\'est produite lors de la récupération des offres:', error);

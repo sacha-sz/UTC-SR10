@@ -13,9 +13,8 @@
 <body>
 
     <div class="container">
-        <h1 class="text-center">Liste des utilisateurs</h1>
-
-        <% users.forEach((user)=> { %>
+        <h1 class="text-center">Liste des personnes souhaitant créer une entreprise</h1>
+        <% entreprises.forEach((entreprise)=> { %>
             <div class="container-fluid media ml-5 mr-5 my-2">
                 <div class="row">
                     <div class="col">
@@ -25,31 +24,28 @@
                                     <div class="d-flex">
                                         <div style="justify-content : center;">
                                             <h4 class="media-heading">
-                                                <%= user.email %>
+                                                <%= entreprise.ORG_nom %>
                                             </h4>
-                                            <p>Nom : <%= user.nom %>
-                                            </p>
-                                            <p>Prenom : <%= user.prenom %>
-                                            </p>
-                                            <p>Type d'utilisateur : <%= user.type_utilisateur %>
-                                            </p>
+                                            <p>SIREN : <%= entreprise.siren %></p>
+                                            <p>Type : <%= entreprise.OT %></p>
+                                            <p>Nom du demandeur : <%= entreprise.nom %></p>
+                                            <p>Prénom du demandeur : <%= entreprise.prenom %></p>
+                                            <p>Email : <%= entreprise.email %></p>
                                         </div>
-
                                     </div>
-
                                 </div>
 
-                                <% if (user.type_utilisateur !='ADMINISTRATEUR' ) { %>
-                                    <div class="col-auto my-auto">
-                                        <div class="d-flex">
-                                            <form action="/admin/passer_admin" method="POST">
-                                                <input type="hidden" name="email" value="<%= user.email %>">
-                                                <button type="submit" class="btn btn-danger">Passer
-                                                    Administrateur</button>
-                                            </form>
-                                        </div>
+
+                                <div class="col-auto my-auto">
+                                    <div class="d-flex">
+                                        <form action="/admin/accept_entreprise" method="POST">
+                                            <input type="hidden" name="siren" value="<%= entreprise.siren %>">
+                                            <input type="hidden" name="user" value="<%= entreprise.email %>">
+                                            <button type="submit" class="btn btn-success">Accepter l'entreprise</button>
+                                        </form>
                                     </div>
-                                    <% } %>
+                                </div>
+
 
                             </div>
                         </div>
@@ -58,7 +54,6 @@
             </div>
             <% }) %>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

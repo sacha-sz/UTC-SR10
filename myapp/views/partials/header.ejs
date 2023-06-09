@@ -56,10 +56,14 @@
                                         <a class="dropdown-item" href="/offre/ajout_offre">Créer une offre</a>
                                         <a class="dropdown-item" href="/offre/offre_recruteur">Mes offres</a>
                                         <a class="dropdown-item" href="/entreprise/entreprise_recruteur">Mon entreprise</a>
+                                        <a class="dropdown-item" href="/entreprise/gestion">Gérer les demandes d'adhésion</a>
                                         <a class="dropdown-item" href="" style="color: #60d394 ;">Devenir administrateur</a>
+
                                     <% } else if (type_user == 'ADMINISTRATEUR') { %>
                                         <a class="dropdown-item" href="/admin/gestion_utilisateur">Gestion des utilisateurs</a>
                                         <a class="dropdown-item" href="/admin/gestion_entreprise">Gestion des entreprises</a>
+                                        <a class="dropdown-item" href="/admin/gestion_new_entreprise">Gestion des nouvelles entreprises</a>
+
                                     <% } else if (type_user == 'CANDIDAT') { %>
                                         <a class="dropdown-item" href="/candidature/mesdocuments">Mes documents</a>
                                         <a class="dropdown-item" href="/candidature/afficher_candidatures_user">Mes candidatures</a>
@@ -67,7 +71,6 @@
                                     <% } %>
                                 <% } %>
 
-                                <!-- TODO : lien vers la page de ses candidatures -->
                                 <a class="dropdown-item" href="/login/logout" style="color: #ee6055;">Déconnexion</a>
                             </div>
                         </div>

@@ -124,26 +124,57 @@ module.exports = {
     },
 
     entrepriseRecruteur : function(email, callback){
-        db.query("SELECT * FROM Organisation INNER JOIN Formulaire ON Formulaire.siren_orga = Organisation.siren WHERE Formulaire.email_utilisateur = ? AND Formulaire.etat_formulaire='ACCEPTEE'", [email], function (err, results) {
+        db.query("SELECT * FROM Organisation INNER JOIN Formulaire ON Formulaire.siren_orga = Organisation.siren WHERE Formulaire.etat_formulaire='ACCEPTEE' AND Formulaire.email_utilisateur = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
             } else {
                 if (results.length > 0) {
-                    console.log("Organisation trouvée avec succès");
                     callback(null, results);
                 } else {
-                    console.log("Aucune organisation avec ce SIREN");
                     callback(new Error("Aucune entreprise trouvée"), null);
                 }
             }
         });
     },
 
+    getAsking: function(email, callback) {
+        db.query("SELECT O.nom AS ORG_nom, O.type_organisation AS OT, O.siren, U.nom, U.prenom, U.email   FROM Formulaire  AS F\
+            INNER JOIN Utilisateur AS U ON F.email_utilisateur = U.email \
+            INNER JOIN Organisation AS O ON F.siren_orga = O.siren \
+            WHERE siren_orga IN ( \
+                SELECT siren_orga \
+                FROM Formulaire \
+                GROUP BY siren_orga \
+                HAVING COUNT(*) > 1 \
+            ) AND etat_formulaire = 'EN COURS' AND Siren_orga IN ( \
+                SELECT siren_orga \
+                FROM Formulaire \
+                wHERE email_utilisateur = ?)", [email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
 
 
     /// UPDATE
-
-
+    formulaire_accept: function (siren, email, callback) {
+        db.query("UPDATE Formulaire SET etat_formulaire = 'ACCEPTEE' WHERE siren_orga = ? AND email_utilisateur = ?;", [siren, email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                db.query("UPDATE Utilisateur SET type_utilisateur = 'RECRUTEUR' WHERE email = ?;", [email], function (err, results) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, true);
+                    }
+                });
+            }
+        });
+    },
 
     /// TEST
 

@@ -28,7 +28,9 @@ Total : 25h30
 - 21/05 -> 5h
 - 24/05 -> 2h TD + 1h perso
 - 30/05 -> 2h
-Total : 22h
+- 06/06 -> 1h
+- 07/09 -> 4h + 2h TD
+Total : XXX
 
 
 
