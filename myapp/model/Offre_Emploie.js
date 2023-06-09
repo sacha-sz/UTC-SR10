@@ -3,11 +3,7 @@ var db = require("./ConnexionBDD.js");
 
 module.exports = {
     read: function (numero, callback) {
-        var sql_read =
-            'SELECT * FROM Fiche_poste WHERE numero = "' +
-            mysql.escape(numero) +
-            '";';
-        db.query(sql_read, function (err, results) {
+        db.query("SELECT * FROM Fiche_poste WHERE numero = ?", [numero], function (err, results) {
             if (err) throw err;
             callback(results);
         });
