@@ -58,7 +58,6 @@ app.post('/auth', function (req, res, next) {
     // Vérifiez si l'utilisateur a dépassé le nombre de tentatives de connexion autorisées
     if (req.session.failedAttempts > 2) {
         if (req.session.connexion_possible !== undefined && req.session.connexion_possible > new Date().getTime()) {
-            req.session.failedAttempts++;
             req.session.tempsRestant = req.session.failedAttempts;
             return res.redirect('/login');
         }
