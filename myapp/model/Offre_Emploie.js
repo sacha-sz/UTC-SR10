@@ -4,14 +4,21 @@ var db = require("./ConnexionBDD.js");
 module.exports = {
     read: function (numero, callback) {
         db.query("SELECT * FROM Fiche_poste WHERE numero = ?", [numero], function (err, results) {
-            if (err) throw err;
-            callback(results);
+            if (err) {
+                console.log("Fonction : read erreur : " + err);
+                callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : read erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
+            } else {
+                console.log("Fonction : read succès");
+                callback(null, results);
+            }
         });
     },
 
     readAllOffers: function (callback) {
-        var sql_readAllOffers =
-            "SELECT DISTINCT\
+        var sql_readAllOffers = "SELECT DISTINCT\
             OE.id, OE.date_validite, OE.indication_piece_jointes, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
@@ -25,27 +32,30 @@ module.exports = {
             ON FP.statut_poste = SP.nom \
             INNER JOIN Type_metier AS TM \
             ON FP.type_metier = TM.nom \
-            INNER JOIN Formulaire AS FO \
-            ON FO.email_utilisateur = FP.email_inscription \
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" \
+            ON ORG.siren = FP.FP_SIREN \
+            WHERE OE.etat = 'PUBLIEE' \
             ORDER BY OE.date_validite;";
 
         db.query(sql_readAllOffers, function (err, results) {
             if (err) {
+                console.log("Fonction : readAllOffers erreur : " + err);
                 callback(err, null);
-            } else {
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllOffers erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
                 callback(new TypeError("Aucune offre"), results);
+            } else {
+                console.log("Fonction : readAllOffers succès");
+                callback(null, results);
             }
         });
     },
 
     readAllValidOffers_desc: function (callback) {
-        var sql_readAllOffers_desc =
-            "SELECT DISTINCT\
+        var sql_readAllOffers_desc = "SELECT DISTINCT\
             OE.id, OE.date_validite, OE.indication_piece_jointes, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
@@ -59,20 +69,23 @@ module.exports = {
             ON FP.statut_poste = SP.nom \
             INNER JOIN Type_metier AS TM \
             ON FP.type_metier = TM.nom \
-            INNER JOIN Formulaire AS FO \
-            ON FO.email_utilisateur = FP.email_inscription \
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
+            ON ORG.siren = FP.FP_SIREN \
+            WHERE OE.etat = 'PUBLIEE' AND\
             OE.date_validite >= CAST(NOW() AS DATE) \
             ORDER BY OE.date_validite DESC;";
 
         db.query(sql_readAllOffers_desc, function (err, results) {
             if (err) {
+                console.log("Fonction : readAllValidOffers_desc erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers_desc erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
+                console.log("Fonction : readAllValidOffers_desc succès");
                 callback(null, results);
             }
         });
@@ -99,13 +112,18 @@ module.exports = {
         INNER JOIN Description AS DE \
         ON DE.numero = FP.id_description \
         INNER JOIN Organisation as ORG \
-        ON ORG.siren = FO.siren_orga \
-        WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
+        ON ORG.siren = FP.FP_SIREN \
+        WHERE OE.etat = 'PUBLIEE' AND\
         OE.date_validite >= CAST(NOW() AS DATE) AND LOWER(FP.intitule) LIKE LOWER(?) \
         ORDER BY OE.date_validite DESC;", [escapedQuery], function (err, results) {
             if (err) {
+                console.log("Fonction : readAllValidOffers_desc_search erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers_desc_search erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
+                console.log("Fonction : readAllValidOffers_desc_search succès");
                 callback(null, results);
             }
         });
@@ -132,15 +150,19 @@ module.exports = {
         INNER JOIN Description AS DE \
         ON DE.numero = FP.id_description \
         INNER JOIN Organisation as ORG \
-        ON ORG.siren = FO.siren_orga \
-        WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
-        OE.date_validite >= CAST(NOW() AS DATE) AND\
+        ON ORG.siren = FP.FP_SIREN \
+        WHERE OE.etat = 'PUBLIEE' AND \
+        OE.date_validite >= CAST(NOW() AS DATE) AND \
         LOWER(FP.intitule) LIKE LOWER(?)\
         ORDER BY OE.date_validite;", [escapedQuery], function (err, results) {
             if (err) {
-                console.log(err);
+                console.log("Fonction : readAllValidOffers_search erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers_search erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
+                console.log("Fonction : readAllValidOffers_search succès");
                 callback(null, results);
             }
         });
@@ -167,14 +189,18 @@ module.exports = {
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = 'ACCEPTEE' AND\
+            ON ORG.siren = FP.FP_SIREN \
+            WHERE OE.etat = 'PUBLIEE' AND \
             OE.date_validite >= CAST(NOW() AS DATE) \
             ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [latitude, longitude], function (err, results) {
             if (err) {
+                console.log("Fonction : readAllValidOffers_dist erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers_dist erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
-                console.log(results);
+                console.log("Fonction : readAllValidOffers_dist succès");
                 callback(null, results);
             }
         });
@@ -202,13 +228,18 @@ module.exports = {
         INNER JOIN Description AS DE \
         ON DE.numero = FP.id_description \
         INNER JOIN Organisation as ORG \
-        ON ORG.siren = FO.siren_orga \
-        WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
+        ON ORG.siren = FP.FP_SIREN \
+        WHERE OE.etat = 'PUBLIEE' AND \
         OE.date_validite >= CAST(NOW() AS DATE)  AND LOWER(FP.intitule) LIKE LOWER(?) \
         ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [escapedQuery, latitude, longitude], function (err, results) {
             if (err) {
+                console.log("Fonction : readAllValidOffers_dist_search erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers_dist_search erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
+                console.log("Fonction : readAllValidOffers_dist_search succès");
                 callback(null, results);
             }
         });
@@ -235,15 +266,20 @@ module.exports = {
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = \"ACCEPTEE\" AND\
+            ON ORG.siren = FP.FP_SIREN \
+            WHERE OE.etat = 'PUBLIEE' AND \
             OE.date_validite >= CAST(NOW() AS DATE) \
             ORDER BY OE.date_validite;";
 
         db.query(sql_readAllOffers, function (err, results) {
             if (err) {
+                console.log("Fonction : readAllValidOffers erreur : " + err);
                 callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : readAllValidOffers erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
+                console.log("Fonction : readAllValidOffers succès");
                 callback(null, results);
             }
         });
@@ -270,16 +306,17 @@ module.exports = {
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
-            WHERE OE.etat = 'PUBLIEE' AND FO.etat_formulaire = 'ACCEPTEE' AND OE.id = ?;", [id], function (err, offre) {
+            ON ORG.siren = FP.FP_SIREN \
+            WHERE OE.etat = 'PUBLIEE' AND OE.id = ?;", [id], function (err, offre) {
             if (err) {
+                console.log("Fonction : readOffersById erreur : " + err);
                 callback(err, null);
+            } else if (offre.length === 0) {
+                console.log("Fonction : readOffersById erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
-                if (offre.length === 0) {
-                    callback(new Error("Aucune offre trouvée"), null);
-                } else {
-                    callback(null, offre);
-                }
+                console.log("Fonction : readOffersById succès");
+                callback(null, offre);
             }
         });
     },
@@ -304,16 +341,17 @@ module.exports = {
             INNER JOIN Description AS DE \
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
-            ON ORG.siren = FO.siren_orga \
+            ON ORG.siren = FP.FP_SIREN \
             WHERE OE.id = ?;", [id], function (err, offre) {
             if (err) {
+                console.log("Fonction : readOffersByIdSansVerif erreur : " + err);
                 callback(err, null);
+            } else if (offre.length === 0) {
+                console.log("Fonction : readOffersByIdSansVerif erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
-                if (offre.length === 0) {
-                    callback(new Error("Aucune offre trouvée"), null);
-                } else {
-                    callback(null, offre);
-                }
+                console.log("Fonction : readOffersByIdSansVerif succès");
+                callback(null, offre);
             }
         });
     },
@@ -322,15 +360,31 @@ module.exports = {
         db.query(
             "SELECT intitule, lieu_mission_lat, lieu_mission_long, salaire_min, salaire_max, missions AS missions FROM Fiche_poste JOIN Description ON Fiche_poste.numero = Description.numero ;",
             function (err, results) {
-                if (err) throw err;
-                callback(results);
+                if (err) {
+                    console.log("Fonction : readall erreur : " + err);
+                    callback(err, null);
+                } else if (results.length === 0) {
+                    console.log("Fonction : readall erreur : Aucun résultat");
+                    callback(new TypeError("Aucune offre"), null);
+                } else {
+                    console.log("Fonction : readall succès");
+                    callback(null, results);
+                }
             }
         );
     },
     getDescription: function (numero, callback) {
         db.query("SELECT * FROM Description WHERE numero =?;", [numero], function (err, results) {
-            if (err) throw err;
-            callback(results);
+            if (err) {
+                console.log("Fonction : getDescription erreur : " + err);
+                callback(err, null);
+            } else if (results.length === 0) {
+                console.log("Fonction : getDescription erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
+            } else {
+                console.log("Fonction : getDescription succès");
+                callback(null, results);
+            }
         });
     },
 
@@ -350,21 +404,30 @@ module.exports = {
         db.query("INSERT INTO Fiche_poste(numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
             [numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier],
             function (err, results) {
-                if (err) throw err;
-                callback(results);
+                if (err) {
+                    console.log("Fonction : creat erreur : " + err);
+                    callback(err, null);
+                } else if (results.affectedRows === 0) {
+                    console.log("Fonction : creat erreur : Aucun résultat");
+                    callback(new TypeError("Aucune offre"), null);
+                } else {
+                    console.log("Fonction : creat succès");
+                    callback(null, results);
+                }
             });
     },
 
     getoffrebyrecruteur: function (email, callback) {
         db.query("SELECT DISTINCT * FROM Fiche_poste INNER JOIN Offre_d_emploi ON Offre_d_emploi.id_poste = Fiche_poste.numero INNER JOIN Formulaire ON Formulaire.email_utilisateur = Fiche_poste.email_inscription INNER JOIN Description ON Description.numero = Fiche_poste.id_description INNER JOIN Organisation ON Organisation.siren = Formulaire.siren_orga WHERE Fiche_poste.email_inscription = ? ", [email], function (err, offre) {
             if (err) {
+                console.log("Fonction : getoffrebyrecruteur erreur : " + err);
                 callback(err, null);
+            } else if (offre.length === 0) {
+                console.log("Fonction : getoffrebyrecruteur erreur : Aucun résultat");
+                callback(new TypeError("Aucune offre"), null);
             } else {
-                if (offre.length === 0) {
-                    callback(new Error("Aucune offre trouvée"), null);
-                } else {
-                    callback(null, offre);
-                }
+                console.log("Fonction : getoffrebyrecruteur succès");
+                callback(null, offre);
             }
         });
     },
