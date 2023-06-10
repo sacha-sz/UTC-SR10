@@ -4,6 +4,7 @@ var loginModel = require('../model/Login');
 var app = express();
 var path = require('path');
 const { promises } = require('dns');
+const { fail } = require('assert');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -54,42 +55,40 @@ app.post('/auth', function (req, res, next) {
         req.session.msg = "Mot de passe Invalide";
         return res.redirect('/login');
     }
+    // Vérifiez si l'utilisateur a dépassé le nombre de tentatives de connexion autorisées
+    if (req.session.failedAttempts > 2) {
+        if (req.session.connexion_possible !== undefined && req.session.connexion_possible > new Date().getTime()) {
+            req.session.failedAttempts++;
+            req.session.tempsRestant = req.session.failedAttempts;
+            return res.redirect('/login');
+        }
+    }
 
     loginModel.areValid_login(email, password, function (result, type) {
         if (result == true && type != null) {
             console.log("Utilisateur connecté");
             req.session.loggedin = true;
             req.session.username = email;
+            req.session.failedAttempts = 0;
+            req.session.connexion_possible = undefined; 
             req.session.type_user = type;
             return res.redirect('/');
         } else {
             console.log("Utilisateur non connecté");
             // Incrémentez le compteur de tentatives échouées
-            req.session.failedAttempts = req.session.failedAttempts || 0;
-            req.session.failedAttempts++;
-            console.error("Tentatives de connexion échouées: " + req.session.failedAttempts);
-
-            if (req.session.failedAttempts > 2) {
-                var currentTime = new Date().getTime();
-                var lastAttemptTime = req.session.lastAttemptTime || currentTime;
-                var timeDiff = currentTime - lastAttemptTime;
-                var minutesElapsed = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
-                if (minutesElapsed < req.session.failedAttempts - 1) {
-                    // Attendez le nombre d'essais ratés + 1 en minutes avant de permettre à l'utilisateur de réessayer
-                    var remainingTime = req.session.failedAttempts - minutesElapsed;
-                    req.session.tempsRestant = remainingTime;
-                    return res.redirect('/login');
-                } else {
-                    // Réinitialisez le compteur de tentatives échouées et mettez à jour le dernier temps d'essai
-                    req.session.failedAttempts = 1;
-                    req.session.lastAttemptTime = currentTime + (1000 * 60); // Ajoute une minute supplémentaire
-                    return res.redirect('/login');
-                }
-            } else {
-                req.session.lastAttemptTime = new Date().getTime();
-                return res.redirect('/login');
+            if (req.session.failedAttempts === undefined) {
+                req.session.failedAttempts = 0;
             }
+            req.session.failedAttempts++;
+            req.session.lastAttemptTime = new Date().getTime();
+            if (req.session.connexion_possible === undefined) {
+                req.session.connexion_possible = req.session.lastAttemptTime; // Ajoute une minute supplémentaire
+            }
+            req.session.connexion_possible = req.session.lastAttemptTime + (req.session.failedAttempts * 1000 * 60); // Ajoute une minute supplémentaire
+            if(req.session.failedAttempts > 2){
+                req.session.tempsRestant = req.session.failedAttempts;
+            }
+            return res.redirect('/login');
         }
     });
 });

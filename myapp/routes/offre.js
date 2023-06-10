@@ -71,7 +71,6 @@ router.get('/offre_recruteur', function (req, res, next) {
         res.redirect('/login');
     }
 });
-
 router.get('/', async function (req, res, next) {
     if (req.session.loggedin) {
         try {
