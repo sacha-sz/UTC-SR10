@@ -28,7 +28,6 @@ router.get('/ajout_offre', function (req, res, next) {
                         type_metiers : TM
                     });
                 });
-
             });
         });
     } else {

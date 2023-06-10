@@ -63,18 +63,12 @@ app.get('/gestion_entreprise', checkAdmin, function (req, res, next) {
 app.get('/gestion_new_entreprise', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         adminModel.getAllOrganisationCreation(function (err, result) {
-            if (err) {
-                // Gérer l'erreur si nécessaire
-                console.log(err);
-                res.status(500).send("Une erreur s'est produite");
-            } else {
                 res.render('AdminCreationEntreprise', {
                     title: 'Liste des Entreprises',
                     username: req.session.username,
                     type_user: req.session.type_user,
                     entreprises: result
                 });
-            }
         });
     } else {
         res.redirect('/login');

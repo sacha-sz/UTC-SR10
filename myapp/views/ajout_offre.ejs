@@ -86,7 +86,7 @@
                             <div class="mb-3">
                                 <label for="siren" class="form-label">Siren de l'entreprise :</label>
                                 <select id="siren" name="siren" class="form-select">
-                                    <% sirens.forEach((siren)=> { %>
+                                    <% sirens.forEach(function(siren) { %>
                                         <option>
                                             <%= siren.siren_orga %>
                                         </option>
