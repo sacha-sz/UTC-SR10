@@ -17,66 +17,60 @@
             <div class="centre-vertical body-content">
                 <div class="card mx-auto b-2 my-2">
                     <div class="card-header text-center">
-                        <h4>Candidater à l'offre</h4>
-                        <%= title %>
+                        <h4>Candidater à l'offre : <%= id %></h4>
                     </div>
                     <div class="card-body ">
-                        <form method="POST" action="/candidature/upload_files" id="frmFileUpload"
+                        <form method="POST" action="/candidature/validation_candidature" id="frmFileUpload"
                             enctype="multipart/form-data">
 
-                            <input type="hidden" name="myUsername" value="<%= username %>" />
-                            <div class="row">
-                                <div class="col div-titre">
-                                    Chargement de fichier avec multer
-                                </div>
-                            </div>
+                            <script>
+                                var frmFileUpload = document.getElementById('frmFileUpload');
+                        
+                                // On modifie le lien de redirection en fonction de l'offre
+                                var url = window.location.href;
+                                var id = url.substring(url.lastIndexOf('/') + 1);
+                                frmFileUpload.action = "/candidature/validation_candidature/" + id;
+                            </script>
 
-                            <div class="row" style="margin-bottom:5px;">
-                                <div class="col-8 offset-2">
-                                    <select class="form-select" id="file_type" name="myFileType" required="true">
-                                        <option value="">--- Type du document ---</option>
-                                        <option value="CV">C.V.</option>
-                                        <option value="LM">L.M.</option>
-                                        <option value="CIN">Autre</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-bottom:5px;">
-                                <div class="col-8 offset-2">
-                                    <input class="form-control" id="fileInput" name="myFileInput" type="file"
-                                        accept="image/*,.pdf" required="true" />
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-bottom:5px;">
-                                <div class="col text-center">
-                                    <button type="submit" class="btn btn-primary">Charger le fichier</button>
-                                </div>
-                            </div>
-
-                            <% if (typeof uploaded_filename !='undefined' && typeof uploaded_original !='undefined' ) {
-                                %>
-                                <div class="row" style="margin: 10px 0px;">
-                                    <div class="col text-center">
-                                        <span>Le fichier <strong>
-                                                <%= uploaded_original %>
-                                            </strong> a bien été chargé sous le nom <strong>
-                                                <%= uploaded_filename %>
-                                            </strong>.</span>
+                            <% if (cv != false) { %>
+                                <div class="row" style="margin-bottom:5px;">
+                                    <p class="text-center text-danger">Attention, le CV est obligatoire</p>
+                                    <div class="col-8 offset-2">
+                                        <input class="form-control" id="fileInputCV" name="myFileInputCV" type="file"
+                                            accept="image/*,.pdf" required="true" placeholder="Saisissez votre CV"/>
                                     </div>
                                 </div>
-                                <% } %>
+                            <% } %>
 
-                                    <% if (typeof upload_error !='undefined' ) { %>
-                                        <div class="row" style="margin: 10px 0px;">
-                                            <div class="col text-center text-red">
-                                                <span><strong>
-                                                        <%= upload_error %>
-                                                    </strong></span>
-                                            </div>
-                                        </div>
-                                        <% } %>
+                            
+                            <% if (lm != false ) {%>
+                                <br>
+                                <div class="row" style="margin-bottom:5px;">
+                                    <p class="text-center text-danger">Attention, la LM est obligatoire</p>
+                                    <div class="col-8 offset-2">
+                                        <input class="form-control" id="fileInputLM" name="myFileInputLM" type="file"
+                                            accept="image/*,.pdf" required="true" />
+                                    </div>
+                                </div>
+                            <% } %>
+
+                            <% if (autre != false ) {%>
+                                <br>
+                                <div class="row" style="margin-bottom:5px;">
+                                    <p class="text-center text-danger">Vous devez ajouter un fichier</p>
+                                    <div class="col-8 offset-2">
+                                        <input class="form-control" id="fileInputAutre" name="myFileInputAutre" type="file"
+                                            accept="image/*,.pdf" required="true" />
+                                    </div>
+                                </div>
+                            <% } %>
+                            
+                            <br>
+                            <div class="row" style="margin-bottom:5px;">
+                                <div class="col text-center">
+                                    <button type="submit" class="btn btn-success">Envoyer</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -10,8 +10,13 @@ const storage = multer.diskStorage({
         cb(null, 'mesfichiers');
     },
     filename: function (req, file, cb) {
+        if (!req.session.username) {
+            cb(new Error('Vous devez être connecté pour déposer un fichier'));
+            return;
+        }
         const extension = path.extname(file.originalname);
-        const filename = req.body.myUsername + '-' + req.body.myFileType + extension;
+        const type = file.fieldname.replace('myFileInput', '');
+        const filename = req.session.username + '-' + type + extension;
         cb(null, filename);
     }
 });
@@ -38,32 +43,91 @@ router.get('/afficher_candidatures_user', function (req, res, next) {
     }
 });
 
-router.get('/formulaire_candidatures', function (req, res, next) {
+router.get('/formulaire_candidatures/:id', function (req, res, next) {
     if (req.session.loggedin) {
-        res.render('formulaire_candidature', {
-            title: 'Candidatures',
-            username: req.session.username,
-            type_user: req.session.type_user
+        candidatureModel.NeedPJOffre(req.params.id, function (err, result) {
+            if (result) {
+                console.log(result);
+                // On split par rapport aux virgules
+                var tab = result[0].indication_piece_jointes.split(',');
+                console.log(tab);
+
+                // On regarde pour les valeurs Autre, LM, CV si elles sont présentes
+                var autre = false;
+                var lm = false;
+                var cv = false;
+
+                for (var i = 0; i < tab.length; i++) {
+                    tab[i] = tab[i].trim();
+                    if (tab[i] == "Autre") {
+                        autre = true;
+                    } else if (tab[i] == "LM") {
+                        lm = true;
+                    } else if (tab[i] == "CV") {
+                        cv = true;
+                    }
+                }
+
+                res.render('formulaire_candidature', {
+                    title: 'Candidatures',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    id: req.params.id,
+                    autre: autre,
+                    lm: lm,
+                    cv: cv
+                });
+            } else {
+                res.status(500).send('Une erreur s\'est produite lors de la récupération des candidatures');
+            }
         });
     } else {
         res.redirect('/login');
     }
 });
 
-router.post('/upload_files', upload.single('myFileInput'), function (req, res, next) {
+router.post('/validation_candidature/:id', upload.fields([
+    { name: 'myFileInputCV', maxCount: 1, type: 'CV' },
+    { name: 'myFileInputLM', maxCount: 1, type: 'LM' },
+    { name: 'myFileInputAutre', maxCount: 1, type: 'Autre' }
+]), function (req, res, next) {
     req.session.uploaded_files = [];
 
-    if (!req.file) {
+    if (!req.files) {
         res.redirect('/candidate/formulaire_candidatures');
     } else {
-        console.log(req.file.originalname, ' => ', req.file.filename);
-        req.session.uploaded_files.push(req.file.filename);
+        for (const file of Object.values(req.files)) {
+            if (file && file.length > 0) {
+                console.log(file[0].originalname, ' => ', file[0].filename);
+                req.session.uploaded_files.push(file[0].filename);
+            }
+        }
+        
+        candidatureModel.candidater(req.session.username, req.params.id, function (err, result) {
+            if (result) {
+                for (var i = 0; i < req.session.uploaded_files.length; i++) {
+                    var nom_fichier = req.session.uploaded_files[i];
+                    var type_fichier = nom_fichier.split('-')[1];
+                    type_fichier = type_fichier.split('.')[0];
+                    var lien = "./mesfichiers/" + nom_fichier;
+                    var id_candidature = result.insertId;
+
+                    candidatureModel.uploadPJ(nom_fichier, type_fichier, lien, id_candidature, function (err, result) {
+                        if (result) {
+                            console.log("Upload PJ : " + nom_fichier + " réussi");
+                        } else {
+                            console.log("Upload PJ : " + nom_fichier + " échoué");
+                        }
+                    });
+                }
+            }
+        });
         res.redirect('/');
     }
 });
 
 router.get('/mesdocuments', function (req, res, next) {
-    console.log("mes documents");  
+    console.log("mes documents");
     if (req.session.loggedin) {
         candidatureModel.PieceJointeUser(req.session.username, function (err, result) {
             console.log(result);

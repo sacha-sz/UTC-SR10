@@ -91,12 +91,21 @@
 
             <div class="row">
                 <p class="text-center">
-                    <a type="button" class="btn btn-success"
-                        href="/candidature/formulaire_candidatures">Candidater</a>
+                    <a type="button" id="send" class="btn btn-success"
+                        href="/candidature/formulaire_candidatures/">Candidater</a>
                 </p>
             </div>
         </div>
     </div>
+
+    <script>
+        var send = document.getElementById('send');
+
+        // On modifie le lien de redirection en fonction de l'offre
+        var url = window.location.href;
+        var id = url.substring(url.lastIndexOf('/') + 1);
+        send.href = "/candidature/formulaire_candidatures/" + id;
+    </script>
 
 </body>
 
