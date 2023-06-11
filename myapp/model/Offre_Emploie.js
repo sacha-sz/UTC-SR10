@@ -7,9 +7,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : read erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : read erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : read succès");
                 callback(null, results);
@@ -43,10 +40,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllOffers erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllOffers erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
-                callback(new TypeError("Aucune offre"), results);
             } else {
                 console.log("Fonction : readAllOffers succès");
                 callback(null, results);
@@ -81,9 +74,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers_desc erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers_desc erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers_desc succès");
                 callback(null, results);
@@ -119,9 +109,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers_desc_search erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers_desc_search erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers_desc_search succès");
                 callback(null, results);
@@ -158,9 +145,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers_search erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers_search erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers_search succès");
                 callback(null, results);
@@ -196,9 +180,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers_dist erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers_dist erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers_dist succès");
                 callback(null, results);
@@ -235,9 +216,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers_dist_search erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers_dist_search erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers_dist_search succès");
                 callback(null, results);
@@ -275,9 +253,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllValidOffers erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : readAllValidOffers erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readAllValidOffers succès");
                 callback(null, results);
@@ -311,9 +286,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readOffersById erreur : " + err);
                 callback(err, null);
-            } else if (offre.length === 0) {
-                console.log("Fonction : readOffersById erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readOffersById succès");
                 callback(null, offre);
@@ -346,9 +318,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readOffersByIdSansVerif erreur : " + err);
                 callback(err, null);
-            } else if (offre.length === 0) {
-                console.log("Fonction : readOffersByIdSansVerif erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : readOffersByIdSansVerif succès");
                 callback(null, offre);
@@ -363,9 +332,6 @@ module.exports = {
                 if (err) {
                     console.log("Fonction : readall erreur : " + err);
                     callback(err, null);
-                } else if (results.length === 0) {
-                    console.log("Fonction : readall erreur : Aucun résultat");
-                    callback(new TypeError("Aucune offre"), null);
                 } else {
                     console.log("Fonction : readall succès");
                     callback(null, results);
@@ -378,9 +344,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : getDescription erreur : " + err);
                 callback(err, null);
-            } else if (results.length === 0) {
-                console.log("Fonction : getDescription erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : getDescription succès");
                 callback(null, results);
@@ -422,9 +385,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : getoffrebyrecruteur erreur : " + err);
                 callback(err, null);
-            } else if (offre.length === 0) {
-                console.log("Fonction : getoffrebyrecruteur erreur : Aucun résultat");
-                callback(new TypeError("Aucune offre"), null);
             } else {
                 console.log("Fonction : getoffrebyrecruteur succès");
                 callback(null, offre);

@@ -10,8 +10,6 @@ module.exports = {
         db.query("SELECT * FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
             } else {
                 callback(null, results);
             }
@@ -23,8 +21,6 @@ module.exports = {
             console.log(results);
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur"), results);
             } else {
                 callback(null, results);
             }
@@ -35,8 +31,6 @@ module.exports = {
         db.query("SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
             } else {
                 callback(null, results);
             }
@@ -74,8 +68,6 @@ module.exports = {
         db.query("SELECT * FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
             } else {
                 callback(null, results);
             }
@@ -87,8 +79,6 @@ module.exports = {
             // console.log(results);
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur"), results);
             } else {
                 callback(null, results);
             }
@@ -99,8 +89,6 @@ module.exports = {
         db.query("SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), results);
             } else {
                 callback(null, results);
             }
@@ -111,8 +99,6 @@ module.exports = {
         db.query("SELECT nom, prenom, telephone, type_utilisateur  FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), null);
             } else {
                 callback(null, results);
             }
@@ -123,8 +109,6 @@ module.exports = {
         db.query("SELECT adresse_utilisateur_lat, adresse_utilisateur_long FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.length == 0) {
-                callback(new TypeError("Aucun utilisateur avec cet email"), null);
             } else {
                 callback(null, results);
             }
@@ -177,14 +161,12 @@ module.exports = {
         db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
+            } else if (results.affectedRows > 0) {
+                // Utilisateur supprimé avec succès
+                callback(null, "Utilisateur supprimé avec succès");
             } else {
-                if (results.affectedRows > 0) {
-                    // Utilisateur supprimé avec succès
-                    callback(null, "Utilisateur supprimé avec succès");
-                } else {
-                    // Aucun utilisateur avec cet email
-                    callback(new TypeError("Aucun utilisateur avec cet email"), null);
-                }
+                // Aucun utilisateur avec cet email
+                callback(new TypeError("Aucun utilisateur avec cet email"), null);
             }
         });
     },

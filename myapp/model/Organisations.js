@@ -2,7 +2,7 @@ var db = require('./ConnexionBDD.js');
 
 module.exports = {
     read: function (siren, callback) {
-        db.query(" SELECT * FROM Organisation WHERE siren= ?", [siren], function (err, results) {
+        db.query("SELECT * FROM Organisation WHERE siren= ?", [siren], function (err, results) {
             if (err) {
                 console.log("Fonction : read : " + err.message);
                 throw err;

@@ -7,9 +7,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readall : " + err.message);
                 callback(err, null);
-            } else if (results.length == 0) {
-                console.log("Fonction : readall : Aucun utilisateur trouvé");
-                callback(new TypeError("Aucun utilisateur"), results);
             } else {
                 console.log("Fonction : readall : Succès");
                 callback(null, results);
@@ -22,9 +19,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : updateTypeUtilisateur : " + err.message);
                 callback(err, false);
-            } else if (results.affectedRows == 0) {
-                console.log("Fonction : updateTypeUtilisateur : Aucun utilisateur trouvé avec l'email " + email);
-                callback(new TypeError("Aucun utilisateur trouvé avec l'email " + email), false);
             } else {
                 console.log("Fonction : updateTypeUtilisateur : Succès")
                 callback(err, true);
@@ -45,9 +39,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : getAllOrganisationCreation : " + err.message);
                 callback(err, null);
-            } else if (results.length == 0) {
-                console.log("Fonction : getAllOrganisationCreation : Aucune organisation trouvée");
-                callback(new TypeError("Aucun utilisateur"), results);
             } else {
                 console.log("Fonction : getAllOrganisationCreation : Succès");
                 callback(null, results);

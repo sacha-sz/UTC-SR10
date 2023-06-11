@@ -11,15 +11,11 @@ module.exports = {
       if (err) {
         console.log("Fonction readCandidatureByUser : " + err)
         callback(err, null);
-      } else if (results.length == 0) {
-        console.log("Fonction readCandidatureByUser : Aucune candidature trouvée")
-        callback(new TypeError("Aucune candidature"), results);
       } else {
         console.log("Fonction readCandidatureByUser : Succès")
         callback(null, results);
       }
-    }
-    )
+    })
   },
 
   PieceJointeUser: function (email, callback) {
@@ -30,14 +26,10 @@ module.exports = {
       if (err) {
         console.log("Fonction PieceJointeUser : " + err)
         callback(err, null);
-      } else if (results.length == 0) {
-        console.log("Fonction PieceJointeUser : Aucune candidature trouvée")
-        callback(new TypeError("Aucune candidature"), results);
       } else {
         console.log("Fonction PieceJointeUser : Succès")
         callback(null, results);
       }
-    }
-    )
+    })
   }
 }

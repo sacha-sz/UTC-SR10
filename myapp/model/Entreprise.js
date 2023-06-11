@@ -8,9 +8,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction readTypeOrganisation : Erreur lors de la récupération des types d'organisation")
                 callback(err, null);
-            } else if (results.length == 0) {
-                console.log("Fonction readTypeOrganisation : Aucun type d'organisation")
-                callback(new TypeError("Aucun type d'organisation"), results);
             } else {
                 console.log("Fonction readTypeOrganisation : Récupération des types d'organisation avec succès")
                 callback(null, results);
@@ -23,9 +20,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction read : Erreur lors de la récupération de l'organisation")
                 callback(err, null);
-            } else if (results.length == 0) {
-                console.log("Fonction read : Aucune organisation avec ce siren")
-                callback(new TypeError("Aucune organisation avec ce siren"), results);
             } else {
                 console.log("Fonction read : Récupération de l'organisation avec succès")
                 callback(null, results);
@@ -38,9 +32,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction readall : Erreur lors de la récupération des organisations")
                 callback(err, null);
-            } else if (results.length == 0) {
-                console.log("Fonction readall : Aucune organisation")
-                callback(new TypeError("Aucune organisation"), results);
             } else {
                 console.log("Fonction readall : Récupération des organisations avec succès")
                 callback(null, results);
@@ -151,9 +142,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(err, null);
-            } else if (results.length > 0) {
-                console.log("Fonction entrepriseRecruteur : Récupération des entreprises recruteurs avec succès")
-                callback(null, results);
             } else {
                 console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(new TypeError("Aucune entreprise trouvée"), null);
@@ -179,9 +167,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(err, null);
-            } else if (results.length > 0) {
-                console.log("Fonction getAsking : Récupération des demandes avec succès")
-                callback(null, results);
             } else {
                 console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(new TypeError("Aucune demande trouvée"), null);

@@ -6,9 +6,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readDescriptionById : Erreur lors de la récupération de la description");
                 throw err;
-            } else if (results.length == 0) {
-                console.log("Fonction : readDescriptionById : Aucune description trouvée pour l'id " + id);
-                callback(null);
             } else {
                 callback(results[0]);
             }
@@ -19,9 +16,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllTypeMetier : Erreur lors de la récupération des types de métier");
                 throw err;
-            } else if (results.length == 0) {
-                console.log("Fonction : readAllTypeMetier : Aucun type de métier trouvé");
-                callback(null);
             } else {
                 callback(results);
             }
@@ -33,9 +27,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readAllStatut : Erreur lors de la récupération des statuts");
                 throw err;
-            } else if (results.length == 0) {
-                console.log("Fonction : readAllStatut : Aucun statut trouvé");
-                callback(null);
             } else {
                 callback(results);
             }
@@ -46,9 +37,6 @@ module.exports = {
             if (err) {
                 console.log("Fonction : readSIRENUser : Erreur lors de la récupération du SIREN");
                 throw err;
-            } else if (results.length == 0) {
-                console.log("Fonction : readSIRENUser : Aucun SIREN trouvé");
-                callback(null);
             } else {
                 callback(results[0]);
             }
