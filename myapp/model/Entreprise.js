@@ -81,7 +81,7 @@ module.exports = {
     },
 
     create: function (siren, nom, siege_social_lat, siege_social_long, type_organisation, callback) {
-        db.query("INSERT INTO Organisation VALUES (?, ?, ?, ?);", [siren, nom, siege_social_lat, siege_social_long, type_organisation], function (err, results) {
+        db.query("INSERT INTO Organisation VALUES (?, ?, ?, ?, ?);", [siren, nom, siege_social_lat, siege_social_long, type_organisation], function (err, results) {
             if (err) {
                 console.log("Fonction create : Erreur lors de l'ajout de l'organisation")
                 callback(err, false);
