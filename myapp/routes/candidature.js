@@ -3,6 +3,8 @@ const candidatureModel = require('../model/Candidature');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const request = require('request');
+const AdmZip = require('adm-zip');
 
 // Create a storage engine for multer
 const storage = multer.diskStorage({
@@ -98,15 +100,20 @@ router.get('/formulaire_candidatures/:id', function (req, res, next) {
 router.get('/liste_candidat/:id', function (req, res, next) {
     if (req.session.loggedin) {
         // Récupérer les candidats sur une offre
-        console.log("liste candidat");
-        res.render('liste_candidat', {
-            title: 'Candidatures',
-            username: req.session.username,
-            type_user: req.session.type_user,
-            id: req.params.id, 
-            // candidats: result TODO: ici mettre la liste des candidats
+        candidatureModel.getInfoCandidature(req.params.id, function (err, result) {
+            if (result) {
+                console.log(result);
+                res.render('liste_candidat', {
+                    title: 'Candidatures',
+                    username: req.session.username,
+                    type_user: req.session.type_user,
+                    id: req.params.id, 
+                    candidats: result
+                }); 
+            } else {
+                res.status(500).send('Une erreur s\'est produite lors de la récupération des candidatures');
+            }
         });
-
     } else {
         res.redirect('/login');
     }
@@ -185,5 +192,94 @@ router.get('/getfile', function (req, res, next) {
         res.send('Une erreur est survenue lors du téléchargement de ' + req.query.fichier_cible + ' : ' + error);
     }
 });
+
+
+router.get('/accepter/:id/:email/:id_offre', function (req, res, next) {
+    var id_candidature = req.params.id;
+    var email_candidat = req.params.email;
+    var id_offre = req.params.id_offre;
+    console.log("Accepter candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
+
+    candidatureModel.accepterCandidature(id_candidature, email_candidat, function (err, result) {
+        if (result) {
+            console.log("Candidature acceptée");
+            candidatureModel.refuserAutresCandidatures(id_candidature, email_candidat, function (err, result) {
+                if (result) {
+                    console.log("Autres candidatures refusées");
+                    candidatureModel.expireeOffre(id_offre, function (err, result) {
+                        if (result) {
+                            console.log("Offre expirée");
+                        } else {
+                            console.log("Erreur lors de l'expiration de l'offre");
+                        }
+                    });
+                } else {
+                    console.log("Erreur lors du refus des autres candidatures");
+                }
+            });
+            res.redirect('/offre/offre_recruteur');
+            return;
+        } else {
+            console.log("Erreur lors de l'acceptation de la candidature");
+            res.redirect('/candidature/liste_candidat/' + id_offre);
+            return;
+        }
+    });
+});
+
+router.get('/refuser/:id/:email/:id_offre', function (req, res, next) {
+    var id_candidature = req.params.id;
+    var email_candidat = req.params.email;
+    var id_offre = req.params.id_offre;
+    console.log("Refuser candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
+
+    candidatureModel.refuserCandidature(id_candidature, email_candidat, function (err, result) {
+        if (result) {
+            console.log("Candidature refusée");
+            res.redirect('/offre/offre_recruteur');
+            return;
+        } else {
+            console.log("Erreur lors du refus de la candidature");
+            res.redirect('/candidature/liste_candidat/' + id_offre);
+            return;
+        }
+    });
+});
+
+
+router.get('/telecharger/:id/:email', function (req, res, next) {
+    candidatureModel.getAllPJ(req.params.id, req.params.email, function (err, result) {
+        if (result) {
+            console.log(result);
+            var liste_name = [];
+            for (var i = 0; i < result.length; i++) {
+                liste_name.push(result[i].nom);
+            }
+            console.log(liste_name);
+
+            var zip = new AdmZip(); // Crée une instance d'AdmZip
+
+            // On ajoute chaque fichier au zip
+            var filesProcessed = 0;
+            for (var i = 0; i < liste_name.length; i++) {
+                zip.addLocalFile("./mesfichiers/" + liste_name[i]);
+                filesProcessed++;
+                if (filesProcessed === liste_name.length) {
+                    // On écrit le zip
+                    var willSendthis = zip.toBuffer();
+                    res.writeHead(200, {
+                        'Content-Type': 'application/zip',
+                        'Content-disposition': 'attachment; \
+                        filename=candidature_' + req.params.id + '_candidat_' + req.params.email + '.zip',
+                    });
+                    res.end(willSendthis);
+                }
+            }
+        } else {
+            res.send('Une erreur est survenue lors de la récupération des documents');
+        }
+    });
+});
+
 
 module.exports = router;

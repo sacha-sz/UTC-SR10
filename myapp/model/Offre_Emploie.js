@@ -282,7 +282,7 @@ module.exports = {
             ON DE.numero = FP.id_description \
             INNER JOIN Organisation as ORG \
             ON ORG.siren = FP.FP_SIREN \
-            WHERE OE.etat = 'PUBLIEE' AND OE.id = ?;", [id], function (err, offre) {
+            WHERE OE.id = ?;", [id], function (err, offre) {
             if (err) {
                 console.log("Fonction : readOffersById erreur : " + err);
                 callback(err, null);
