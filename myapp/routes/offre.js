@@ -197,7 +197,6 @@ router.get('/recherche', async function (req, res, next) {
 router.post('/ajout', function (req, res, next) {
     console.log('Ajout d\'une offre');
     const intitule = req.body.intitule;
-    const description = req.body.description;
     const responsable = req.body.responsable;
     const lat = req.body.lat;
     const long = req.body.long;
@@ -211,7 +210,6 @@ router.post('/ajout', function (req, res, next) {
     var type_metier = req.body.type_metier;
     const siren = req.body.siren;
     console.log(intitule);
-    console.log(description);
     console.log(responsable);
     console.log(lat);
     console.log(long);
@@ -224,7 +222,7 @@ router.post('/ajout', function (req, res, next) {
     console.log(type_metier);
     console.log(statut);
     console.log(siren);
-    if (intitule == null || intitule == "" || description == null || description == "" ||
+    if (intitule == null || intitule == "" || 
         responsable == null || responsable == "" || lat == null || lat == ""
         || long == null || long == "" || rythme == null || rythme == "" ||
         missions == null || missions == "" ||
@@ -274,7 +272,7 @@ router.post('/ajout', function (req, res, next) {
         );
         type_metier = newTM;
     }
-    offreModel.create(intitule, responsable, lat, long, description, rythme, salaire_min, salaire_max, statut, type_metier, req.session.username, siren, missions, activites, competences, function (result) {
+    offreModel.create(intitule, responsable, lat, long, rythme, salaire_min, salaire_max, statut, type_metier, req.session.username, siren, missions, activites, competences, function (result) {
         if (result) {
             console.log("Offre créée");
             res.redirect('/');

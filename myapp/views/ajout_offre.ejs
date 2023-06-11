@@ -63,11 +63,6 @@
                                     placeholder="Entrez les Missions">
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description :</label>
-                                <input autofocus name="description" type="text" class="form-control" id="description"
-                                    placeholder="Entrez la Description">
-                            </div>
-                            <div class="mb-3">
                                 <label for="activites" class="form-label">Activités :</label>
                                 <input autofocus name="activites" type="text" class="form-control" id="activites"
                                     placeholder="Entrez les Activités">
@@ -86,11 +81,17 @@
                             <div class="mb-3">
                                 <label for="siren" class="form-label">Siren de l'entreprise :</label>
                                 <select id="siren" name="siren" class="form-select">
-                                    <% sirens.forEach(function(siren) { %>
-                                        <option>
-                                            <%= siren.siren_orga %>
-                                        </option>
-                                        <% }) %>
+                                    <% if (Array.isArray(sirens)) { %>
+                                        <% sirens.forEach(function (siren) { %>
+                                            <option>
+                                                <%= siren.siren_orga %>
+                                            </option>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <option>
+                                                        <%= sirens.siren_orga %>
+                                                    </option>
+                                                    <% } %>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -127,7 +128,7 @@
                                             <%= TM.nom %>
                                         </option>
                                         <% }) %>
-                                        <option>Autre</option>
+                                            <option>Autre</option>
                                 </select>
                             </div>
                             <div class="addtype_metier" style="display: none;">
@@ -157,21 +158,21 @@
 
 <%- include('./partials/footer'); %>
 
-<script>
-    document.getElementById("statut").addEventListener("change", function() {
-        if (document.getElementById("statut").value == "Autre") {
-            document.getElementsByClassName("addStatut")[0].style.display = "block";
-        } else {
-            document.getElementsByClassName("addStatut")[0].style.display = "none";
-        }
-    });
-    document.getElementById("type_metier").addEventListener("change", function() {
-        if (document.getElementById("type_metier").value == "Autre") {
-            document.getElementsByClassName("addtype_metier")[0].style.display = "block";
-        } else {
-            document.getElementsByClassName("addtype_metier")[0].style.display = "none";
-        }
-    });
-</script>
+    <script>
+        document.getElementById("statut").addEventListener("change", function () {
+            if (document.getElementById("statut").value == "Autre") {
+                document.getElementsByClassName("addStatut")[0].style.display = "block";
+            } else {
+                document.getElementsByClassName("addStatut")[0].style.display = "none";
+            }
+        });
+        document.getElementById("type_metier").addEventListener("change", function () {
+            if (document.getElementById("type_metier").value == "Autre") {
+                document.getElementsByClassName("addtype_metier")[0].style.display = "block";
+            } else {
+                document.getElementsByClassName("addtype_metier")[0].style.display = "none";
+            }
+        });
+    </script>
 
 </html>
