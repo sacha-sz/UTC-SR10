@@ -194,6 +194,7 @@ router.get('/recherche', async function (req, res, next) {
 
 
 
+
 router.post('/ajout', function (req, res, next) {
     console.log('Ajout d\'une offre');
     const intitule = req.body.intitule;

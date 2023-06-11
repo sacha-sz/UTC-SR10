@@ -142,6 +142,9 @@ module.exports = {
             if (err) {
                 console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(err, null);
+            } else if (results.length > 0) {
+                console.log("Fonction entrepriseRecruteur : Récupération des entreprises recruteurs avec succès")
+                callback(null, results);
             } else {
                 console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(new TypeError("Aucune entreprise trouvée"), null);

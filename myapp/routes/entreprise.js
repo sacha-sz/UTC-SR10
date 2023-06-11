@@ -22,6 +22,7 @@ app.get('/', function (req, res, next) {
 
 app.get('/entreprise_recruteur', function (req, res, next) {
     if (req.session.loggedin) {
+        console.log("Entreprise recruteur");
         entrepriseModel.entrepriseRecruteur(req.session.username, function (err, result) {
             if (result == null || err) {
                 console.log("Aucun type d'organisation");
