@@ -41,9 +41,9 @@ app.use(cors( {
 
 app.use(session({
     secret: 'Ca cest pas grave ca cest bien, je suis un secret',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1h
+    cookie: { maxAge: 1000 * 60 * 60, } // 1h
 }));
 
 app.use('/', indexRouter);

@@ -19,9 +19,13 @@
 
 Tobias :
 - Demander siren dans l'ajout d'une offre
-- Nb tentatives mdp
 
 
 Sacha :
 - Chiffrement mdp
 - Récupérer dossier des candidats (Afficher les candidats sur une offre et possibilité de télécharger les fichiers)
+
+
+Edition et suppression d'une offre 
+Gestion des candidatures : visualiser la liste de mes candidatures, sélectionner, compléter ou
+annuler une candidature

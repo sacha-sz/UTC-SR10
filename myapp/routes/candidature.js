@@ -94,6 +94,25 @@ router.get('/formulaire_candidatures/:id', function (req, res, next) {
     }
 });
 
+
+router.get('/liste_candidat/:id', function (req, res, next) {
+    if (req.session.loggedin) {
+        // Récupérer les candidats sur une offre
+        console.log("liste candidat");
+        res.render('liste_candidat', {
+            title: 'Candidatures',
+            username: req.session.username,
+            type_user: req.session.type_user,
+            id: req.params.id, 
+            // candidats: result TODO: ici mettre la liste des candidats
+        });
+
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
 router.post('/validation_candidature/:id', upload.fields([
     { name: 'myFileInputCV', maxCount: 1, type: 'CV' },
     { name: 'myFileInputLM', maxCount: 1, type: 'LM' },

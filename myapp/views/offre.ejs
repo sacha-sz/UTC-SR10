@@ -60,8 +60,6 @@
                 <div class="media-body">
                     <div class="row">
                         <div class="col-9">
-                            
-
                             <h4 class="font-weight-bold text-primary text-center"> Descriptif de mission</h4>
                             <p> <b class="font-weight-bold text-justify">Description : </b>
                                 <%= offre.missions %>
@@ -74,27 +72,43 @@
                             </p>
 
                             <h4 class="font-weight-bold text-primary text-center"> Type de métier</h4>
-                            <p> <b class="font-weight-bold text-justify"><%= offre.TM_nom %> : </b>
+                            <p> <b class="font-weight-bold text-justify">
+                                    <%= offre.TM_nom %> :
+                                </b>
                                 <%= offre.TM_description %>
                             </p>
                             <br>
 
                             <h4 class="font-weight-bold text-primary text-center"> Fiche de poste</h4>
-                            <p> <b class="font-weight-bold text-justify">Nom :</b> <%= offre.SP_nom%> </p>
-                            <p> <b class="font-weight-bold text-justify">Description :</b> <%= offre.SP_description%> </p>
+                            <p> <b class="font-weight-bold text-justify">Nom :</b>
+                                <%= offre.SP_nom%>
+                            </p>
+                            <p> <b class="font-weight-bold text-justify">Description :</b>
+                                <%= offre.SP_description%>
+                            </p>
                             <br>
-
                         </div>
                     </div>
                 </div>
             </div>
 
+            <% if (type_user === 'CANDIDAT') { %>
             <div class="row">
                 <p class="text-center">
                     <a type="button" id="send" class="btn btn-success"
-                        href="/candidature/formulaire_candidatures/">Candidater</a>
+                        href="/candidature/formulaire_candidatures/<%= offre.id %>">Candidater</a>
                 </p>
             </div>
+            <% } %>
+
+            <% if (type_user === 'RECRUTEUR') { %>
+            <div class="row">
+                <p class="text-center">
+                    <a type="button" id="listCandidat" class="btn btn-success"
+                        href="/candidature/liste_candidat/<%= offre.id %>">Voir les candidatures</a>
+                </p>
+            </div>
+            <% } %>
         </div>
     </div>
 
@@ -105,6 +119,10 @@
         var url = window.location.href;
         var id = url.substring(url.lastIndexOf('/') + 1);
         send.href = "/candidature/formulaire_candidatures/" + id;
+
+        var listCandidat = document.getElementById('listCandidat');
+        var id2 = "<%= offre.id %>"; // Assurez-vous que cette variable est correctement initialisée dans votre code
+        listCandidat.href = "/candidature/liste_candidat/" + id2;
     </script>
 
 </body>
