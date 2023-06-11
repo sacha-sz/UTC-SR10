@@ -15,8 +15,16 @@ const storage = multer.diskStorage({
             return;
         }
         const extension = path.extname(file.originalname);
+        
+        
         const type = file.fieldname.replace('myFileInput', '');
-        const filename = req.session.username + '-' + type + extension;
+        const allowed_extensions = ['CV', 'LM', 'Autre'];
+        if (!allowed_extensions.includes(type)) {
+            cb(new Error('Type de fichier non autorisé'));
+            return;
+        }
+        
+        const filename = req.session.username + '-' + type + "-" + req.params.id + extension;
         cb(null, filename);
     }
 });

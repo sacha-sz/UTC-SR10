@@ -11,42 +11,50 @@
 </header>
 
 <body>
-
-    <h1>Liste des documents</h1>
-    <% documents.forEach((doc)=> { %>
-        <div class="container-fluid media ml-5 mr-5 my-2">
-            <div class="row">
-                <div class="col">
-                    <div class="media-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="d-flex">
-                                    <div style="justify-content : center;">
-                                        <h4 class="media-heading">
-                                            <%= doc.nom %>
-                                        </h4>
-                                        <p> </p>
-                                        <p>Type : <%= doc.type_pieces %>
-                                        </p>
+    <div class="container">
+        <h1 class="text-center">Liste des documents</h1>
+        <% documents.forEach((doc)=> { %>
+            <div class="container-fluid media ml-5 mr-5 my-2">
+                <div class="row">
+                    <div class="col">
+                        <div class="media-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex">
+                                        <div style="justify-content : center;">
+                                            <h4 class="media-heading">
+                                                <%= doc.nom %>
+                                            </h4>
+                                            <p>Type : <%= doc.type_pieces %></p>
+                                            <p>Ce fichier est lié à l'offre :
+                                                <script>
+                                                    var nom = "<%= doc.nom %>";
+                                                    var id_ext = nom.split("-")[2];
+                                                    var id = id_ext.split(".")[0];
+                                                    var url = "/offre/" + id;
+                                                    document.write("<a href=" + url + ">" + id + "</a>");
+                                                </script>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-auto my-auto">
-                                <div class="d-flex">
-                                    <a href="/candidature/getfile?fichier_cible=<%= doc.nom %>">
-                                        <button type="button" class="btn btn-success">Télécharger</button>
-                                    </a>
+                                <div class="col-auto my-auto">
+                                    <div class="d-flex">
+                                        <a href="/candidature/getfile?fichier_cible=<%= doc.nom %>">
+                                            <button type="button" class="btn btn-success">Télécharger</button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <% }) %>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <% }) %>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <%- include('./partials/footer'); %>
+        <%- include('./partials/footer'); %>
 
 </html>
