@@ -72,11 +72,35 @@
                                 <input autofocus name="competences" type="text" class="form-control" id="competences"
                                     placeholder="Entrez les Compétences attendues">
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="statut" class="form-label">Statut :</label>
-                                <input autofocus name="statut" type="text" class="form-control" id="statut"
-                                    placeholder="Entrez les Statut du poste">
-                            </div> -->
+                            <!-- ICI -->
+                            <div class="mb-3">
+                                <label for="nb_pieces" class="form-label">Nombre de pièces :</label>
+                                <input autofocus name="nb_pieces" type="number" class="form-control" id="nb_pieces"
+                                    placeholder="Entrez le nombre de pièces">
+                            </div>
+                            <div class="mb-3">
+                                <label for="etat" class="form-label">Etat :</label>
+                                <select id="etat" name="etat" class="form-select">
+                                            <option>NON PUBLIEE</option>
+                                            <option>PUBLIEE</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date_validite" class="form-label">Offre valable jusqu'au :</label>
+                                <input autofocus name="date_validite" type="date" class="form-control" id="date_validite">
+                            </div>
+                            <div class="mb-3">
+                                <label for="indication_piece_jointes" class="form-label">Etat :</label>
+                                <select id="indication_piece_jointes" name="indication_piece_jointes" class="form-select">
+                                            <option>CV</option>
+                                            <option>LM</option>
+                                            <option>Autre</option>
+                                            <option>CV, LM</option>
+                                            <option>CV, Autre</option>
+                                            <option>LM, Autre</option>
+                                            <option>CV, LM, Autre</option>
+                                </select>
+                            </div>
                             <!-- Gestion du statut -->
                             <div class="mb-3">
                                 <label for="siren" class="form-label">Siren de l'entreprise :</label>

@@ -25,7 +25,7 @@ router.get('/ajout_offre', function (req, res, next) {
                         type_user: req.session.type_user,
                         statuts: result,
                         sirens: siren,
-                        type_metiers : TM
+                        type_metiers: TM
                     });
                 });
             });
@@ -201,14 +201,19 @@ router.post('/ajout', function (req, res, next) {
     const lat = req.body.lat;
     const long = req.body.long;
     const rythme = req.body.rythme;
-    const salaire_min = req.body.salaire_min;
-    const salaire_max = req.body.salaire_max;
+    var salaire_min = req.body.salaire_min;
+    var salaire_max = req.body.salaire_max;
     const missions = req.body.missions;
     const activites = req.body.activites;
     const competences = req.body.competences;
     var statut = req.body.statut;
     var type_metier = req.body.type_metier;
     const siren = req.body.siren;
+    const nb_pieces = req.body.nb_pieces;
+    const etat = req.body.etat;
+    const date_validite = req.body.date_validite;
+    const indication_piece_jointes = req.body.indication_piece_jointes;
+    // nb_pieces, etat, date_validite, indication_piece_jointes,id_poste,
     console.log(intitule);
     console.log(responsable);
     console.log(lat);
@@ -222,7 +227,7 @@ router.post('/ajout', function (req, res, next) {
     console.log(type_metier);
     console.log(statut);
     console.log(siren);
-    if (intitule == null || intitule == "" || 
+    if (intitule == null || intitule == "" ||
         responsable == null || responsable == "" || lat == null || lat == ""
         || long == null || long == "" || rythme == null || rythme == "" ||
         missions == null || missions == "" ||
@@ -232,9 +237,18 @@ router.post('/ajout', function (req, res, next) {
         type_metier == null || type_metier == "" ||
         siren == null || siren == "" ||
         salaire_min == null || salaire_min == "" ||
+        nb_pieces == null || nb_pieces == "" ||
+        etat == null || etat == "" ||
+        date_validite == null || date_validite == "" ||
+        indication_piece_jointes == null || indication_piece_jointes == "" ||
         salaire_max == null || salaire_max == "") {
         console.log("Elements manquants 1");
         return res.redirect('/offre/ajout_offre');
+    }
+    if (salaire_min > salaire_max) {
+        var tmp = salaire_min;
+        salaire_min = salaire_max;
+        salaire_max = tmp;
     }
     if (statut == "Autre") {
         const newStatut = req.body.newNom;
@@ -275,11 +289,20 @@ router.post('/ajout', function (req, res, next) {
     offreModel.create(intitule, responsable, lat, long, rythme, salaire_min, salaire_max, statut, type_metier, req.session.username, siren, missions, activites, competences, function (result) {
         if (result) {
             console.log("Offre créée");
-            res.redirect('/');
         } else {
             res.redirect('/offre/ajout_offre');
         }
+        var id_poste = result.insertId;
+        offreEmploiModel.createOffreEmploi(nb_pieces, etat, date_validite, indication_piece_jointes, id_poste, function (result) {
+            if (result) {
+                console.log("Offre Emploie créée");
+                res.redirect('/');
+            } else {
+                res.redirect('/offre/ajout_offre');
+            }
+        });
     });
+
 });
 
 

@@ -128,7 +128,7 @@ app.post('/accepte_adhesion', function(req, res, next) {
             console.log(err);
             throw err;
         } else {
-            res.redirect('/admin/gestion_new_entreprise');
+            res.redirect('/entreprise/gestion');
         }
     });
 }),

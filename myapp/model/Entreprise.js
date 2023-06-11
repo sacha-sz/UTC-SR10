@@ -215,7 +215,6 @@ module.exports = {
 
     /// TEST
 
-
     // Test que la latitude et la longitude soient valides
     TEST_LATITUDE: function (latitude, callback) {
         // Vérification de la latitude

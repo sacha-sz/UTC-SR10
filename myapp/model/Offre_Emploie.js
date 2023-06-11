@@ -431,4 +431,21 @@ module.exports = {
             }
         });
     },
+    
+    createOffreEmploi : function (nb_pieces, etat, date_validite, indication_piece_jointes,id_poste, callback) {
+        db.query("INSERT INTO Offre_d_emploi(nombre_de_piece, etat, date_validite, indication_piece_jointes, id_poste) VALUES (?, ?, ?, ?, ?);",
+            [nb_pieces, etat, date_validite, indication_piece_jointes, id_poste],
+            function (err, results) {
+                if (err) {
+                    console.log("Fonction : createOffreEmploi erreur : " + err);
+                    callback(err, null);
+                } else if (results.affectedRows === 0) {
+                    console.log("Fonction : createOffreEmploi erreur : Aucun résultat");
+                    callback(new TypeError("Aucune offre"), null);
+                } else {
+                    console.log("Fonction : createOffreEmploi succès");
+                    callback(null, results);
+                }
+            });
+    }
 };
