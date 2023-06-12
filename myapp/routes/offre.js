@@ -358,6 +358,7 @@ router.post('/editer_offre/:id', function (req, res, next) {
     var type_metier = req.body.type_metier;
     var statut = req.body.statut;
     var id_offre = req.params.id;
+    var Etat = req.body.etat;
     console.log(id_offre);
 
     var URL = '/offre/editer_offre/' + id_offre;
@@ -367,19 +368,20 @@ router.post('/editer_offre/:id', function (req, res, next) {
         && (long == null || long == "") && (rythme == null || rythme == "") && (salaire_min == null || salaire_min == "")
         && (salaire_max == null || salaire_max == "") && (missions == null || missions == "") && (activites == null || activites == "")
         && (competences == null || competences == "") && (date_validite == null || date_validite == "") && (indication_piece_jointes == null || indication_piece_jointes == "")
-        && (type_metier == null || type_metier == "") && (statut == null || statut == "")) {
+        && (type_metier == null || type_metier == "") && (statut == null || statut == "")
+        && (Etat == null || Etat == "")) {
         console.log("Aucune modification");
 
         return res.redirect(URL);
     }
     console.log("Modifications");
     var promises = [];
-    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (offre) {
+    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (err, offre) {
+        console.log(`offre : ${offre}`);
         if (offre.length == 0) {
             console.log("Offre inexistante");
             return res.redirect(URL);
         }
-        console.log(offre);
         var id_poste = offre[0].id_poste;
 
         console.log("AVANT IF")
@@ -398,9 +400,26 @@ router.post('/editer_offre/:id', function (req, res, next) {
             );
         }
 
+        if(Etat != null && Etat != ""){
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateEtat(id_offre, Etat, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification de l'état");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
         if (responsable != null && responsable != "") {
             promises.push(
                 new Promise(function (resolve) {
+                    console.log(`responsable : ${responsable}`);
+                    console.log(`id_poste : ${id_poste}`);
                     offreModel.updateResponsable(id_poste, responsable, function (result) {
                         if (!result) {
                             console.log("Erreur lors de la modification du responsable");
@@ -548,10 +567,10 @@ router.post('/editer_offre/:id', function (req, res, next) {
             );
         }
 
-        if (indication_pieces_jointes != null && indication_pieces_jointes != "") {
+        if (indication_piece_jointes != null && indication_piece_jointes != "") {
             promises.push(
                 new Promise(function (resolve) {
-                    offreModel.updatePJ(id_offre, indication_pieces_jointes, function (result) {
+                    offreModel.updatePJ(id_offre, indication_piece_jointes, function (result) {
                         if (!result) {
                             console.log("Erreur lors de la modification des indication_pieces_jointes");
                             resolve(false);
@@ -610,7 +629,7 @@ router.post('/delete/:id', function (req, res, next) {
     console.log(confirmation);
     console.log("dans delete_offre POST");
     var id_offre = req.params.id;
-    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (offre) {
+    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (err, offre) {
         if (offre.length == 0) {
             console.log("Offre inexistante");
             return res.redirect(URL);
@@ -621,7 +640,7 @@ router.post('/delete/:id', function (req, res, next) {
         console.log(URL);
         if (confirmation == "CONFIRMER") {
             console.log("Suppression de l'offre");
-            userModel.deleteOffre(id_offre,id_poste, function (err, result) {
+            offreModel.deleteOffre(id_offre,id_poste, function (result) {
                 if (result) {
                     console.log("Offre supprimé");
                     res.redirect('/');

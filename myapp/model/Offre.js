@@ -105,7 +105,7 @@ module.exports = {
         });
     },
     updateIntitule : function (id, intitule, callback) {
-        db.query("UPDATE Fiche_poste SET intitule = ? WHERE id = ?;", [intitule, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET intitule = ? WHERE numero = ?;", [intitule, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateIntitule : Erreur lors de la mise à jour de l'intitulé");
                 throw err;
@@ -120,7 +120,7 @@ module.exports = {
     },
 
     updateResponsable : function (id, responsable, callback) {
-        db.query("UPDATE Fiche_poste SET responsable_hierarchique = ? WHERE id = ?;", [responsable, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET responsable_hierarchique = ? WHERE numero = ?;", [responsable, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateResponsable : Erreur lors de la mise à jour du responsable");
                 throw err;
@@ -134,7 +134,7 @@ module.exports = {
         });
     },
     updateLatitude : function (id, latitude, callback) {
-        db.query("UPDATE Fiche_poste SET lieu_mission_lat = ? WHERE id = ?;", [latitude, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET lieu_mission_lat = ? WHERE numero = ?;", [latitude, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateLatitude : Erreur lors de la mise à jour de la latitude");
                 throw err;
@@ -149,7 +149,7 @@ module.exports = {
     },
 
     updateLongitude : function (id, longitude, callback) {
-        db.query("UPDATE Fiche_poste SET lieu_mission_long = ? WHERE id = ?;", [longitude, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET lieu_mission_long = ? WHERE numero = ?;", [longitude, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateLongitude : Erreur lors de la mise à jour de la longitude");
                 throw err;
@@ -164,7 +164,7 @@ module.exports = {
     },
 
     updateRythme : function (id, rythme, callback) {
-        db.query("UPDATE Fiche_poste SET rythme = ? WHERE id = ?;", [rythme, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET rythme = ? WHERE numero = ?;", [rythme, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateRythme : Erreur lors de la mise à jour du rythme");
                 throw err;
@@ -179,7 +179,7 @@ module.exports = {
     },
 
     updateSalaireMax : function (id, salaire_max, callback) {
-        db.query("UPDATE Fiche_poste SET salaire_max = ? WHERE id = ?;", [salaire_max, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET salaire_max = ? WHERE numero = ?;", [salaire_max, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateSalaireMax : Erreur lors de la mise à jour du salaire max");
                 throw err;
@@ -194,7 +194,7 @@ module.exports = {
     },
 
     updateSalaireMin : function (id, salaire_min, callback) {
-        db.query("UPDATE Fiche_poste SET salaire_min = ? WHERE id = ?;", [salaire_min, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET salaire_min = ? WHERE numero = ?;", [salaire_min, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateSalaireMin : Erreur lors de la mise à jour du salaire min");
                 throw err;
@@ -208,7 +208,7 @@ module.exports = {
         });
     },
     updateStatut : function (id, statut, callback) {
-        db.query("UPDATE Fiche_poste SET statut_poste = ? WHERE id = ?;", [statut, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET statut_poste = ? WHERE numero = ?;", [statut, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateStatut : Erreur lors de la mise à jour du statut");
                 throw err;
@@ -223,7 +223,7 @@ module.exports = {
     },
 
     updateTypeMetier : function (id, type_metier, callback) {
-        db.query("UPDATE Fiche_poste SET type_metier = ? WHERE id = ?;", [type_metier, id], function (err, results) {
+        db.query("UPDATE Fiche_poste SET type_metier = ? WHERE numero = ?;", [type_metier, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateTypeMetier : Erreur lors de la mise à jour du type de métier");
                 throw err;
@@ -243,7 +243,7 @@ module.exports = {
     // 3) on met à jour la fiche de poste
     // on souhaite mettre à jour les missions
     updateMission : function (id_poste, missions,  callback){
-        db.query("SELECT id_description FROM Fiche_poste WHERE id = ?;", [id_poste], function (err, results) {
+        db.query("SELECT id_description FROM Fiche_poste WHERE numero = ?;", [id_poste], function (err, results) {
             if (err) {
                 console.log("Fonction : updateMission : Erreur lors de la récupération de l'id de la description");
                 throw err;
@@ -252,7 +252,7 @@ module.exports = {
                 callback(null);
             } else {
                 var id_description = results[0].id_description;
-                db.query("UPDATE Description SET missions = ? WHERE id = ?;", [missions, id_description], function (err, results) {
+                db.query("UPDATE Description SET missions = ? WHERE numero   = ?;", [missions, id_description], function (err, results) {
                     if (err) {
                         console.log("Fonction : updateMission : Erreur lors de la mise à jour de la description");
                         throw err;
@@ -269,7 +269,7 @@ module.exports = {
     },
     // on souhaite mettre à jour les activités
     updateActivite : function (id_poste, activites,  callback){
-        db.query("SELECT id_description FROM Fiche_poste WHERE id = ?;", [id_poste], function (err, results) {
+        db.query("SELECT id_description FROM Fiche_poste WHERE numero = ?;", [id_poste], function (err, results) {
             if (err) {
                 console.log("Fonction : updateActivite : Erreur lors de la récupération de l'id de la description");
                 throw err;
@@ -278,7 +278,7 @@ module.exports = {
                 callback(null);
             } else {
                 var id_description = results[0].id_description;
-                db.query("UPDATE Description SET activites = ? WHERE id = ?;", [activites, id_description], function (err, results) {
+                db.query("UPDATE Description SET activites = ? WHERE numero = ?;", [activites, id_description], function (err, results) {
                     if (err) {
                         console.log("Fonction : updateActivite : Erreur lors de la mise à jour de la description");
                         throw err;
@@ -295,7 +295,7 @@ module.exports = {
     },
     // on souhaite mettre à jour les compétences
     updateCompetence : function(id_poste, competences, callback){
-        db.query("SELECT id_description FROM Fiche_poste WHERE id = ?;", [id_poste], function (err, results) {
+        db.query("SELECT id_description FROM Fiche_poste WHERE numero = ?;", [id_poste], function (err, results) {
             if (err) {
                 console.log("Fonction : updateCompetence : Erreur lors de la récupération de l'id de la description");
                 throw err;
@@ -304,7 +304,7 @@ module.exports = {
                 callback(null);
             } else {
                 var id_description = results[0].id_description;
-                db.query("UPDATE Description SET competences = ? WHERE id = ?;", [competences, id_description], function (err, results) {
+                db.query("UPDATE Description SET competences_attendues = ? WHERE numero = ?;", [competences, id_description], function (err, results) {
                     if (err) {
                         console.log("Fonction : updateCompetence : Erreur lors de la mise à jour de la description");
                         throw err;
@@ -320,7 +320,7 @@ module.exports = {
         });
     },
     updateEtat : function (id, etat, callback) {
-        db.query("UPDATE Offre_emploie SET etat = ? WHERE id = ?;", [etat, id], function (err, results) {
+        db.query("UPDATE Offre_d_emploi SET etat = ? WHERE id = ?;", [etat, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateEtat : Erreur lors de la mise à jour de l'état");
                 throw err;
@@ -334,7 +334,7 @@ module.exports = {
         });
     },
     updateDate : function (id, date, callback) {
-        db.query("UPDATE Offre_emploie SET date_validite = ? WHERE id = ?;", [date, id], function (err, results) {
+        db.query("UPDATE Offre_d_emploi SET date_validite = ? WHERE id = ?;", [date, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updateDate : Erreur lors de la mise à jour de la date");
                 throw err;
@@ -348,7 +348,7 @@ module.exports = {
         });
     },
     updatePJ : function (id, pj, callback) {
-        db.query("UPDATE Offre_emploie SET indication_piece_jointes = ? WHERE id = ?;", [pj, id], function (err, results) {
+        db.query("UPDATE Offre_d_emploi SET indication_piece_jointes = ? WHERE id = ?;", [pj, id], function (err, results) {
             if (err) {
                 console.log("Fonction : updatePJ : Erreur lors de la mise à jour des pièces jointes");
                 throw err;
@@ -361,10 +361,25 @@ module.exports = {
             }
         });
     }, 
+    updateEtat : function (id, poste, callback) {
+        db.query("UPDATE Offre_d_emploi SET etat = ? WHERE id = ?;", [poste, id], function (err, results) {
+            if (err) {
+                console.log("Fonction : updatePublie : Erreur lors de la mise à jour de la publication");
+                throw err;
+            } else if (results.length == 0) {
+                console.log("Fonction : updatePublie : Aucune publication trouvée");
+                callback(null);
+            } else {
+                console.log("Fonction : updatePublie : Publication mise à jour");
+                callback(results);
+            }
+        });
+    },
+
     deleteOffre : function (id_offre,id_poste, callback) {
         // Il faut d'abord faire une select pour récupérer l'id de la description.
         // Ensuite on supprime la description, puis le poste, puis l'offre.
-        db.query("SELECT id_description FROM Fiche_poste WHERE id = ?;", [id_poste], function (err, results) {
+        db.query("SELECT id_description FROM Fiche_poste WHERE numero = ?;", [id_poste], function (err, results) {
             if (err) {
                 console.log("Fonction : deleteOffre : Erreur lors de la récupération de l'id de la description");
                 throw err;
@@ -373,7 +388,7 @@ module.exports = {
                 callback(null);
             } else {
                 var id_description = results[0].id_description;
-                db.query("DELETE FROM Description WHERE id = ?;", [id_description], function (err, results) {
+                db.query("DELETE FROM Description WHERE numero = ?;", [id_description], function (err, results) {
                     if (err) {
                         console.log("Fonction : deleteOffre : Erreur lors de la suppression de la description");
                         throw err;
@@ -381,7 +396,7 @@ module.exports = {
                         console.log("Fonction : deleteOffre : Aucune description trouvée");
                         callback(null);
                     } else {
-                        db.query("DELETE FROM Fiche_poste WHERE id = ?;", [id_poste], function (err, results) {
+                        db.query("DELETE FROM Fiche_poste WHERE numero = ?;", [id_poste], function (err, results) {
                             if (err) {
                                 console.log("Fonction : deleteOffre : Erreur lors de la suppression du poste");
                                 throw err;
@@ -389,7 +404,7 @@ module.exports = {
                                 console.log("Fonction : deleteOffre : Aucun poste trouvé");
                                 callback(null);
                             } else {
-                                db.query("DELETE FROM Offre_emploie WHERE id = ?;", [id_offre], function (err, results) {
+                                db.query("DELETE FROM Offre_d_emploi WHERE id = ?;", [id_offre], function (err, results) {
                                     if (err) {
                                         console.log("Fonction : deleteOffre : Erreur lors de la suppression de l'offre");
                                         throw err;

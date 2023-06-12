@@ -295,7 +295,7 @@ module.exports = {
 
     readOffersByIdSansVerif: function (id, callback) {
         db.query("SELECT DISTINCT\
-            OE.id, OE.date_validite, OE.indication_piece_jointes, \
+            OE.id, OE.date_validite, OE.indication_piece_jointes, OE.id_poste, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
             SP.nom AS SP_nom, SP.description AS SP_description, \
             TM.nom AS TM_nom, TM.description AS TM_description, \
