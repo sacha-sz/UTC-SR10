@@ -381,7 +381,7 @@ module.exports = {
     },
 
     getoffrebyrecruteur: function (email, callback) {
-        db.query("SELECT DISTINCT * FROM Fiche_poste INNER JOIN Offre_d_emploi ON Offre_d_emploi.id_poste = Fiche_poste.numero INNER JOIN Formulaire ON Formulaire.email_utilisateur = Fiche_poste.email_inscription INNER JOIN Description ON Description.numero = Fiche_poste.id_description INNER JOIN Organisation ON Organisation.siren = Formulaire.siren_orga WHERE Fiche_poste.email_inscription = ? ", [email], function (err, offre) {
+        db.query("SELECT DISTINCT intitule, Description.numero as D_numero,responsable_hierarchique ,lieu_mission_lat , lieu_mission_long, rythme , salaire_min , salaire_max , statut_poste , type_metier, email_inscription , id_description , FP_SIREN , nombre_de_piece ,Offre_d_emploi.id as id , etat , date_validite ,indication_piece_jointes , id_poste , Formulaire.id as idF , etat_formulaire , date_creation , email_utilisateur , siren_orga , Fiche_poste.numero as FP_numero , missions , activites , competences_attendues, siren, nom , siege_social_lat ,siege_social_long ,type_organisation FROM Fiche_poste INNER JOIN Offre_d_emploi ON Offre_d_emploi.id_poste = Fiche_poste.numero INNER JOIN Formulaire ON Formulaire.email_utilisateur = Fiche_poste.email_inscription INNER JOIN Description ON Description.numero = Fiche_poste.id_description INNER JOIN Organisation ON Organisation.siren = Formulaire.siren_orga WHERE Fiche_poste.email_inscription = ?", [email], function (err, offre) {
             if (err) {
                 console.log("Fonction : getoffrebyrecruteur erreur : " + err);
                 callback(err, null);
