@@ -340,7 +340,7 @@ router.post('/ajout', function (req, res, next) {
 
 
 
-app.post('/editer_offre/:id', function (req, res, next) {
+router.post('/editer_offre/:id', function (req, res, next) {
     console.log("DANS POST");
     console.log("Edition");
     var intitule = req.body.intitule;
@@ -603,7 +603,7 @@ app.post('/editer_offre/:id', function (req, res, next) {
     });
 });
 
-app.post('/delete/:id', function (req, res, next) {
+router.post('/delete/:id', function (req, res, next) {
     let confirmation = req.body.confirmation;
 
     confirmation = confirmation.toUpperCase();
