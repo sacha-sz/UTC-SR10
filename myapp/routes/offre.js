@@ -192,6 +192,37 @@ router.get('/recherche', async function (req, res, next) {
     }
 });
 
+router.get('/editer_offre/:id', function (req, res, next) {
+    if (req.session.loggedin) {
+        const offreId = req.params.id;
+        console.log(offreId);
+        offreEmploiModel.readOffersById(offreId, function (err, result) {
+            if (result) {
+                offreModel.readAllStatut(function (statut) {
+                    console.log(result);
+                    offreModel.readAllTypeMetier(function (TM) {
+                        console.log(result);
+                        res.render('editer_offre', {
+                            title: 'Offre',
+                            username: req.session.username,
+                            type_user: req.session.type_user,
+                            offre: result[0],
+                            statuts: statut,
+                            type_metiers: TM
+                        });
+                    });
+                });
+            } else {
+                res.redirect('/offre');
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+
 
 
 
@@ -304,6 +335,129 @@ router.post('/ajout', function (req, res, next) {
         });
     });
 
+});
+
+
+
+app.post('/changed_infos', function (req, res, next) {
+    var intitule = req.body.intitule;
+    var responsable = req.body.responsable;
+    var lat = req.body.lat;
+    var long = req.body.long;
+    var rythme = req.body.rythme;
+    var salaire_min = req.body.salaire_min;
+    var salaire_max = req.body.salaire_max;
+    var missions = req.body.missions;
+    var activites = req.body.activites;
+    var competences = req.body.competences;
+    var date_validite = req.body.date_validite;
+    var indication_piece_jointes = req.body.indication_piece_jointes;
+    var type_metier = req.body.type_metier;
+    var statut = req.body.statut;
+
+
+    // Vérifie si toutes les valeurs sont nulles ou vides
+    if ((nom == null || nom == "") && (prenom == null || prenom == "") && (tel == null || tel == "") && (sexe == null || sexe == "")) {
+        console.log("Aucune modification");
+        return res.redirect('/users/change_profile');
+    }
+
+    var promises = [];
+
+    if (tel != null && tel != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.TEST_TEL(tel, function (result) {
+                    if (!result) {
+                        console.log("Numéro de téléphone invalide");
+                        resolve(false);
+                    } else {
+                        resolve(true);
+                    }
+                });
+            })
+        );
+    }
+
+    if (nom != null && nom != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updateNom(req.session.username, nom, function (err, result) {
+                    if (result) {
+                        console.log("Nom modifié");
+                        resolve(true);
+                    } else {
+                        console.log("Nom non modifié");
+                        resolve(false);
+                    }
+                });
+            })
+        );
+    }
+
+    if (prenom != null && prenom != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updatePrenom(req.session.username, prenom, function (err, result) {
+                    if (result) {
+                        console.log("Prénom modifié");
+                        resolve(true);
+                    } else {
+                        console.log("Prénom non modifié");
+                        resolve(false);
+                    }
+                });
+            })
+        );
+    }
+
+    if (sexe != null && sexe != "") {
+        promises.push(
+            new Promise(function (resolve) {
+                userModel.updateSexe(req.session.username, sexe, function (err, result) {
+                    if (result) {
+                        console.log("Sexe modifié");
+                        resolve(true);
+                    } else {
+                        console.log("Sexe non modifié");
+                        resolve(false);
+                    }
+                });
+            })
+        );
+    }
+
+    Promise.all(promises).then(function (values) {
+        if (values.includes(false)) {
+            res.redirect('/users/change_profile');
+        } else {
+            res.redirect('/users/change_profile');
+        }
+    });
+});
+
+app.post('/delete_user', function (req, res, next) {
+    let confirmation = req.body.confirmation;
+    confirmation = confirmation.toUpperCase();
+    console.log(confirmation);
+    console.log("dans delete_user POST");
+
+    if (confirmation == "CONFIRMER") {
+        console.log("Suppression de l'utilisateur");
+        userModel.delete(req.session.username, function (err, result) {
+            if (result) {
+                console.log("Utilisateur supprimé");
+                req.session.destroy();
+                res.redirect('/');
+            } else {
+                console.log("Utilisateur non supprimé");
+                res.redirect('/users/change_profile');
+            }
+        });
+    } else {
+        console.log("Utilisateur non supprimé");
+        res.redirect('/users/change_profile');
+    }
 });
 
 

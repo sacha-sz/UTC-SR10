@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+        <link rel="stylesheet" href="/CSS/connexion.css">
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+<!-- Ce style doit permettre au formulaire de ne pas déborder de la page en haut et en bas -->
+<style>
+    .form-style {
+        max-height: 80vh; /* Ajustez la valeur selon vos besoins */
+      }
+
+</style>
+
+
+<body style = "overflow-y: auto;">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="d-flex justify-content-center align-items-center form-style" style="height: 100%;">
+        <div style= "height: 80px;"></div>
+        <div class="centre-vertical">
+            <div class="form-style">
+            <div class="card mx-auto b-2 my-2">
+                <div class="card-header text-center">
+                    <h4>Modifiez votre profil</h4>
+                </div>
+
+                        <div class="card-body">
+                            <form method="POST" action="/users/changed_infos" name="form_modif_profil">
+                                <% if (typeof offre.intitule !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="intitule" class="form-label"><strong>Intitule :</strong></label>
+                                        <input autofocus name="intitule" type="text" class="form-control" id="intitule"
+                                            placeholder="Votre ancien intitule : <%= offre.intitule %>">
+                                    </div>
+                                <% } %>
+                                <% if (typeof offre.responsable_hierarchique !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="responsable" class="form-label"><strong>Responsable :</strong></label>
+                                        <input autofocus name="responsable" type="text" class="form-control" id="responsable"
+                                            placeholder="Votre ancien Responsable : <%= offre.responsable_hierarchique %>">
+                                    </div>
+                                <% } %>
+                                <% if (typeof offre.lieu_mission_lat !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="lat" class="form-label"><strong>Latitude :</strong></label>
+                                        <input autofocus name="lat" type="number" class="form-control" step="0.00001" id="lat"
+                                            placeholder="Votre ancienne Latitude : <%= offre.lieu_mission_lat %>">
+                                    </div>
+                                <% } %>
+                                <% if (typeof offre.lieu_mission_long !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="long" class="form-label"><strong>longitude :</strong></label>
+                                        <input autofocus name="long" type="number" class="form-control" step="0.00001" id="lat"
+                                            placeholder="Votre ancienne Longitude : <%= offre.lieu_mission_long %>">
+                                    </div>
+                                <% } %>
+                                <!-- Début -->
+                                <% if (typeof offre.rythme !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="rythme" class="form-label">Rythme :</label>
+                                    <input autofocus name="rythme" type="number" class="form-control" id="rythme"
+                                        placeholder="Ancien Rythme : <%= offre.rythme %>" step="0.5">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.salaire_min !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="salaire_min" class="form-label">Salaire minimum :</label>
+                                    <input autofocus name="salaire_min" type="number" class="form-control" id="salaire_min"
+                                        placeholder="Ancien Salaire min : <%= offre.salaire_min %>" step="1">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.salaire_max !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="salaire_max" class="form-label">Salaire maximum :</label>
+                                    <input autofocus name="salaire_max" type="number" class="form-control" id="salaire_max"
+                                        placeholder="Ancien Salaire min  : <%= offre.salaire_max %>" step="1">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.missions !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="missions" class="form-label">Missions :</label>
+                                    <input autofocus name="missions" type="text" class="form-control" id="missions"
+                                        placeholder="Anciennes missions : <%= offre.missions %>">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.activites !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="activites" class="form-label">Activités :</label>
+                                    <input autofocus name="activites" type="text" class="form-control" id="activites"
+                                        placeholder="Ancien Rythme : <%= offre.activites %>">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.competences_attendues !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="competences" class="form-label">Compétences :</label>
+                                    <input autofocus name="competences" type="text" class="form-control" id="competences"
+                                        placeholder="Anciennes Compétences : <%= offre.competences_attendues %>">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.date_validite !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="date_validite" class="form-label">Offre valable jusqu'au :</label>
+                                    <input autofocus name="date_validite" type="date" class="form-control" id="date_validite">
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.indication_piece_jointes !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="indication_piece_jointes" class="form-label">Etat :</label>
+                                    <select id="indication_piece_jointes" name="indication_piece_jointes" class="form-select">
+                                                <option> <%= offre.indication_piece_jointes %> </option>
+                                                <option>CV, LM</option>
+                                                <option>CV, Autre</option>
+                                                <option>LM, Autre</option><option>CV</option>
+                                                <option>LM</option>
+                                                <option>Autre</option>
+                                                <option>CV, LM, Autre</option>
+                                    </select>
+                                </div>
+                                <% } %>
+                                <!-- Gestion du statut -->
+
+                                <% if (typeof offre.SP_nom !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="statut" class="form-label">Statut :</label>
+                                    <select id="statut" name="statut" class="form-select">
+                                        <option> <%= offre.SP_nom %></option>
+                                        <% statuts.forEach((statut)=> { %>
+                                            <option>
+                                                <%= statut.nom %>
+                                            </option>
+                                            <% }) %>
+                                                <option>Autre</option>
+                                    </select>
+                                </div>
+                                <% } %>
+
+                                <% if (typeof offre.TM_nom !=='undefined' ) { %>
+                                <div class="mb-3">
+                                    <label for="type_metier" class="form-label">Type métier de l'entreprise :</label>
+                                    <select id="type_metier" name="type_metier" class="form-select">
+                                        <option> <%= offre.TM_nom %> </option>
+                                        <% type_metiers.forEach((TM)=> { %>
+                                            <option>
+                                                <%= TM.nom %>
+                                            </option>
+                                            <% }) %>
+                                                <option>Autre</option>
+                                    </select>
+                                </div>
+                                <% } %>
+
+
+                                <!-- Fin -->
+                                <br>
+
+                                <div class="row justify-content-between text-center">
+                                    <button type="submit" value="Appliquer"
+                                        class="btn btn-success btn-sm btn-block col-4">Appliquer</button></form>
+                                    
+
+                                    <div class="dropend col-4 ">
+                                        <button type="button"
+                                            class="btn btn-danger btn-block btn-sm dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-offset="10,20"
+                                            aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Supprimer compte
+                                        </button>
+                                        <form class="dropdown-menu p-4" method="POST" action="/users/delete_user" name="form_delete_user">
+                                            <div class="mb-3 text-center">
+                                                <p>Toute suppression de votre compte est irréversible.</p>
+                                            </div>
+                                            <hr class="border border-danger border-2 opacity-50">
+                                            <div class="mb-3">
+                                                <label
+                                                    for="confirmation"
+                                                    class="form-label text-justify">Veuillez écrire : CONFIRMER</label>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    id="confirmation"
+                                                    name="confirmation"
+                                                    placeholder="...">
+                                            </div>
+                                            <button type="submit" value="Supprimer"
+                                                class="btn btn-primary btn-danger"> Suppression</button>
+                                        </form>
+                                    </div>
+                                </div>
+                        </div>
+            </div>
+            <div style="height: 80px;"></div>
+        </div>
+    </div>
+</body>
+
+<%- include('./partials/footer'); %>
+
+</html>
