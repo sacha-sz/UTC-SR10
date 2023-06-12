@@ -282,4 +282,60 @@ router.get('/telecharger/:id/:email', function (req, res, next) {
 });
 
 
+router.get('/modifier/:id/', function (req, res, next) {
+    var id_offre = req.params.id;
+    var email_candidat = req.session.username;
+    console.log("Modifier candidature : " + id_offre + " " + email_candidat);
+
+    candidatureModel.getIdCandidature(id_offre, email_candidat, function (err, result) {
+        if (result) {
+            console.log(result);
+            var id_candidature = result[0].id;
+            console.log("id_candidature : " + id_candidature);
+
+            // On récupère toutes les pièces jointes de la candidature
+            candidatureModel.getAllPJ(id_candidature, email_candidat, function (err, result) {
+                if (result) {
+                    console.log(result);
+                    res.render('modifier_candidature', {
+                        title: 'Modifier candidature',
+                        username: req.session.username,
+                        type_user: req.session.type_user,
+                        id: id_candidature,
+                        id_offre: id_offre,
+                        documents: result
+                    });
+                } else {
+                    res.status(500).send('Une erreur s\'est produite lors de la récupération des documents');
+                }
+            });
+        } else {
+            console.log("Erreur lors de la récupération de l'id de la candidature");
+            res.redirect('/candidature/afficher_candidatures_user');
+            return;
+        }
+    });
+});
+
+router.post('/change-files/:id',upload.fields([
+    { name: 'myFileInputCV', maxCount: 1},
+    { name: 'myFileInputLM', maxCount: 1},
+    { name: 'myFileInputAutre', maxCount: 1}
+]), function (req, res, next) {
+    req.session.uploaded_files = [];
+
+    if (!req.files) {
+        res.redirect('/candidature/afficher_candidatures_user');
+    } else {
+        for (const file of Object.values(req.files)) {
+            if (file && file.length > 0) {
+                console.log(file[0].originalname, ' => ', file[0].filename);
+                req.session.uploaded_files.push(file[0].filename);
+            }
+        }
+
+        console.log(req.session.uploaded_files);
+        res.redirect('/candidature/afficher_candidatures_user');
+    }
+});
 module.exports = router;

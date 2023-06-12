@@ -163,4 +163,16 @@ module.exports = {
       }
     }
   )},
+
+  getIdCandidature: function(id_offre, email, callback) {
+    db.query("SELECT id FROM Candidature WHERE id_offre = ? AND email_utilisateur = ?;", [id_offre, email], function (err, results) {
+      if (err) {
+        console.log("Fonction getIdCandidature : " + err)
+        callback(err, null);
+      } else {
+        console.log("Fonction getIdCandidature : Succès")
+        callback(null, results);
+      }
+    }
+  )},
 }

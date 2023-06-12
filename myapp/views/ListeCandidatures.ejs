@@ -46,9 +46,7 @@
 
                                                     <p> n° Offre: <%= candidature.id_offre %>
                                                     </p>
-                                                    <p> n° Candidature : <%= candidature.id_candidature %>
-                                                    </p>
-                                                    <p> Rythme : <%= candidature.rythme %>
+                                                    <p> Rythme : <%= candidature.rythme %>h/semaine
                                                     </p>
                                                     <p> Salaire : <%= candidature.salaire_min %> - <%=
                                                                 candidature.salaire_min %>
@@ -60,13 +58,34 @@
                                                             <%= candidature.date_candidature %>
                                                         </span>
                                                     </p>
-                                                    <p>etat_candidature : <%= candidature.etat_candidature %>
+                                                    <p>etat_candidature : 
+                                                        
+                                                        <% if (candidature.etat_candidature == "ACCEPTEE") {%> 
+                                                            <span class="badge bg-success">
+                                                                <%= candidature.etat_candidature %>
+                                                            </span>
+                                                        <% } else if (candidature.etat_candidature == "REFUSEE") {%> 
+                                                            <span class="badge bg-danger">
+                                                                <%= candidature.etat_candidature %>
+                                                            </span>
+                                                        <% } else if (candidature.etat_candidature == "EN_ATTENTE") {%>
+                                                            <span class="badge bg-warning text-dark">
+                                                                <%= candidature.etat_candidature %>
+                                                            </span>
+                                                        <% } %>
                                                     </p>
-
                                                 </div>
-
                                             </div>
-
+                                        </div>
+                                        <div class = "col">
+                                            <div class="text-center">
+                                                <a href="/candidature/modifier/<%= candidature.id_offre %>/"
+                                                    class="btn btn-m" role="button" style="outline: olive; color: cornflowerblue;">
+                                                    Quoi ? Tu veux modifier les fichiers de la candidature ?
+                                                    clique ici !
+                                                    <img
+                                                        src="https://media.tenor.com/hmI7cBnXu9kAAAAC/referee-var.gif" alt="Referee"> </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

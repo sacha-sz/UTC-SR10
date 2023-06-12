@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div data-bs-spy="scroll" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+        <div class="d-flex justify-content-center align-items-center ">
+            <div class="centre-vertical body-content">
+                <div class="card mx-auto b-2 my-2">
+                    <div class="card-header text-center">
+                        <h4>Candidater à l'offre : <%= id_offre %></h4>
+                    </div>
+                    <div class="card-body ">
+                        <p>Voici les documents que vous devez fournir pour candidater à cette offre :<br>
+                            Vous pouvez les télécharger ou uploader de nouveaux fichiers.
+                        </p>
+
+                        <br>
+                        
+                        <form method="POST" action="/candidature/change-files/<%= id_offre %>"id="frmFileUpload"
+                        enctype="multipart/form-data">
+                        <% for (let i = 0; i < documents.length; i++) { %>
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-center">
+                                <a href="/candidature/getfile?fichier_cible=<%= documents[i].nom%>"><%= documents[i].nom%></a>
+                                <script>
+                                    var type = "<%= documents[i].nom%>";
+                                    type = type.split('-')[1];
+                                    document.write("<input class='form-control' id='fileInput"+type+"' name='myFileInput"+type+"' type='file'accept='image/*,.pdf'/>")
+                                </script>
+                            </div>
+                        </div>  
+                        <br>
+                        <% } %>
+                
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-center">
+                                <button type="submit" class="btn btn-outline-success">Modifier vos fichiez</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('./partials/footer'); %>
+
+</html>
