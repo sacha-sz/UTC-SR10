@@ -9,10 +9,10 @@ module.exports = {
               ON OE.id_poste = FP.numero\
               WHERE C.email_utilisateur = ?;", [email], function (err, results) {
       if (err) {
-        console.log("Fonction readCandidatureByUser : " + err)
+        // console.log("Fonction readCandidatureByUser : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction readCandidatureByUser : Succès")
+        // console.log("Fonction readCandidatureByUser : Succès")
         callback(null, results);
       }
     })
@@ -24,10 +24,10 @@ module.exports = {
               ON PJ.id_candidature = C.id \
               WHERE C.email_utilisateur = ?;", [email], function (err, results) {
       if (err) {
-        console.log("Fonction PieceJointeUser : " + err)
+        // console.log("Fonction PieceJointeUser : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction PieceJointeUser : Succès")
+        // console.log("Fonction PieceJointeUser : Succès")
         callback(null, results);
       }
     })
@@ -36,10 +36,10 @@ module.exports = {
   NeedPJOffre: function (id, callback) {
     db.query("SELECT indication_piece_jointes FROM Offre_d_emploi WHERE id = ?;", [id], function (err, results) {
       if (err) {
-        console.log("Fonction NeedPJOffre : " + err)
+        // console.log("Fonction NeedPJOffre : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction NeedPJOffre : Succès")
+        // console.log("Fonction NeedPJOffre : Succès")
         callback(null, results);
       }
     })
@@ -48,10 +48,10 @@ module.exports = {
   candidater: function (email, id_offre, callback) {
     db.query("INSERT INTO Candidature (email_utilisateur, id_offre) VALUES (?, ?);", [email, id_offre], function (err, results) {
       if (err) {
-        console.log("Fonction candidater : " + err)
+        // console.log("Fonction candidater : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction candidater : Succès")
+        // console.log("Fonction candidater : Succès")
         callback(null, results);
       }
     })
@@ -60,10 +60,10 @@ module.exports = {
   uploadPJ: function (nom, type_pieces, lien, id_candidature, callback) {
     db.query("INSERT INTO Pieces_jointes (nom, type_pieces, lien, id_candidature) VALUES (?, ?, ?, ?);", [nom, type_pieces, lien, id_candidature], function (err, results) {
       if (err) {
-        console.log("Fonction uploadPJ : " + err)
+        // console.log("Fonction uploadPJ : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction uploadPJ : Succès")
+        // console.log("Fonction uploadPJ : Succès")
         callback(null, results);
       }
     })
@@ -75,10 +75,10 @@ module.exports = {
               ON PJ.id_candidature = C.id \
               WHERE C.email_utilisateur = ?;", [email], function (err, results) {
       if (err) {
-        console.log("Fonction PieceJointeUser : " + err)
+        // console.log("Fonction PieceJointeUser : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction PieceJointeUser : Succès")
+        // console.log("Fonction PieceJointeUser : Succès")
         callback(null, results);
       }
     })
@@ -93,10 +93,10 @@ module.exports = {
               ON OE.id = C.id_offre \
               WHERE OE.id = ?;", [id_candidature], function (err, results) {
       if (err) {  
-        console.log("Fonction getInfoCandidature : " + err)
+        // console.log("Fonction getInfoCandidature : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction getInfoCandidature : Succès")
+        // console.log("Fonction getInfoCandidature : Succès")
         callback(null, results);
       }
     })
@@ -105,10 +105,10 @@ module.exports = {
   accepterCandidature: function (id_candidature, email_utilisateur, callback) {
     db.query("UPDATE Candidature SET etat_candidature = 'ACCEPTEE' WHERE id = ? AND email_utilisateur = ?;", [id_candidature, email_utilisateur], function (err, results) {
       if (err) {
-        console.log("Fonction accepterCandidature : " + err)
+        // console.log("Fonction accepterCandidature : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction accepterCandidature : Succès")
+        // console.log("Fonction accepterCandidature : Succès")
         callback(null, results);
       }
     })
@@ -117,10 +117,10 @@ module.exports = {
   refuserCandidature: function (id_candidature, email_utilisateur, callback) {
     db.query("UPDATE Candidature SET etat_candidature = 'REFUSEE' WHERE id = ? AND email_utilisateur = ?;", [id_candidature, email_utilisateur], function (err, results) {
       if (err) {
-        console.log("Fonction refuserCandidature : " + err)
+        // console.log("Fonction refuserCandidature : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction refuserCandidature : Succès")
+        // console.log("Fonction refuserCandidature : Succès")
         callback(null, results);
       }
     })
@@ -129,10 +129,10 @@ module.exports = {
   refuserAutresCandidatures: function (id_offre, email_utilisateur, callback) { 
     db.query("UPDATE Candidature SET etat_candidature = 'REFUSEE' WHERE id_offre = ? AND email_utilisateur != ?;", [id_offre, email_utilisateur], function (err, results) {
       if (err) {
-        console.log("Fonction refuserAutresCandidatures : " + err)
+        // console.log("Fonction refuserAutresCandidatures : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction refuserAutresCandidatures : Succès")
+        // console.log("Fonction refuserAutresCandidatures : Succès")
         callback(null, results);
       }
     })
@@ -142,10 +142,10 @@ module.exports = {
   expireeOffre: function (id_offre_emploie, callback) {
     db.query("UPDATE Offre_d_emploi SET etat = 'EXPIREE' WHERE id = ?;", [id_offre_emploie], function (err, results) {
       if (err) {
-        console.log("Fonction expireeOffre : " + err)
+        // console.log("Fonction expireeOffre : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction expireeOffre : Succès")
+        // console.log("Fonction expireeOffre : Succès")
         callback(null, results);
       }
     })
@@ -155,10 +155,10 @@ module.exports = {
     db.query("SELECT * FROM Pieces_jointes WHERE id_candidature = ? AND \
     nom LIKE ?;", [id, email+"-%"], function (err, results) {
       if (err) {
-        console.log("Fonction getAllPJ : " + err)
+        // console.log("Fonction getAllPJ : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction getAllPJ : Succès")
+        // console.log("Fonction getAllPJ : Succès")
         callback(null, results);
       }
     }
@@ -167,10 +167,10 @@ module.exports = {
   getIdCandidature: function(id_offre, email, callback) {
     db.query("SELECT id FROM Candidature WHERE id_offre = ? AND email_utilisateur = ?;", [id_offre, email], function (err, results) {
       if (err) {
-        console.log("Fonction getIdCandidature : " + err)
+        // console.log("Fonction getIdCandidature : " + err)
         callback(err, null);
       } else {
-        console.log("Fonction getIdCandidature : Succès")
+        // console.log("Fonction getIdCandidature : Succès")
         callback(null, results);
       }
     }

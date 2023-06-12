@@ -8,7 +8,7 @@ const agent = request.agent(app); // Crée un agent de test
 beforeAll((done) => {
     agent
         .post('/login/auth')
-        .send({ email: 'test@gmail.com', password: 'mon_mot_de_passe' })
+        .send({ email: 'test@gmail.com', password: 'Passwordtest+123' })
         .expect(302)
         .end(function (err, res) {
             if (err) return done(err);

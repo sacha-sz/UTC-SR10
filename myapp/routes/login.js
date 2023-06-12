@@ -41,17 +41,17 @@ app.get('/logout', function (req, res) {
 
 /* POST users Connexion */
 app.post('/auth', function (req, res, next) {
-    console.log("Connexion d'un utilisateur");
+    // console.log("Connexion d'un utilisateur");
     var email = req.body.email;
     var password = req.body.password;
 
     // Test que toutes les données soient correctement renseignées
     if (email == null || email == "") {
-        console.log("Données manquantes");
+        // console.log("Données manquantes");
         req.session.msg = "Email Invalide";
         return res.redirect('/login');
     } else if (password == null || password == "") {
-        console.log("Données manquantes");
+        // console.log("Données manquantes");
         req.session.msg = "Mot de passe Invalide";
         return res.redirect('/login');
     }
@@ -65,7 +65,7 @@ app.post('/auth', function (req, res, next) {
 
     loginModel.areValid_login(email, password, function (result, type) {
         if (result == true && type != null) {
-            console.log("Utilisateur connecté");
+            // console.log("Utilisateur connecté");
             req.session.loggedin = true;
             req.session.username = email;
             req.session.failedAttempts = 0;
@@ -73,7 +73,7 @@ app.post('/auth', function (req, res, next) {
             req.session.type_user = type;
             return res.redirect('/');
         } else {
-            console.log("Utilisateur non connecté");
+            // console.log("Utilisateur non connecté");
             // Incrémentez le compteur de tentatives échouées
             if (req.session.failedAttempts === undefined) {
                 req.session.failedAttempts = 0;

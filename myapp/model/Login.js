@@ -10,18 +10,18 @@ module.exports = {
             if (results.length == 1) {
                 pass.comparePassword(password, hash, function (result) {
                     if (result == true) {
-                        console.log("Connexion réussie");
+                        // console.log("Connexion réussie");
                         callback(true, results[0].type_utilisateur);
                     } else {
-                        console.log("Mot de passe incorrect");
+                        // console.log("Mot de passe incorrect");
                         callback(false, null);
                     }
                 });
             } else {
-                console.log(email);
-                console.log(results);
+                // console.log(email);
+                // console.log(results);
                 callback(false, null);
-                console.log("Erreur de connexion.");
+                // console.log("Erreur de connexion.");
             }
         });
     },

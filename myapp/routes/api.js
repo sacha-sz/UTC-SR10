@@ -18,9 +18,9 @@ router.get('/users', function (req, res, next) {
 
 
 router.get('/Offre_Emploie', function (req, res, next) {
-    console.log(req.query);
-    console.log(req.query.lat);
-    console.log(req.query.long);
+    // console.log(req.query);
+    // console.log(req.query.lat);
+    // console.log(req.query.long);
 
     if (req.query.sort != undefined && req.query.search != undefined) {
         if (req.query.sort == "date_decroissante") {
@@ -43,7 +43,7 @@ router.get('/Offre_Emploie', function (req, res, next) {
             });
         } else if (req.query.sort == "distance_nearest") {
             result = offerModel.readAllValidOffers_dist(req.query.lat, req.query.long, function (err, result) {
-                console.log(result);
+                // console.log(result);
                 res.status(200).send(result);
             });
         } else {    

@@ -18,7 +18,7 @@ module.exports = {
 
     readall: function (callback) {
         db.query("SELECT * FROM Utilisateur;", function (err, results) {
-            console.log(results);
+            // console.log(results);
             if (err) {
                 callback(err, null);
             } else {
@@ -49,14 +49,14 @@ module.exports = {
             rows = db.query("INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) \
             VALUES(?, ?, ?, ?, ?, ?, true, ?, ?, ?, ?, 'CANDIDAT');", [email, hash, nom, prenom, ddn, date_creation, tel, lat, lng, sexe], function (err, results) {
                 if (err) {
-                    console.log("Erreur : " + err.message);
+                    // console.log("Erreur : " + err.message);
                     callback(err, false);
                 } else {
                     if (results.affectedRows > 0) {
-                        console.log("Utilisateur ajouté avec succès.");
+                        // console.log("Utilisateur ajouté avec succès.");
                         callback(err, true);
                     } else {
-                        console.log("Erreur : Aucun utilisateur ajouté.");
+                        // console.log("Erreur : Aucun utilisateur ajouté.");
                         callback(err, false);
                     }
                 }
@@ -76,7 +76,7 @@ module.exports = {
 
     readall: function (callback) {
         db.query("SELECT * FROM Utilisateur;", function (err, results) {
-            // console.log(results);
+            // // console.log(results);
             if (err) {
                 callback(err, null);
             } else {
@@ -120,10 +120,10 @@ module.exports = {
     updateNom: function (email, new_nom, callback) {
         rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =?", [new_nom, email], function (err, results) {
             if (err) {
-                console.log("Erreur : " + err.message);
+                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                console.log("Nom modifié avec succès.");
+                // console.log("Nom modifié avec succès.");
                 callback(err, true);
             }
         });
@@ -132,10 +132,10 @@ module.exports = {
     updatePrenom: function (email, new_prenom, callback) {
         rows = db.query("UPDATE Utilisateur SET prenom = ? WHERE email = ?", [new_prenom, email], function (err, results) {
             if (err) {
-                console.log("Erreur : " + err.message);
+                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                console.log("Prénom modifié avec succès.");
+                // console.log("Prénom modifié avec succès.");
                 callback(err, true);
             }
         });
@@ -144,10 +144,10 @@ module.exports = {
     updateSexe: function (email, new_sexe, callback) {
         rows = db.query("UPDATE Utilisateur SET sexe = ?  WHERE email = ?", [new_sexe, email], function (err, results) {
             if (err) {
-                console.log("Erreur : " + err.message);
+                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                console.log("Sexe modifié avec succès.");
+                // console.log("Sexe modifié avec succès.");
                 callback(err, true);
             }
         }

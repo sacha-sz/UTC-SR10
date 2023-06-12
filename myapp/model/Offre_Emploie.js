@@ -5,10 +5,10 @@ module.exports = {
     read: function (numero, callback) {
         db.query("SELECT * FROM Fiche_poste WHERE numero = ?", [numero], function (err, results) {
             if (err) {
-                console.log("Fonction : read erreur : " + err);
+                // console.log("Fonction : read erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : read succès");
+                // console.log("Fonction : read succès");
                 callback(null, results);
             }
         });
@@ -38,10 +38,10 @@ module.exports = {
 
         db.query(sql_readAllOffers, function (err, results) {
             if (err) {
-                console.log("Fonction : readAllOffers erreur : " + err);
+                // console.log("Fonction : readAllOffers erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllOffers succès");
+                // console.log("Fonction : readAllOffers succès");
                 callback(null, results);
             }
         });
@@ -72,10 +72,10 @@ module.exports = {
 
         db.query(sql_readAllOffers_desc, function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers_desc erreur : " + err);
+                // console.log("Fonction : readAllValidOffers_desc erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers_desc succès");
+                // console.log("Fonction : readAllValidOffers_desc succès");
                 callback(null, results);
             }
         });
@@ -107,10 +107,10 @@ module.exports = {
         OE.date_validite >= CAST(NOW() AS DATE) AND LOWER(FP.intitule) LIKE LOWER(?) \
         ORDER BY OE.date_validite DESC;", [escapedQuery], function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers_desc_search erreur : " + err);
+                // console.log("Fonction : readAllValidOffers_desc_search erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers_desc_search succès");
+                // console.log("Fonction : readAllValidOffers_desc_search succès");
                 callback(null, results);
             }
         });
@@ -143,10 +143,10 @@ module.exports = {
         LOWER(FP.intitule) LIKE LOWER(?)\
         ORDER BY OE.date_validite;", [escapedQuery], function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers_search erreur : " + err);
+                // console.log("Fonction : readAllValidOffers_search erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers_search succès");
+                // console.log("Fonction : readAllValidOffers_search succès");
                 callback(null, results);
             }
         });
@@ -178,10 +178,10 @@ module.exports = {
             OE.date_validite >= CAST(NOW() AS DATE) \
             ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [latitude, longitude], function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers_dist erreur : " + err);
+                // console.log("Fonction : readAllValidOffers_dist erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers_dist succès");
+                // console.log("Fonction : readAllValidOffers_dist succès");
                 callback(null, results);
             }
         });
@@ -214,10 +214,10 @@ module.exports = {
         OE.date_validite >= CAST(NOW() AS DATE)  AND LOWER(FP.intitule) LIKE LOWER(?) \
         ORDER BY SQRT(POWER(FP.lieu_mission_lat - ?, 2) + POWER(FP.lieu_mission_long - ?, 2)) ASC", [escapedQuery, latitude, longitude], function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers_dist_search erreur : " + err);
+                // console.log("Fonction : readAllValidOffers_dist_search erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers_dist_search succès");
+                // console.log("Fonction : readAllValidOffers_dist_search succès");
                 callback(null, results);
             }
         });
@@ -251,10 +251,10 @@ module.exports = {
 
         db.query(sql_readAllOffers, function (err, results) {
             if (err) {
-                console.log("Fonction : readAllValidOffers erreur : " + err);
+                // console.log("Fonction : readAllValidOffers erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readAllValidOffers succès");
+                // console.log("Fonction : readAllValidOffers succès");
                 callback(null, results);
             }
         });
@@ -284,10 +284,10 @@ module.exports = {
             ON ORG.siren = FP.FP_SIREN \
             WHERE OE.id = ?;", [id], function (err, offre) {
             if (err) {
-                console.log("Fonction : readOffersById erreur : " + err);
+                // console.log("Fonction : readOffersById erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readOffersById succès");
+                // console.log("Fonction : readOffersById succès");
                 callback(null, offre);
             }
         });
@@ -316,10 +316,10 @@ module.exports = {
             ON ORG.siren = FP.FP_SIREN \
             WHERE OE.id = ?;", [id], function (err, offre) {
             if (err) {
-                console.log("Fonction : readOffersByIdSansVerif erreur : " + err);
+                // console.log("Fonction : readOffersByIdSansVerif erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : readOffersByIdSansVerif succès");
+                // console.log("Fonction : readOffersByIdSansVerif succès");
                 callback(null, offre);
             }
         });
@@ -330,10 +330,10 @@ module.exports = {
             "SELECT intitule, lieu_mission_lat, lieu_mission_long, salaire_min, salaire_max, missions AS missions FROM Fiche_poste JOIN Description ON Fiche_poste.numero = Description.numero ;",
             function (err, results) {
                 if (err) {
-                    console.log("Fonction : readall erreur : " + err);
+                    // console.log("Fonction : readall erreur : " + err);
                     callback(err, null);
                 } else {
-                    console.log("Fonction : readall succès");
+                    // console.log("Fonction : readall succès");
                     callback(null, results);
                 }
             }
@@ -342,10 +342,10 @@ module.exports = {
     getDescription: function (numero, callback) {
         db.query("SELECT * FROM Description WHERE numero =?;", [numero], function (err, results) {
             if (err) {
-                console.log("Fonction : getDescription erreur : " + err);
+                // console.log("Fonction : getDescription erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : getDescription succès");
+                // console.log("Fonction : getDescription succès");
                 callback(null, results);
             }
         });
@@ -368,13 +368,13 @@ module.exports = {
             [numero, intitule, responsable_hierarchique, lieu_mission_lat, lieu_mission_long, rythme, salaire_min, salaire_max, statut_poste, type_metier],
             function (err, results) {
                 if (err) {
-                    console.log("Fonction : creat erreur : " + err);
+                    // console.log("Fonction : creat erreur : " + err);
                     callback(err, null);
                 } else if (results.affectedRows === 0) {
-                    console.log("Fonction : creat erreur : Aucun résultat");
+                    // console.log("Fonction : creat erreur : Aucun résultat");
                     callback(new TypeError("Aucune offre"), null);
                 } else {
-                    console.log("Fonction : creat succès");
+                    // console.log("Fonction : creat succès");
                     callback(null, results);
                 }
             });
@@ -383,10 +383,10 @@ module.exports = {
     getoffrebyrecruteur: function (email, callback) {
         db.query("SELECT DISTINCT intitule, Description.numero as D_numero,responsable_hierarchique ,lieu_mission_lat , lieu_mission_long, rythme , salaire_min , salaire_max , statut_poste , type_metier, email_inscription , id_description , FP_SIREN , nombre_de_piece ,Offre_d_emploi.id as id , etat , date_validite ,indication_piece_jointes , id_poste , Formulaire.id as idF , etat_formulaire , date_creation , email_utilisateur , siren_orga , Fiche_poste.numero as FP_numero , missions , activites , competences_attendues, siren, nom , siege_social_lat ,siege_social_long ,type_organisation FROM Fiche_poste INNER JOIN Offre_d_emploi ON Offre_d_emploi.id_poste = Fiche_poste.numero INNER JOIN Formulaire ON Formulaire.email_utilisateur = Fiche_poste.email_inscription INNER JOIN Description ON Description.numero = Fiche_poste.id_description INNER JOIN Organisation ON Organisation.siren = Formulaire.siren_orga WHERE Fiche_poste.email_inscription = ?", [email], function (err, offre) {
             if (err) {
-                console.log("Fonction : getoffrebyrecruteur erreur : " + err);
+                // console.log("Fonction : getoffrebyrecruteur erreur : " + err);
                 callback(err, null);
             } else {
-                console.log("Fonction : getoffrebyrecruteur succès");
+                // console.log("Fonction : getoffrebyrecruteur succès");
                 callback(null, offre);
             }
         });
@@ -397,13 +397,13 @@ module.exports = {
             [nb_pieces, etat, date_validite, indication_piece_jointes, id_poste],
             function (err, results) {
                 if (err) {
-                    console.log("Fonction : createOffreEmploi erreur : " + err);
+                    // console.log("Fonction : createOffreEmploi erreur : " + err);
                     callback(err, null);
                 } else if (results.affectedRows === 0) {
-                    console.log("Fonction : createOffreEmploi erreur : Aucun résultat");
+                    // console.log("Fonction : createOffreEmploi erreur : Aucun résultat");
                     callback(new TypeError("Aucune offre"), null);
                 } else {
-                    console.log("Fonction : createOffreEmploi succès");
+                    // console.log("Fonction : createOffreEmploi succès");
                     callback(null, results);
                 }
             });

@@ -57,10 +57,10 @@ router.get('/formulaire_candidatures/:id', function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.NeedPJOffre(req.params.id, function (err, result) {
             if (result) {
-                console.log(result);
+                // console.log(result);
                 // On split par rapport aux virgules
                 var tab = result[0].indication_piece_jointes.split(',');
-                console.log(tab);
+                // console.log(tab);
 
                 // On regarde pour les valeurs Autre, LM, CV si elles sont présentes
                 var autre = false;
@@ -102,7 +102,7 @@ router.get('/liste_candidat/:id', function (req, res, next) {
         // Récupérer les candidats sur une offre
         candidatureModel.getInfoCandidature(req.params.id, function (err, result) {
             if (result) {
-                console.log(result);
+                // console.log(result);
                 res.render('liste_candidat', {
                     title: 'Candidatures',
                     username: req.session.username,
@@ -132,7 +132,7 @@ router.post('/validation_candidature/:id', upload.fields([
     } else {
         for (const file of Object.values(req.files)) {
             if (file && file.length > 0) {
-                console.log(file[0].originalname, ' => ', file[0].filename);
+                // console.log(file[0].originalname, ' => ', file[0].filename);
                 req.session.uploaded_files.push(file[0].filename);
             }
         }
@@ -148,9 +148,9 @@ router.post('/validation_candidature/:id', upload.fields([
 
                     candidatureModel.uploadPJ(nom_fichier, type_fichier, lien, id_candidature, function (err, result) {
                         if (result) {
-                            console.log("Upload PJ : " + nom_fichier + " réussi");
+                            // console.log("Upload PJ : " + nom_fichier + " réussi");
                         } else {
-                            console.log("Upload PJ : " + nom_fichier + " échoué");
+                            // console.log("Upload PJ : " + nom_fichier + " échoué");
                         }
                     });
                 }
@@ -161,12 +161,12 @@ router.post('/validation_candidature/:id', upload.fields([
 });
 
 router.get('/mesdocuments', function (req, res, next) {
-    console.log("mes documents");
+    // console.log("mes documents");
     if (req.session.loggedin) {
         candidatureModel.PieceJointeUser(req.session.username, function (err, result) {
-            console.log(result);
+            // console.log(result);
             if (result) {
-                console.log(result);
+                // console.log(result);
                 res.render('mesdocuments', {
                     title: 'Mes documents',
                     username: req.session.username,
@@ -184,8 +184,8 @@ router.get('/mesdocuments', function (req, res, next) {
 
 
 router.get('/getfile', function (req, res, next) {
-    console.log("getfile");
-    console.log(req.query.fichier_cible);
+    // console.log("getfile");
+    // console.log(req.query.fichier_cible);
     try {
         res.download('./mesfichiers/' + req.query.fichier_cible);
     } catch (error) {
@@ -198,29 +198,29 @@ router.get('/accepter/:id/:email/:id_offre', function (req, res, next) {
     var id_candidature = req.params.id;
     var email_candidat = req.params.email;
     var id_offre = req.params.id_offre;
-    console.log("Accepter candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
+    // console.log("Accepter candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
 
     candidatureModel.accepterCandidature(id_candidature, email_candidat, function (err, result) {
         if (result) {
-            console.log("Candidature acceptée");
+            // console.log("Candidature acceptée");
             candidatureModel.refuserAutresCandidatures(id_candidature, email_candidat, function (err, result) {
                 if (result) {
-                    console.log("Autres candidatures refusées");
+                    // console.log("Autres candidatures refusées");
                     candidatureModel.expireeOffre(id_offre, function (err, result) {
                         if (result) {
-                            console.log("Offre expirée");
+                            // console.log("Offre expirée");
                         } else {
-                            console.log("Erreur lors de l'expiration de l'offre");
+                            // console.log("Erreur lors de l'expiration de l'offre");
                         }
                     });
                 } else {
-                    console.log("Erreur lors du refus des autres candidatures");
+                    // console.log("Erreur lors du refus des autres candidatures");
                 }
             });
             res.redirect('/offre/offre_recruteur');
             return;
         } else {
-            console.log("Erreur lors de l'acceptation de la candidature");
+            // console.log("Erreur lors de l'acceptation de la candidature");
             res.redirect('/candidature/liste_candidat/' + id_offre);
             return;
         }
@@ -231,15 +231,15 @@ router.get('/refuser/:id/:email/:id_offre', function (req, res, next) {
     var id_candidature = req.params.id;
     var email_candidat = req.params.email;
     var id_offre = req.params.id_offre;
-    console.log("Refuser candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
+    // console.log("Refuser candidature : " + id_candidature + " " + email_candidat + " " + id_offre);
 
     candidatureModel.refuserCandidature(id_candidature, email_candidat, function (err, result) {
         if (result) {
-            console.log("Candidature refusée");
+            // console.log("Candidature refusée");
             res.redirect('/offre/offre_recruteur');
             return;
         } else {
-            console.log("Erreur lors du refus de la candidature");
+            // console.log("Erreur lors du refus de la candidature");
             res.redirect('/candidature/liste_candidat/' + id_offre);
             return;
         }
@@ -250,12 +250,12 @@ router.get('/refuser/:id/:email/:id_offre', function (req, res, next) {
 router.get('/telecharger/:id/:email', function (req, res, next) {
     candidatureModel.getAllPJ(req.params.id, req.params.email, function (err, result) {
         if (result) {
-            console.log(result);
+            // console.log(result);
             var liste_name = [];
             for (var i = 0; i < result.length; i++) {
                 liste_name.push(result[i].nom);
             }
-            console.log(liste_name);
+            // console.log(liste_name);
 
             var zip = new AdmZip(); // Crée une instance d'AdmZip
 
@@ -285,18 +285,18 @@ router.get('/telecharger/:id/:email', function (req, res, next) {
 router.get('/modifier/:id/', function (req, res, next) {
     var id_offre = req.params.id;
     var email_candidat = req.session.username;
-    console.log("Modifier candidature : " + id_offre + " " + email_candidat);
+    // console.log("Modifier candidature : " + id_offre + " " + email_candidat);
 
     candidatureModel.getIdCandidature(id_offre, email_candidat, function (err, result) {
         if (result) {
-            console.log(result);
+            // console.log(result);
             var id_candidature = result[0].id;
-            console.log("id_candidature : " + id_candidature);
+            // console.log("id_candidature : " + id_candidature);
 
             // On récupère toutes les pièces jointes de la candidature
             candidatureModel.getAllPJ(id_candidature, email_candidat, function (err, result) {
                 if (result) {
-                    console.log(result);
+                    // console.log(result);
                     res.render('modifier_candidature', {
                         title: 'Modifier candidature',
                         username: req.session.username,
@@ -310,7 +310,7 @@ router.get('/modifier/:id/', function (req, res, next) {
                 }
             });
         } else {
-            console.log("Erreur lors de la récupération de l'id de la candidature");
+            // console.log("Erreur lors de la récupération de l'id de la candidature");
             res.redirect('/candidature/afficher_candidatures_user');
             return;
         }
@@ -329,12 +329,12 @@ router.post('/change-files/:id',upload.fields([
     } else {
         for (const file of Object.values(req.files)) {
             if (file && file.length > 0) {
-                console.log(file[0].originalname, ' => ', file[0].filename);
+                // console.log(file[0].originalname, ' => ', file[0].filename);
                 req.session.uploaded_files.push(file[0].filename);
             }
         }
 
-        console.log(req.session.uploaded_files);
+        // console.log(req.session.uploaded_files);
         res.redirect('/candidature/afficher_candidatures_user');
     }
 });

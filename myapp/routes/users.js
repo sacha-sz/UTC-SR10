@@ -81,14 +81,14 @@ app.post('/inscription', function (req, res, next) {
     // Test que toutes les données soient correctement renseignées
     if (mail == null || password == null || password2 == null ||nom == null || prenom == null || tel == null || sexe == null || ddn == null || latitude == null || longitude == null ||
         mail == "" || password == "" || password2 == "" || nom == "" || prenom == "" || tel == "" || sexe == "" || ddn == "" || latitude == "" || longitude == "") {
-        console.log("Données manquantes");
+        // console.log("Données manquantes");
         req.session.msg = "Données manquantes";
         res.redirect('/users/inscription');
     } else {
         // Test que le mail soit valide
         userModel.TEST_MAIL(mail, function (result) {
             if (!result) {
-                console.log("Mail au mauvais format");
+                // console.log("Mail au mauvais format");
                 req.session.msg = "Mail au mauvais format";
                 res.redirect('/users/inscription');
             } else {
@@ -99,35 +99,35 @@ app.post('/inscription', function (req, res, next) {
                 // Test que le mot de passe soit valide
                 userModel.TEST_MDP(password, function (result) {
                     if (!result) {
-                        console.log("Mot de passe invalide");
+                        // console.log("Mot de passe invalide");
                         res.redirect('/users/inscription');
                     } else {
                         // Test que le numéro de téléphone soit valide
                         userModel.TEST_TEL(tel, function (result) {
                             if (!result) {
-                                console.log("Numéro de téléphone invalide");
+                                // console.log("Numéro de téléphone invalide");
                                 res.redirect('/users/inscription');
                             } else {
                                 // Test que la latitude et la longitude soient valides
                                 userModel.TEST_COORDONNEES(latitude, longitude, function (result) {
                                     if (!result) {
-                                        console.log("Coordonnées GPS invalides");
+                                        // console.log("Coordonnées GPS invalides");
                                         res.redirect('/users/inscription');
                                     } else {
 
                                         // Test que la date de naissance soit valide
                                         userModel.TEST_DATE_NAISSANCE(ddn, function (result) {
                                             if (!result) {
-                                                console.log("Date de naissance invalide");
+                                                // console.log("Date de naissance invalide");
                                                 res.redirect('/users/inscription');
                                             } else {
                                                 // utiliser le model pour enregistrer les données récupérées dans la BD
                                                 result = userModel.create(mail, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (err, result) {
                                                     if (result == true) {
-                                                        console.log("Utilisateur créé");
+                                                        // console.log("Utilisateur créé");
                                                         res.redirect('/');
                                                     } else {
-                                                        console.log("Utilisateur non créé");
+                                                        // console.log("Utilisateur non créé");
                                                         res.redirect('/users/inscription');
                                                     }
                                                 }
@@ -155,7 +155,7 @@ app.post('/changed_infos', function (req, res, next) {
 
     // Vérifie si toutes les valeurs sont nulles ou vides
     if ((nom == null || nom == "") && (prenom == null || prenom == "") && (tel == null || tel == "") && (sexe == null || sexe == "")) {
-        console.log("Aucune modification");
+        // console.log("Aucune modification");
         return res.redirect('/users/change_profile');
     }
 
@@ -166,7 +166,7 @@ app.post('/changed_infos', function (req, res, next) {
             new Promise(function (resolve) {
                 userModel.TEST_TEL(tel, function (result) {
                     if (!result) {
-                        console.log("Numéro de téléphone invalide");
+                        // console.log("Numéro de téléphone invalide");
                         resolve(false);
                     } else {
                         resolve(true);
@@ -181,10 +181,10 @@ app.post('/changed_infos', function (req, res, next) {
             new Promise(function (resolve) {
                 userModel.updateNom(req.session.username, nom, function (err, result) {
                     if (result) {
-                        console.log("Nom modifié");
+                        // console.log("Nom modifié");
                         resolve(true);
                     } else {
-                        console.log("Nom non modifié");
+                        // console.log("Nom non modifié");
                         resolve(false);
                     }
                 });
@@ -197,10 +197,10 @@ app.post('/changed_infos', function (req, res, next) {
             new Promise(function (resolve) {
                 userModel.updatePrenom(req.session.username, prenom, function (err, result) {
                     if (result) {
-                        console.log("Prénom modifié");
+                        // console.log("Prénom modifié");
                         resolve(true);
                     } else {
-                        console.log("Prénom non modifié");
+                        // console.log("Prénom non modifié");
                         resolve(false);
                     }
                 });
@@ -213,10 +213,10 @@ app.post('/changed_infos', function (req, res, next) {
             new Promise(function (resolve) {
                 userModel.updateSexe(req.session.username, sexe, function (err, result) {
                     if (result) {
-                        console.log("Sexe modifié");
+                        // console.log("Sexe modifié");
                         resolve(true);
                     } else {
-                        console.log("Sexe non modifié");
+                        // console.log("Sexe non modifié");
                         resolve(false);
                     }
                 });
@@ -236,23 +236,23 @@ app.post('/changed_infos', function (req, res, next) {
 app.post('/delete_user', function (req, res, next) {
     let confirmation = req.body.confirmation;
     confirmation = confirmation.toUpperCase();
-    console.log(confirmation);
-    console.log("dans delete_user POST");
+    // console.log(confirmation);
+    // console.log("dans delete_user POST");
 
     if (confirmation == "CONFIRMER") {
-        console.log("Suppression de l'utilisateur");
+        // console.log("Suppression de l'utilisateur");
         userModel.delete(req.session.username, function (err, result) {
             if (result) {
-                console.log("Utilisateur supprimé");
+                // console.log("Utilisateur supprimé");
                 req.session.destroy();
                 res.redirect('/');
             } else {
-                console.log("Utilisateur non supprimé");
+                // console.log("Utilisateur non supprimé");
                 res.redirect('/users/change_profile');
             }
         });
     } else {
-        console.log("Utilisateur non supprimé");
+        // console.log("Utilisateur non supprimé");
         res.redirect('/users/change_profile');
     }
 });
@@ -260,10 +260,10 @@ app.post('/delete_user', function (req, res, next) {
 
 app.get('/my_profile', function (req, res, next) {
     if (req.session.loggedin) {
-        console.log(req.session.username);
+        // console.log(req.session.username);
         userModel.getInfos(req.session.username, function (err, result) {
             if (result != null) {
-                console.log("Affichage du profil de l'utilisateur");
+                // console.log("Affichage du profil de l'utilisateur");
                 res.render('show_profile', { 
                     title: 'Mon profil', 
                     username: req.session.username, 
@@ -277,12 +277,12 @@ app.get('/my_profile', function (req, res, next) {
                     type_user: req.session.type_user
                 });
             } else {
-                console.log("Utilisateur non trouvé");
+                // console.log("Utilisateur non trouvé");
                 res.redirect('/');
             }
         });
     } else {
-        console.log("Utilisateur non connecté");
+        // console.log("Utilisateur non connecté");
         res.redirect('/');
     }
 });
