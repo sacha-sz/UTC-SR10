@@ -136,6 +136,7 @@ router.get('/:id', function (req, res, next) {
     offreEmploiModel.readOffersById(offreId, function (err, result) {
         if (result) {
             console.log(result);
+            console.log(result[0]);
             res.render('offre', {
                 title: 'Offre',
                 username: req.session.username,
@@ -339,7 +340,9 @@ router.post('/ajout', function (req, res, next) {
 
 
 
-app.post('/changed_infos', function (req, res, next) {
+app.post('/editer_offre/:id', function (req, res, next) {
+    console.log("DANS POST");
+    console.log("Edition");
     var intitule = req.body.intitule;
     var responsable = req.body.responsable;
     var lat = req.body.lat;
@@ -354,110 +357,284 @@ app.post('/changed_infos', function (req, res, next) {
     var indication_piece_jointes = req.body.indication_piece_jointes;
     var type_metier = req.body.type_metier;
     var statut = req.body.statut;
+    var id_offre = req.params.id;
+    console.log(id_offre);
 
-
+    var URL = '/offre/editer_offre/' + id_offre;
+    console.log(URL);
     // Vérifie si toutes les valeurs sont nulles ou vides
-    if ((nom == null || nom == "") && (prenom == null || prenom == "") && (tel == null || tel == "") && (sexe == null || sexe == "")) {
+    if ((intitule == null || intitule == "") && (responsable == null || responsable == "") && (lat == null || lat == "")
+        && (long == null || long == "") && (rythme == null || rythme == "") && (salaire_min == null || salaire_min == "")
+        && (salaire_max == null || salaire_max == "") && (missions == null || missions == "") && (activites == null || activites == "")
+        && (competences == null || competences == "") && (date_validite == null || date_validite == "") && (indication_piece_jointes == null || indication_piece_jointes == "")
+        && (type_metier == null || type_metier == "") && (statut == null || statut == "")) {
         console.log("Aucune modification");
-        return res.redirect('/users/change_profile');
-    }
 
+        return res.redirect(URL);
+    }
+    console.log("Modifications");
     var promises = [];
-
-    if (tel != null && tel != "") {
-        promises.push(
-            new Promise(function (resolve) {
-                userModel.TEST_TEL(tel, function (result) {
-                    if (!result) {
-                        console.log("Numéro de téléphone invalide");
-                        resolve(false);
-                    } else {
-                        resolve(true);
-                    }
-                });
-            })
-        );
-    }
-
-    if (nom != null && nom != "") {
-        promises.push(
-            new Promise(function (resolve) {
-                userModel.updateNom(req.session.username, nom, function (err, result) {
-                    if (result) {
-                        console.log("Nom modifié");
-                        resolve(true);
-                    } else {
-                        console.log("Nom non modifié");
-                        resolve(false);
-                    }
-                });
-            })
-        );
-    }
-
-    if (prenom != null && prenom != "") {
-        promises.push(
-            new Promise(function (resolve) {
-                userModel.updatePrenom(req.session.username, prenom, function (err, result) {
-                    if (result) {
-                        console.log("Prénom modifié");
-                        resolve(true);
-                    } else {
-                        console.log("Prénom non modifié");
-                        resolve(false);
-                    }
-                });
-            })
-        );
-    }
-
-    if (sexe != null && sexe != "") {
-        promises.push(
-            new Promise(function (resolve) {
-                userModel.updateSexe(req.session.username, sexe, function (err, result) {
-                    if (result) {
-                        console.log("Sexe modifié");
-                        resolve(true);
-                    } else {
-                        console.log("Sexe non modifié");
-                        resolve(false);
-                    }
-                });
-            })
-        );
-    }
-
-    Promise.all(promises).then(function (values) {
-        if (values.includes(false)) {
-            res.redirect('/users/change_profile');
-        } else {
-            res.redirect('/users/change_profile');
+    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (offre) {
+        if (offre.length == 0) {
+            console.log("Offre inexistante");
+            return res.redirect(URL);
         }
+        console.log(offre);
+        var id_poste = offre[0].id_poste;
+
+        console.log("AVANT IF")
+        if (intitule != null && intitule != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateIntitule(id_poste, intitule, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification de l'intitulé");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (responsable != null && responsable != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateResponsable(id_poste, responsable, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du responsable");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (lat != null && lat != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateLatitude(id_poste, lat, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification de la latitude");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (long != null && long != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateLongitude(id_poste, long, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification de la longitude");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (rythme != null && rythme != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateRythme(id_poste, rythme, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du rythme");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (salaire_min != null && salaire_min != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateSalaireMin(id_poste, salaire_min, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du salaire_min");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (salaire_max != null && salaire_max != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateSalaireMax(id_poste, salaire_max, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du salaire_max");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (missions != null && missions != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateMission(id_poste, missions, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification des missions");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (activites != null && activites != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateActivite(id_poste, activites, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification des activites");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (competences != null && competences != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateCompetence(id_poste, competences, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification des competences");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (date_validite != null && date_validite != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateDate(id_offre, date_validite, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification de la date_validite");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (indication_pieces_jointes != null && indication_pieces_jointes != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updatePJ(id_offre, indication_pieces_jointes, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification des indication_pieces_jointes");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (type_metier != null && type_metier != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateTypeMetier(id_poste, type_metier, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du type_metier");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        if (statut != null && statut != "") {
+            promises.push(
+                new Promise(function (resolve) {
+                    offreModel.updateStatut(id_poste, statut, function (result) {
+                        if (!result) {
+                            console.log("Erreur lors de la modification du statut");
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                })
+            );
+        }
+
+        Promise.all(promises).then(function (values) {
+            if (values.includes(false)) {
+                res.redirect(URL);
+            } else {
+                res.redirect(URL);
+            }
+        });
     });
 });
 
-app.post('/delete_user', function (req, res, next) {
+app.post('/delete/:id', function (req, res, next) {
     let confirmation = req.body.confirmation;
+
     confirmation = confirmation.toUpperCase();
     console.log(confirmation);
-    console.log("dans delete_user POST");
-
-    if (confirmation == "CONFIRMER") {
-        console.log("Suppression de l'utilisateur");
-        userModel.delete(req.session.username, function (err, result) {
-            if (result) {
-                console.log("Utilisateur supprimé");
-                req.session.destroy();
-                res.redirect('/');
-            } else {
-                console.log("Utilisateur non supprimé");
-                res.redirect('/users/change_profile');
-            }
-        });
-    } else {
-        console.log("Utilisateur non supprimé");
-        res.redirect('/users/change_profile');
-    }
+    console.log("dans delete_offre POST");
+    var id_offre = req.params.id;
+    offreEmploiModel.readOffersByIdSansVerif(id_offre, function (offre) {
+        if (offre.length == 0) {
+            console.log("Offre inexistante");
+            return res.redirect(URL);
+        }
+        console.log(offre);
+        var id_poste = offre[0].id_poste;
+        var URL = '/offre/editer_offre/' + id_offre;
+        console.log(URL);
+        if (confirmation == "CONFIRMER") {
+            console.log("Suppression de l'offre");
+            userModel.deleteOffre(id_offre,id_poste, function (err, result) {
+                if (result) {
+                    console.log("Offre supprimé");
+                    res.redirect('/');
+                } else {
+                    console.log("Offre non supprimé");
+                    res.redirect(URL);
+                }
+            });
+        } else {
+            console.log("Offre non supprimé");
+            res.redirect(URL);
+        }
+    });
 });
 
 

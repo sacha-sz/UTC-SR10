@@ -63,6 +63,7 @@ app.get('/gestion_entreprise', checkAdmin, function (req, res, next) {
 app.get('/gestion_new_entreprise', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         adminModel.getAllOrganisationCreation(function (err, result) {
+            console.log(result);
                 res.render('AdminCreationEntreprise', {
                     title: 'Liste des Entreprises',
                     username: req.session.username,

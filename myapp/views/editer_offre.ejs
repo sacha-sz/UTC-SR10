@@ -31,7 +31,7 @@
                 </div>
 
                         <div class="card-body">
-                            <form method="POST" action="/users/changed_infos" name="form_modif_profil">
+                            <form method="POST" action="/offre/editer_offre/<%= offre.id %>" name="form_modif_profil">
                                 <% if (typeof offre.intitule !=='undefined' ) { %>
                                     <div class="mb-3">
                                         <label for="intitule" class="form-label"><strong>Intitule :</strong></label>
@@ -56,7 +56,7 @@
                                 <% if (typeof offre.lieu_mission_long !=='undefined' ) { %>
                                     <div class="mb-3">
                                         <label for="long" class="form-label"><strong>longitude :</strong></label>
-                                        <input autofocus name="long" type="number" class="form-control" step="0.00001" id="lat"
+                                        <input autofocus name="long" type="number" class="form-control" step="0.00001" id="long"
                                             placeholder="Votre ancienne Longitude : <%= offre.lieu_mission_long %>">
                                     </div>
                                 <% } %>
@@ -118,7 +118,7 @@
 
                                 <% if (typeof offre.indication_piece_jointes !=='undefined' ) { %>
                                 <div class="mb-3">
-                                    <label for="indication_piece_jointes" class="form-label">Etat :</label>
+                                    <label for="indication_piece_jointes" class="form-label">Pièces Jointes :</label>
                                     <select id="indication_piece_jointes" name="indication_piece_jointes" class="form-select">
                                                 <option> <%= offre.indication_piece_jointes %> </option>
                                                 <option>CV, LM</option>
@@ -180,9 +180,9 @@
                                             data-bs-auto-close="outside">
                                             Supprimer compte
                                         </button>
-                                        <form class="dropdown-menu p-4" method="POST" action="/users/delete_user" name="form_delete_user">
+                                        <form class="dropdown-menu p-4" method="POST" action="/offre/delete/<%= offre.id %>" name="form_delete_user">
                                             <div class="mb-3 text-center">
-                                                <p>Toute suppression de votre compte est irréversible.</p>
+                                                <p>Toute suppression de votre offre est irréversible.</p>
                                             </div>
                                             <hr class="border border-danger border-2 opacity-50">
                                             <div class="mb-3">
