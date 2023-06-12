@@ -131,6 +131,24 @@
                                 </div>
                                 <% } %>
                                 <!-- Gestion du statut -->
+                                <% if (typeof offre.etat !=='undefined' ) { %>
+                                    <div class="mb-3">
+                                        <label for="etat" class="form-label">etat :</label>
+                                        <select id="etat" name="etat" class="form-select">
+                                            <option> <%= offre.etat %></option>
+                                            <% if(offre.etat === 'PUBLIEE') { %>
+                                                <option>NON PUBLIEE</option>
+                                                <option>EXPIREE</option>
+                                            <% } else if(offre.etat === 'NON PUBLIEE') { %>
+                                                <option>PUBLIEE</option>
+                                                <option>EXPIREE</option>
+                                                <% } else if(offre.etat === 'EXPIREE') { %>
+                                                    <option>PUBLIEE</option>
+                                                    <option>NON PUBLIEE</option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                <% } %>    
 
                                 <% if (typeof offre.SP_nom !=='undefined' ) { %>
                                 <div class="mb-3">

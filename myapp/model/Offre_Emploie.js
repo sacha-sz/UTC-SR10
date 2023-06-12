@@ -297,7 +297,7 @@ module.exports = {
         db.query("SELECT DISTINCT\
             OE.id, OE.date_validite, OE.indication_piece_jointes, OE.id_poste, \
             FP.intitule, FP.responsable_hierarchique, FP.lieu_mission_lat, FP.lieu_mission_long, FP.rythme, FP.salaire_min, FP.salaire_max, \
-            SP.nom AS SP_nom, SP.description AS SP_description, \
+            SP.nom AS SP_nom, SP.description AS SP_description, OE.etat, \
             TM.nom AS TM_nom, TM.description AS TM_description, \
             ORG.nom AS ORG_nom, \
             DE.missions, DE.activites, DE.competences_attendues \

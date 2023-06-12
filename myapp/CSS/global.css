@@ -16,6 +16,7 @@ header {
     top: 0;
     width: 100%;
     text-align: center;
+    z-index : 1;
 }
 
 footer {
@@ -37,7 +38,7 @@ footer {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 1;
 }
 
 .body-content {

@@ -197,7 +197,7 @@ router.get('/editer_offre/:id', function (req, res, next) {
     if (req.session.loggedin) {
         const offreId = req.params.id;
         console.log(offreId);
-        offreEmploiModel.readOffersById(offreId, function (err, result) {
+        offreEmploiModel.readOffersByIdSansVerif(offreId, function (err, result) {
             if (result) {
                 offreModel.readAllStatut(function (statut) {
                     console.log(result);
@@ -209,7 +209,8 @@ router.get('/editer_offre/:id', function (req, res, next) {
                             type_user: req.session.type_user,
                             offre: result[0],
                             statuts: statut,
-                            type_metiers: TM
+                            type_metiers: TM,
+
                         });
                     });
                 });
