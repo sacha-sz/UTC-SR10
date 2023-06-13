@@ -42,7 +42,15 @@ function checkRecruteur(req, res, next) {
     }
 }
 
-router.get('/afficher_candidatures_user', function (req, res, next) {
+function checkCandidat(req, res, next) {
+    if (req.session.type_user == "CANDIDAT") {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+router.get('/afficher_candidatures_user', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.readCandidatureByUser(req.session.username, function (err, result) {
             if (result) {
@@ -61,7 +69,7 @@ router.get('/afficher_candidatures_user', function (req, res, next) {
     }
 });
 
-router.get('/formulaire_candidatures/:id', function (req, res, next) {
+router.get('/formulaire_candidatures/:id', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.NeedPJOffre(req.params.id, function (err, result) {
             if (result) {
@@ -105,7 +113,7 @@ router.get('/formulaire_candidatures/:id', function (req, res, next) {
 });
 
 
-router.get('/liste_candidat/:id', function (req, res, next) {
+router.get('/liste_candidat/:id', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         // Récupérer les candidats sur une offre
         candidatureModel.getInfoCandidature(req.params.id, function (err, result) {
@@ -128,7 +136,7 @@ router.get('/liste_candidat/:id', function (req, res, next) {
 });
 
 
-router.post('/validation_candidature/:id', upload.fields([
+router.post('/validation_candidature/:id', checkCandidat, upload.fields([
     { name: 'myFileInputCV', maxCount: 1, type: 'CV' },
     { name: 'myFileInputLM', maxCount: 1, type: 'LM' },
     { name: 'myFileInputAutre', maxCount: 1, type: 'Autre' }
@@ -202,7 +210,7 @@ router.get('/getfile', function (req, res, next) {
 });
 
 
-router.get('/accepter/:id/:email/:id_offre', function (req, res, next) {
+router.get('/accepter/:id/:email/:id_offre',checkRecruteur, function (req, res, next) {
     var id_candidature = req.params.id;
     var email_candidat = req.params.email;
     var id_offre = req.params.id_offre;
@@ -235,7 +243,7 @@ router.get('/accepter/:id/:email/:id_offre', function (req, res, next) {
     });
 });
 
-router.get('/refuser/:id/:email/:id_offre', function (req, res, next) {
+router.get('/refuser/:id/:email/:id_offre',checkRecruteur, function (req, res, next) {
     var id_candidature = req.params.id;
     var email_candidat = req.params.email;
     var id_offre = req.params.id_offre;

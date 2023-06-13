@@ -631,7 +631,7 @@ router.post('/editer_offre/:id', checkRecruteur, function (req, res, next) {
     });
 });
 
-router.post('/delete/:id', function (req, res, next) {
+router.post('/delete/:id', checkRecruteur, function (req, res, next) {
     let confirmation = req.body.confirmation;
 
     confirmation = confirmation.toUpperCase();
