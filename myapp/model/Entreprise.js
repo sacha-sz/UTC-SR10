@@ -170,7 +170,7 @@ module.exports = {
             if (err) {
                 // console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(err, null);
-            } else if (results.length > 0) {
+            } else if (results) {
                 // console.log("Fonction getAsking : Récupération des demandes avec succès")
                 callback(null, results);
             } else {
