@@ -170,6 +170,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(err, null);
+            } else if (results.length > 0) {
+                // console.log("Fonction getAsking : Récupération des demandes avec succès")
+                callback(null, results);
             } else {
                 // console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(new TypeError("Aucune demande trouvée"), null);

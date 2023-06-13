@@ -18,6 +18,16 @@ module.exports = {
     })
   },
 
+  CompteNombreCandidature: function (email,id_offre,  callback) {
+    db.query("SELECT COUNT(*) AS nbCandidature FROM `Candidature` WHERE email_utilisateur = ? AND id_offre = ?", [email,id_offre], function (err, results) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, results);
+      }
+    })
+  },
+
   PieceJointeUser: function (email, callback) {
     db.query("SELECT * FROM Candidature AS C \
               INNER JOIN Pieces_jointes AS PJ \

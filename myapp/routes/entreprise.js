@@ -108,7 +108,7 @@ app.get('/gestion', function (req, res, next) {
             if (err) {
                 // Gérer l'erreur si nécessaire
                 // console.log(err);
-                res.status(500).send("Une erreur s'est produite");
+                // res.status(500).send("Une erreur s'est produite");
             } else {
                 res.render('RecruteurRejoindre', {
                     title: 'Liste des demandes',

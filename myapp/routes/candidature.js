@@ -50,7 +50,7 @@ function checkCandidat(req, res, next) {
     }
 }
 
-router.get('/afficher_candidatures_user', checkRecruteur, function (req, res, next) {
+router.get('/afficher_candidatures_user', function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.readCandidatureByUser(req.session.username, function (err, result) {
             if (result) {
@@ -69,7 +69,7 @@ router.get('/afficher_candidatures_user', checkRecruteur, function (req, res, ne
     }
 });
 
-router.get('/formulaire_candidatures/:id', checkRecruteur, function (req, res, next) {
+router.get('/formulaire_candidatures/:id', function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.NeedPJOffre(req.params.id, function (err, result) {
             if (result) {
@@ -143,38 +143,48 @@ router.post('/validation_candidature/:id', checkCandidat, upload.fields([
 ]), function (req, res, next) {
     req.session.uploaded_files = [];
 
-    if (!req.files) {
-        res.redirect('/candidate/formulaire_candidatures');
-    } else {
-        for (const file of Object.values(req.files)) {
-            if (file && file.length > 0) {
-                // console.log(file[0].originalname, ' => ', file[0].filename);
-                req.session.uploaded_files.push(file[0].filename);
-            }
-        }
+    candidatureModel.CompteNombreCandidature(req.session.username, req.params.id, function (err, result) {
+        console.log(result);
+        if (result) {
+            console.log(`Nombre de candidatures : ${result[0].nbCandidature}`);
+            if (result[0].nbCandidature != 0) {
+                return res.redirect('/');
+            } else {
+                if (!req.files) {
+                    return res.redirect('/candidate/formulaire_candidatures');
+                } else {
+                    for (const file of Object.values(req.files)) {
+                        if (file && file.length > 0) {
+                            req.session.uploaded_files.push(file[0].filename);
+                        }
+                    }
         
-        candidatureModel.candidater(req.session.username, req.params.id, function (err, result) {
-            if (result) {
-                for (var i = 0; i < req.session.uploaded_files.length; i++) {
-                    var nom_fichier = req.session.uploaded_files[i];
-                    var type_fichier = nom_fichier.split('-')[1];
-                    type_fichier = type_fichier.split('.')[0];
-                    var lien = "./mesfichiers/" + nom_fichier;
-                    var id_candidature = result.insertId;
-
-                    candidatureModel.uploadPJ(nom_fichier, type_fichier, lien, id_candidature, function (err, result) {
+                    candidatureModel.candidater(req.session.username, req.params.id, function (err, result) {
                         if (result) {
-                            // console.log("Upload PJ : " + nom_fichier + " réussi");
-                        } else {
-                            // console.log("Upload PJ : " + nom_fichier + " échoué");
+                            for (var i = 0; i < req.session.uploaded_files.length; i++) {
+                                var nom_fichier = req.session.uploaded_files[i];
+                                var type_fichier = nom_fichier.split('-')[1];
+                                type_fichier = type_fichier.split('.')[0];
+                                var lien = "./mesfichiers/" + nom_fichier;
+                                var id_candidature = result.insertId;
+        
+                                candidatureModel.uploadPJ(nom_fichier, type_fichier, lien, id_candidature, function (err, result) {
+                                    if (result) {
+                                        // console.log("Upload PJ : " + nom_fichier + " réussi");
+                                    } else {
+                                        // console.log("Upload PJ : " + nom_fichier + " échoué");
+                                    }
+                                });
+                            }
                         }
                     });
+                    return res.redirect('/');
                 }
             }
-        });
-        res.redirect('/');
-    }
+        }
+    });
 });
+
 
 router.get('/mesdocuments', function (req, res, next) {
     // console.log("mes documents");
