@@ -34,6 +34,14 @@ const storage = multer.diskStorage({
 // Create the multer upload object
 const upload = multer({ storage: storage });
 
+function checkRecruteur(req, res, next) {
+    if (req.session.type_user == "RECRUTEUR") {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 router.get('/afficher_candidatures_user', function (req, res, next) {
     if (req.session.loggedin) {
         candidatureModel.readCandidatureByUser(req.session.username, function (err, result) {

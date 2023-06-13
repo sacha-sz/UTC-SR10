@@ -18,7 +18,7 @@ function checkAdmin(req, res, next) {
 }
 
 
-app.get('/gestion_utilisateur',checkAdmin, function (req, res, next) {
+app.get('/gestion_utilisateur', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         userModel.readall(function (err, result) {
             if (err) {

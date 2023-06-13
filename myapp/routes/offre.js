@@ -8,11 +8,18 @@ var app = express();
 var path = require('path');
 const { stat } = require('fs');
 
+function checkRecruteur(req, res, next) {
+    if (req.session.type_user == "RECRUTEUR") {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
-router.get('/ajout_offre', function (req, res, next) {
+router.get('/ajout_offre', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         offreModel.readAllStatut(function (result) {
             // console.log(result);
@@ -35,7 +42,7 @@ router.get('/ajout_offre', function (req, res, next) {
     }
 });
 
-router.get('/offre_recruteur', function (req, res, next) {
+router.get('/offre_recruteur', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         offreEmploiModel.getoffrebyrecruteur(req.session.username, function (err, result) {
             // console.log(result);
@@ -70,6 +77,7 @@ router.get('/offre_recruteur', function (req, res, next) {
         res.redirect('/login');
     }
 });
+
 router.get('/', async function (req, res, next) {
     if (req.session.loggedin) {
         try {
@@ -193,7 +201,7 @@ router.get('/recherche', async function (req, res, next) {
     }
 });
 
-router.get('/editer_offre/:id', function (req, res, next) {
+router.get('/editer_offre/:id', checkRecruteur, function (req, res, next) {
     if (req.session.loggedin) {
         const offreId = req.params.id;
         // console.log(offreId);
@@ -228,7 +236,7 @@ router.get('/editer_offre/:id', function (req, res, next) {
 
 
 
-router.post('/ajout', function (req, res, next) {
+router.post('/ajout',checkRecruteur, function (req, res, next) {
     // console.log('Ajout d\'une offre');
     const intitule = req.body.intitule;
     const responsable = req.body.responsable;
@@ -341,7 +349,7 @@ router.post('/ajout', function (req, res, next) {
 
 
 
-router.post('/editer_offre/:id', function (req, res, next) {
+router.post('/editer_offre/:id', checkRecruteur, function (req, res, next) {
     // console.log("DANS POST");
     // console.log("Edition");
     var intitule = req.body.intitule;
