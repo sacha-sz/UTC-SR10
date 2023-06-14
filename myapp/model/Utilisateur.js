@@ -59,37 +59,6 @@ module.exports = {
         });
     },
 
-    read: function (email, callback) {
-        db.query("SELECT * FROM Utilisateur WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
-
-    readall: function (callback) {
-        db.query("SELECT * FROM Utilisateur;", function (err, results) {
-            // // console.log(results);
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
-
-    getNomPrenomTelSexe: function (email, callback) {
-        db.query("SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
-
     getInfos: function (email, callback) {
         db.query("SELECT nom, prenom, telephone, type_utilisateur  FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {

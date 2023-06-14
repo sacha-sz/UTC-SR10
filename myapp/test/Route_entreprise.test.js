@@ -42,6 +42,7 @@ describe("Test the root path", () => {
             .expect(302, done);
     });
 
+    /// /entreprise/entreprise_recruteur : GET
 
     /// /entreprise/inscription : GET
 
@@ -188,22 +189,22 @@ describe("Test the root path", () => {
 
         const response = await agent.post("/entreprise/inscription").send({
             name: "TEST9",
-                SIREN: "911111119",
-                lat: "48.8566",
-                long: "2.3522",
-                type_organisation: "Autre",
-                newOrganisation: "TEST9Organisation",
-                newDescription: "TEST9Desc"
+            SIREN: "911111119",
+            lat: "48.8566",
+            long: "2.3522",
+            type_organisation: "Autre",
+            newOrganisation: "TEST9Organisation",
+            newDescription: "TEST9Desc"
         });
 
-        expect(response.statusCode).toBe(302); 
+        expect(response.statusCode).toBe(302);
         expect(response.headers.location).toBe('/entreprise/inscription');
 
         expect(mockCreateTorga).toHaveBeenCalledTimes(1);
         expect(mockCreateTorga).toHaveBeenCalledWith("TEST9Organisation", "TEST9Desc", expect.any(Function));
 
         mockCreateTorga.mockRestore();
-    }); 
+    });
 
     test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation", async () => {
         const mockCreateOrga = jest.spyOn(entrepriseModel, 'create').mockImplementation((siren, name, lat, long, type_organisation, callback) => {
@@ -212,17 +213,17 @@ describe("Test the root path", () => {
 
         const response = await agent.post("/entreprise/inscription").send({
             name: "TEST11",
-                SIREN: "911111001",
-                lat: "48.8566",
-                long: "2.3522",
-                type_organisation: "SAS"
+            SIREN: "911111001",
+            lat: "48.8566",
+            long: "2.3522",
+            type_organisation: "SAS"
         });
 
-        expect(response.statusCode).toBe(302); 
+        expect(response.statusCode).toBe(302);
         expect(response.headers.location).toBe('/entreprise/inscription');
 
         expect(mockCreateOrga).toHaveBeenCalledTimes(1);
-        expect(mockCreateOrga).toHaveBeenCalledWith("911111001", "TEST11", "48.8566", "2.3522", "SAS",  expect.any(Function));
+        expect(mockCreateOrga).toHaveBeenCalledWith("911111001", "TEST11", "48.8566", "2.3522", "SAS", expect.any(Function));
 
         mockCreateOrga.mockRestore();
     });
@@ -341,7 +342,7 @@ describe("Test the root path", () => {
             SIREN: "91111111"
         });
 
-        expect(response.statusCode).toBe(302); 
+        expect(response.statusCode).toBe(302);
         expect(response.headers.location).toBe('/entreprise');
 
         expect(mockDelete).toHaveBeenCalledTimes(1);
@@ -349,4 +350,4 @@ describe("Test the root path", () => {
 
         mockDelete.mockRestore();
     });
- });
+});

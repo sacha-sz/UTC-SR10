@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.92% </span>
+                <span class="strong">88.46% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/52</span>
+                <span class='fraction'>46/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>3/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.92% </span>
+                <span class="strong">88.46% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/52</span>
+                <span class='fraction'>46/52</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -226,23 +226,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -327,28 +327,28 @@ app.use('/candidature', candidatureRouter);
 &nbsp;
 &nbsp;
 // catch 404 and forward to error handler
-app.use(<span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {
-<span class="cstat-no" title="statement not covered" >    next(createError(404));</span>
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 &nbsp;
 &nbsp;
 // error handler
-app.use(<span class="fstat-no" title="function not covered" >fu</span>nction (err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
-<span class="cstat-no" title="statement not covered" >    console.log(err);</span>
-<span class="cstat-no" title="statement not covered" >    if (res.status(404)) {</span>
-<span class="cstat-no" title="statement not covered" >        if (req.session.loggedin) {</span>
-<span class="cstat-no" title="statement not covered" >            res.render('404', {</span>
+    console.log(err);
+    if (res.status(404)) {
+        if (req.session.loggedin) {
+            res.render('404', {
                 title: "404",
                 username: req.session.username,
                 type_user: req.session.type_user
             });
         } else {
-<span class="cstat-no" title="statement not covered" >            res.render('404', {</span>
+            res.render('404', {
                 title: "404"
             });
         }
-    } else {
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        res.locals.message = err.message;</span>
 <span class="cstat-no" title="statement not covered" >        res.locals.error = req.app.get('env') === 'development' ? err : {};</span>
 &nbsp;
@@ -376,7 +376,7 @@ module.exports = app;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-14T09:42:33.458Z
+                at 2023-06-14T22:15:07.427Z
             </div>
         <script src="../prettify.js"></script>
         <script>

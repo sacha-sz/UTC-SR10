@@ -19,35 +19,77 @@ Le projet SR10 est un projet visant la création d'un site web pour la gestion d
 ├── README.md
 ├── LICENSE
 ├── .gitignore
-├── assets
-│   ├── MCD
-│   │   ├── MCD.pu
-│   │   ├── MCD_1.png
-│   │   └── MCD_2.png
-│   ├── MLD
-│   │   ├── MLD.pu
-│   │   ├── MLD_1.png
-│   │   └── MLD_2.png
-│   ├── Usecase
-│   │   ├── Usecase.pu
-│   │   ├── Usecase_1.png
-│   │   └── Usecase_2.png
+├── SR10
 ├── doc
-│   ├── Maquette_SR10_V1.pdf
-│   ├── Maquette_SR10_V2.pdf
-│   └── TD1-sujet.pdf
+│   ├── MCD
+│   │   ├── MCD.puml
+│   │   └── MCD.png
+│   ├── MLD
+│   │   ├── MLD.plantuml
+│   │   └── MLD.png
+│   ├── Usecase
+│   │   ├── UseCase.pu
+│   │   └── UseCase.png
+│   ├── Heures.md
+│   ├── Maquette_SR10.pdf
+│   └── Securite.md
+├── myapp
+│   ├── bin
+│   │   └── www
+│   ├── coverage
+│   │   └── ...
+│   ├── CSS
+│   │   ├── 404.css
+│   │   ├── connexion.css
+│   │   ├── global.css
+│   │   ├── inscription.css
+│   │   └── utilisateur.css
+│   ├── JobHub (TD Sur Vue.js)
+│   │   └── ...
+│   ├── mesfichiers
+│   │   ├── email-TypeFichier-IdOffre.pdf
+│   │   ├── Pierre@gmail.com-LM-1.pdf
+│   │   └── Pierre@gmail.com-CV-1.pdf
+│   ├── model
+│   │   ├── Admin.js
+│   │   ├── Candidature.js
+│   │   └── ...
+│   ├── node_modules
+│   │   └── ...
+│   ├── public
+│   │   ├── IMG
+│   │   │   └── yoda.png
+│   │   └── ...
+│   ├── routes
+│   │   ├── admin.js
+│   │   ├── api.js
+│   │   ├── authentification.js
+│   │   └── ...
+│   ├── test
+│   │   ├── hello.test.js
+│   │   ├── Route_entreprise.test.js
+│   │   └── Unit_Utilisateur.test.js
+│   ├── views
+│   │   ├── partials
+│   │   │   ├── footer.ejs
+│   │   │   ├── head.ejs
+│   │   │   └── header.ejs
+│   │   ├── 404.ejs
+│   │   ├── a_propos.ejs
+│   │   └── ...
+│   ├── app.js
+│   ├── nodemon.json
+│   ├── package-lock.json
+│   ├── package.json
+│   └── serveur.js
 └── src
     ├── CSS
     │   └── X.css
     ├── HTML
     │   ├── X.html
     │   └── Y.html
-    ├── JS
-    │   └── X.js
-    └── XXX
-        └── XXX
+    └── JS
+        └── X.js
+
 ...
 ```
-
-## Prérequis
-- XXXX
