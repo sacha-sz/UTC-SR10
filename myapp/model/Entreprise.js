@@ -46,12 +46,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
                 callback(err, false);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction createTypeOrganisation : Ajout du type d'organisation avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
-                callback(new TypeError("Erreur lors de l'ajout du type d'organisation"), false);
             }
         });
     },
@@ -61,12 +58,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
                 callback(err, false);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction createTypeOrganisation : Ajout du type d'organisation avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
-                callback(new TypeError("Erreur lors de l'ajout du type d'organisation"), false);
             }
         });
     },
@@ -76,12 +70,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction create : Erreur lors de l'ajout de l'organisation")
                 callback(err, false);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction create : Ajout de l'organisation avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction create : Erreur lors de l'ajout de l'organisation")
-                callback(new TypeError("Erreur lors de l'ajout de l'organisation"), false);
             }
         });
     },
@@ -93,12 +84,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction addUser : Erreur lors de l'ajout de l'utilisateur")
                 callback(err, null);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction addUser : Ajout de l'utilisateur avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction addUser : Erreur lors de l'ajout de l'utilisateur")
-                callback(new TypeError("Erreur lors de l'ajout de l'utilisateur"), false);
             }
         });
     },
@@ -109,12 +97,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction deleteTypeOrganisation : Erreur lors de la suppression du type d'organisation")
                 callback(err, null);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction deleteTypeOrganisation : Suppression du type d'organisation avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction deleteTypeOrganisation : Erreur lors de la suppression du type d'organisation")
-                callback(new TypeError("Aucun type d'organisation avec ce nom"), false);
             }
         });
     },
@@ -124,12 +109,9 @@ module.exports = {
             if (err) {
                 // console.log("Fonction delete : Erreur lors de la suppression de l'organisation")
                 callback(err, false);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // console.log("Fonction delete : Suppression de l'organisation avec succès")
                 callback(null, true);
-            } else {
-                // console.log("Fonction delete : Erreur lors de la suppression de l'organisation")
-                callback(new TypeError("Aucune organisation avec ce SIREN"), false);
             }
         });
     },
@@ -192,12 +174,9 @@ module.exports = {
                     if (err) {
                         // console.log("Fonction formulaire_accept : Erreur lors de l'acceptation du formulaire")
                         callback(err, null);
-                    } else if (results.affectedRows > 0) {
+                    } else {
                         // console.log("Fonction formulaire_accept : Acceptation du formulaire avec succès")
                         callback(null, true);
-                    } else {
-                        // console.log("Fonction formulaire_accept : Erreur lors de l'acceptation du formulaire")
-                        callback(new TypeError("Erreur lors de l'acceptation du formulaire"), false);
                     }
                 });
             }

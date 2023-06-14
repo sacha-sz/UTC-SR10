@@ -52,13 +52,8 @@ module.exports = {
                     // console.log("Erreur : " + err.message);
                     callback(err, false);
                 } else {
-                    if (results.affectedRows > 0) {
-                        // console.log("Utilisateur ajouté avec succès.");
-                        callback(err, true);
-                    } else {
-                        // console.log("Erreur : Aucun utilisateur ajouté.");
-                        callback(err, false);
-                    }
+                    // console.log("Utilisateur ajouté avec succès.");
+                    callback(err, true);
                 }
             });
         });
@@ -161,13 +156,10 @@ module.exports = {
         db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
-            } else if (results.affectedRows > 0) {
+            } else {
                 // Utilisateur supprimé avec succès
                 callback(null, "Utilisateur supprimé avec succès");
-            } else {
-                // Aucun utilisateur avec cet email
-                callback(new TypeError("Aucun utilisateur avec cet email"), null);
-            }
+            } 
         });
     },
 

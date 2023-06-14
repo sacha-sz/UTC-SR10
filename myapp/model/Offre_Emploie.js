@@ -370,9 +370,6 @@ module.exports = {
                 if (err) {
                     // console.log("Fonction : creat erreur : " + err);
                     callback(err, null);
-                } else if (results.affectedRows === 0) {
-                    // console.log("Fonction : creat erreur : Aucun résultat");
-                    callback(new TypeError("Aucune offre"), null);
                 } else {
                     // console.log("Fonction : creat succès");
                     callback(null, results);
@@ -399,9 +396,6 @@ module.exports = {
                 if (err) {
                     // console.log("Fonction : createOffreEmploi erreur : " + err);
                     callback(err, null);
-                } else if (results.affectedRows === 0) {
-                    // console.log("Fonction : createOffreEmploi erreur : Aucun résultat");
-                    callback(new TypeError("Aucune offre"), null);
                 } else {
                     // console.log("Fonction : createOffreEmploi succès");
                     callback(null, results);

@@ -19,7 +19,7 @@ beforeAll(() => {
 
 afterAll((done) => {
   function callback(err) {
-    ModelUtilisateur.delete("test_create_user@example.com", function (resultat) {
+    ModelUtilisateur.delete("test_delete@example.com", function (resultat) {
     });
     if (err) done(err);
     else done();
@@ -31,11 +31,11 @@ afterAll((done) => {
 
 describe("ModelUtilisateur Tests", () => {
   test("read user", (done) => {
-    ModelUtilisateur.read("julie@gmail.com", function (err, resultat) {
+    ModelUtilisateur.read("test_delete@gmail.com", function (err, resultat) {
       const prenom = resultat[0].prenom;
-      expect(prenom).toBe("Julie");
-      expect(resultat[0].nom).toBe("Bonnet");
-      expect(resultat[0].password).toBe("julie123");
+      expect(prenom).toBe("Prenom_delete");
+      expect(resultat[0].nom).toBe("Nom_delete");
+      expect(resultat[0].password).toBe
       expect(resultat[0].statut).toBe(1);
       expect(resultat[0].telephone).toBe("0612345678");
       expect(resultat[0].adresse_utilisateur_lat).toBe(48.5826);
