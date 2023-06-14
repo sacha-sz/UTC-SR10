@@ -229,7 +229,7 @@ router.get('/accepter/:id/:email/:id_offre',checkRecruteur, function (req, res, 
     candidatureModel.accepterCandidature(id_candidature, email_candidat, function (err, result) {
         if (result) {
             // console.log("Candidature acceptée");
-            candidatureModel.refuserAutresCandidatures(id_candidature, email_candidat, function (err, result) {
+            candidatureModel.refuserAutresCandidatures(id_offre, email_candidat, function (err, result) {
                 if (result) {
                     // console.log("Autres candidatures refusées");
                     candidatureModel.expireeOffre(id_offre, function (err, result) {
