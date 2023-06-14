@@ -1,0 +1,160 @@
+@startuml
+
+skinparam packageStyle rectangle
+skinparam packageTitleAlignment center
+
+note top of Database : "Dans cette représentation les clés primaires sont notées {key}\n et ne sont présentes que lorsqu'elles ne sont pas auto-incrémentées.\nLes clés étrangères ne sont pas notées."
+
+package "Database" {
+
+    class "Utilisateur" as Utilisateur {
+        +email : string {key}
+        password : string
+        nom : string
+        prenom : string
+        date_naissance : date
+        date_creation : date
+        statut : bool
+        telephone : string
+        adresse_utilisateur_lat : float
+        adresse_utilisateur_long : float
+        sexe : SEXE
+        type_utilisateur : TYPE_UTILISATEUR
+    }
+
+    package "Candidature" {
+        class "Candidature" as Candidature {
+            date_candidature : date
+            etat_candidature : ETAT_CANDIDATURE
+        }
+
+        class "Offre_d_emploi" as Offre_d_emploi {
+            nombre_de_piece : UNSIGNED int
+            etat : ETAT_OFFRE
+            date_validite : date
+            indication_piece_jointes : INDICATION_PIECE_JOINTE
+        }
+
+        class "Pieces_jointes" as Pieces_jointes {
+            nom : string
+            type_pieces : TYPE_PIECE
+            lien : string
+        }
+    }
+
+    package "Poste" {
+        class "Description" as Description {
+            missions : string
+            activites : string
+            competences_attendues : string
+        }
+
+        class "Fiche_poste" as Fiche_poste {
+            intitule : string
+            responsable_hierarchique : string
+            lieu_mission_lat : float
+            lieu_mission_long : float
+            rythme : string
+            salaire_min : float
+            salaire_max : float
+        }
+
+        class "Statut_poste" as Statut_poste {
+            +nom : string {key}
+            description : string
+        }
+
+        class "Type_metier" as Type_metier {
+            +nom : string {key}
+            description : string
+        }
+    }
+
+    package "Organisation" {
+        class "Formulaire" as Formulaire {
+            etat_formulaire : ETAT_FORMULAIRE
+            date_creation : date
+        }
+
+        class "Organisation" as Organisation {
+            +siren : string {key}
+            nom : string
+            siege_social_lat : float
+            siege_social_long : float
+        }
+
+        class "Type_organisation" as Type_organisation {
+            +nom : string {key}
+            description : string
+        }
+    }
+
+    package "Enum" as  Enum {
+        enum "ETAT_CANDIDATURE" as ETAT_CANDIDATURE {
+            EN_COURS
+            REFUSEE
+            ACCEPTEE
+        }
+
+        enum "ETAT_FORMULAIRE" as ETAT_FORMULAIRE {
+            EN_COURS
+            REFUSEE
+            ACCEPTEE
+        }
+
+        enum "SEXE" as SEXE {
+            HOMME
+            FEMME
+            AUTRE
+        }
+
+        enum "TYPE_UTILISATEUR" as TYPE_UTILISATEUR {
+            CANDIDAT
+            RECRUTEUR
+            ADMINISTRATEUR
+        }
+
+        enum "INDICATION_PIECE_JOINTE" as INDICATION_PIECE_JOINTE {
+            CV
+            LM
+            AUTRE
+            CV_LM
+            CV_AUTRE
+            LM_AUTRE
+            CV_LM_AUTRE
+        }
+
+        enum "ETAT_OFFRE" as ETAT_OFFRE {
+            NON_PUBLIEE
+            PUBLIEE
+            EXPIREE
+        }
+
+        enum "TYPE_PIECE" as TYPE_PIECE {
+            CV
+            LM
+            AUTRE
+        }
+    }
+
+}
+
+Candidature "*"-- "1" Utilisateur : a pour candidat >
+Candidature "*" -- "1" Offre_d_emploi : sont candidature de >
+
+Description "1" -- "1" Fiche_poste : a pour description <
+
+Fiche_poste "*" -- "*" Organisation : sont postes de >
+Fiche_poste "1" -- "1" Statut_poste : a pour statut >
+Fiche_poste "1" -- "1" Type_metier : a pour type de metier >
+Fiche_poste "1" -- "1" Utilisateur : a pour recruteur >
+
+Formulaire "*" -- "1" Utilisateur : est le formulaire de >
+Formulaire "1" -- "1" Organisation : est lie à l organisation >
+
+Offre_d_emploi "1" -- "1" Fiche_poste : est une offre de >
+
+Pieces_jointes "*" -- "1" Candidature : est une piece jointe de >
+
+Organisation "1" -- "1" Type_organisation : est de type >
+@enduml
