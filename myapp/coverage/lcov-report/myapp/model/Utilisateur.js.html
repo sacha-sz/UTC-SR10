@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">3.19% </span>
+                <span class="strong">3.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/94</span>
+                <span class='fraction'>3/90</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/38</span>
+                <span class='fraction'>0/34</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">3.19% </span>
+                <span class="strong">3.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/94</span>
+                <span class='fraction'>3/90</span>
             </div>
         
             
@@ -316,15 +316,7 @@
 <a name='L251'></a><a href='#L251'>251</a>
 <a name='L252'></a><a href='#L252'>252</a>
 <a name='L253'></a><a href='#L253'>253</a>
-<a name='L254'></a><a href='#L254'>254</a>
-<a name='L255'></a><a href='#L255'>255</a>
-<a name='L256'></a><a href='#L256'>256</a>
-<a name='L257'></a><a href='#L257'>257</a>
-<a name='L258'></a><a href='#L258'>258</a>
-<a name='L259'></a><a href='#L259'>259</a>
-<a name='L260'></a><a href='#L260'>260</a>
-<a name='L261'></a><a href='#L261'>261</a>
-<a name='L262'></a><a href='#L262'>262</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L254'></a><a href='#L254'>254</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -378,13 +370,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -486,9 +473,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -639,13 +623,8 @@ module.exports = {
                     // console.log("Erreur : " + err.message);
 <span class="cstat-no" title="statement not covered" >                    callback(err, false);</span>
                 } else {
-<span class="cstat-no" title="statement not covered" >                    if (results.affectedRows &gt; 0) {</span>
-                        // console.log("Utilisateur ajouté avec succès.");
-<span class="cstat-no" title="statement not covered" >                        callback(err, true);</span>
-                    } else {
-                        // console.log("Erreur : Aucun utilisateur ajouté.");
-<span class="cstat-no" title="statement not covered" >                        callback(err, false);</span>
-                    }
+                    // console.log("Utilisateur ajouté avec succès.");
+<span class="cstat-no" title="statement not covered" >                    callback(err, true);</span>
                 }
             });
         });
@@ -748,13 +727,10 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        db.query("DELETE FROM Utilisateur WHERE email = ?", [email], <span class="fstat-no" title="function not covered" >fu</span>nction (err, results) {</span>
 <span class="cstat-no" title="statement not covered" >            if (err) {</span>
 <span class="cstat-no" title="statement not covered" >                callback(err, null);</span>
-            } else <span class="cstat-no" title="statement not covered" >if (results.affectedRows &gt; 0) {</span>
+            } else {
                 // Utilisateur supprimé avec succès
 <span class="cstat-no" title="statement not covered" >                callback(null, "Utilisateur supprimé avec succès");</span>
-            } else {
-                // Aucun utilisateur avec cet email
-<span class="cstat-no" title="statement not covered" >                callback(new TypeError("Aucun utilisateur avec cet email"), null);</span>
-            }
+            } 
         });
     },
 &nbsp;
@@ -853,7 +829,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-14T09:27:44.455Z
+                at 2023-06-14T09:35:36.579Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
