@@ -28,7 +28,6 @@ afterAll((done) => {
 
 
 describe("Test the root path", () => {
-/* 
     /// /entreprise : GET
 
     test('GET /entreprise : Connecté donc retourne 200', done => {
@@ -204,32 +203,8 @@ describe("Test the root path", () => {
         expect(mockCreateTorga).toHaveBeenCalledWith("TEST9Organisation", "TEST9Desc", expect.any(Function));
 
         mockCreateTorga.mockRestore();
-    }); */
+    }); 
 
-    test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation d'un nouveau type", async () => {
-        const mockCreateOrgaP = jest.spyOn(entrepriseModel, 'create').mockImplementation((siren, name, lat, long, type_organisation, callback) => {
-            callback(TypeError("Erreur lors de l'ajout de l'organisation"), false);
-        });
-
-        const response = await agent.post("/entreprise/inscription").send({
-            name: "TEST10",
-                SIREN: "123456789",
-                lat: "48.8566",
-                long: "2.3522",
-                type_organisation: "Autre",
-                newOrganisation: "TEST10Organisation",
-                newDescription: "TEST10Desc"
-        });
-
-        expect(response.statusCode).toBe(302); 
-        expect(response.headers.location).toBe('/entreprise/inscription');
-
-        expect(mockCreateOrgaP).toHaveBeenCalledTimes(1);
-        expect(mockCreateOrgaP).toHaveBeenCalledWith("911111101", "TEST10", "48.8566", "2.3522", "TEST10Organisation",  expect.any(Function));
-
-        mockCreateOrgaP.mockRestore();
-    });
-/* 
     test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation", async () => {
         const mockCreateOrga = jest.spyOn(entrepriseModel, 'create').mockImplementation((siren, name, lat, long, type_organisation, callback) => {
             callback(new Error("Erreur lors de la création de l'organisation"), false);
@@ -374,4 +349,4 @@ describe("Test the root path", () => {
 
         mockDelete.mockRestore();
     });
- */});
+ });

@@ -1,8 +1,8 @@
 const DB = require("../model/ConnexionBDD.js");
 const ModelUtilisateur = require("../model/Utilisateur.js");
+const express = require("express");
 
 beforeAll(() => {
-  // des instructions à exécuter avant le lancement de cette suite de tests
   const email = "test_delete@example.com";
   const password = "Password123!";
   const nom = "Nom_delete";
@@ -11,7 +11,7 @@ beforeAll(() => {
   const sexe = "FEMME";
   const ddn = "1995-01-01";
   const latitude = 48.8934;
-  const longitude = 2.2778;
+  const longitude = 2;
 
   ModelUtilisateur.create(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, function (result) {
   });
@@ -24,24 +24,22 @@ afterAll((done) => {
     if (err) done(err);
     else done();
   }
-  DB.end(callback); // Ferme la connexion à la base de données après les tests
+  DB.end(callback);
 });
 
 
 
 describe("ModelUtilisateur Tests", () => {
   test("read user", (done) => {
-    ModelUtilisateur.read("test_delete@gmail.com", function (err, resultat) {
-      const prenom = resultat[0].prenom;
-      expect(prenom).toBe("Prenom_delete");
+    ModelUtilisateur.read("test_delete@example.com", function (err, resultat) {
+      expect(resultat[0].prenom).toBe("Prenom_delete");
       expect(resultat[0].nom).toBe("Nom_delete");
-      expect(resultat[0].password).toBe
       expect(resultat[0].statut).toBe(1);
-      expect(resultat[0].telephone).toBe("0612345678");
-      expect(resultat[0].adresse_utilisateur_lat).toBe(48.5826);
-      expect(resultat[0].adresse_utilisateur_long).toBe(7.7492);
+      expect(resultat[0].telephone).toBe("0616745678");
+      expect(resultat[0].adresse_utilisateur_lat).toBe(48.8934);
+      expect(resultat[0].adresse_utilisateur_long).toBe(2.2778);
       expect(resultat[0].sexe).toBe("FEMME");
-      expect(resultat[0].type_utilisateur).toBe("RECRUTEUR");
+      expect(resultat[0].type_utilisateur).toBe("CANDIDAT");
       done();
     });
   });
@@ -49,115 +47,88 @@ describe("ModelUtilisateur Tests", () => {
   test("read user if erreur", () => {
     function cbRead(err, resultat) {
       expect(() => {
-        if (err) throw err; // lever l'erreur si err!=null
-      }).toThrow("Aucun utilisateur avec cet email"); // elle passe si une exception est levée mais elle passe avec false si l'erreur n'est pas de type email not found
+        if (err) throw err;
+      }).toThrow("Aucun utilisateur avec cet email");
     }
-    ModelUtilisateur.read("testee@test.fr", cbRead);
+    ModelUtilisateur.read("test_delete@example.com", cbRead);
   });
 
   test("read user with error", () => {
-    // Définir une erreur fictive pour simuler une erreur dans la requête
     const fakeError = new Error("Erreur de requête");
-  
-    // Définir une fonction de rappel de test
+
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBeNull(); // Vérifie si resultat est null
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
+
     jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction read avec l'email et la fonction de rappel de test
-    ModelUtilisateur.read("testee@test.fr", testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
-    expect(DB.query).toHaveBeenCalledWith('SELECT * FROM Utilisateur WHERE email = "testee@test.fr"', expect.any(Function));
-  
-    // Restaurer la fonction DB.query originale
+
+    ModelUtilisateur.read("test_delete@example.com", testCallback);
+
+    expect(DB.query).toHaveBeenCalledWith('SELECT * FROM Utilisateur WHERE email = "test_delete@example.com"', expect.any(Function));
+
     DB.query.mockRestore();
   });
-  
-  
+
+
   test("readall user with error", () => {
-    // Définir une erreur fictive pour simuler une erreur dans la requête
     const fakeError = new Error("Erreur de requête");
-  
-    // Définir une fonction de rappel de test
+
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBeNull(); // Vérifie si resultat est null
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
     jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction read avec l'email et la fonction de rappel de test
+
     ModelUtilisateur.readall(testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith('SELECT * FROM Utilisateur', expect.any(Function));
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
-  
+
   test("getNomPrenomTelSexe with error", () => {
-    // Définir une erreur fictive pour simuler une erreur dans la requête
     const fakeError = new Error("Erreur de requête");
-  
-    // Définir une fonction de rappel de test
+
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBeNull(); // Vérifie si resultat est null
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
     jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction read avec l'email et la fonction de rappel de test
-    ModelUtilisateur.getNomPrenomTelSexe("testee@test.fr", testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
-    expect(DB.query).toHaveBeenCalledWith('SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = "testee@test.fr"', expect.any(Function));
-  
-    // Restaurer la fonction DB.query originale
+
+    ModelUtilisateur.getNomPrenomTelSexe("test_delete@example.com", testCallback);
+
+    expect(DB.query).toHaveBeenCalledWith('SELECT nom, prenom, telephone, sexe FROM Utilisateur WHERE email = "test_delete@example.com"', expect.any(Function));
+
     DB.query.mockRestore();
   });
 
   test("readall with empty table", () => {
-    // Définir un tableau vide pour simuler une table vide
     const emptyTable = [];
-  
-    // Définir une fonction de rappel de test
+
     function testCallback(err, results) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBeInstanceOf(TypeError); // Vérifier si err est une instance de TypeError
       expect(err.message).toBe("Aucun utilisateur"); // Vérifier le message d'erreur
       expect(results).toEqual(emptyTable); // Vérifier si results correspond au tableau vide
     }
-  
-    // Mock de la fonction db.query pour renvoyer un tableau vide
+
     jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
       callback(null, emptyTable);
     });
-  
-    // Appeler la fonction readall avec la fonction de rappel de test
+
     ModelUtilisateur.readall(testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith('SELECT * FROM Utilisateur', expect.any(Function));
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
 
@@ -167,15 +138,14 @@ describe("ModelUtilisateur Tests", () => {
         if (err) throw err; // lever l'erreur si err!=null
       }).toThrow("Aucun utilisateur avec cet email"); // elle passe si une exception est levée mais elle passe avec false si l'erreur n'est pas de type email not found
     }
-    ModelUtilisateur.getNomPrenomTelSexe("testee@test.fr", testIf);
+    ModelUtilisateur.getNomPrenomTelSexe("test_delete@example.com", testIf);
   });
 
   test("getNomPrenomTelSexe", (done) => {
-    ModelUtilisateur.getNomPrenomTelSexe("julie@gmail.com", function (err, resultat) {
-      const prenom = resultat[0].prenom;
-      expect(prenom).toBe("Julie");
-      expect(resultat[0].nom).toBe("Bonnet");
-      expect(resultat[0].telephone).toBe("0612345678");
+    ModelUtilisateur.getNomPrenomTelSexe("test_delete@example.com", function (err, resultat) {
+      expect(resultat[0].prenom).toBe("Prenom_delete");
+      expect(resultat[0].nom).toBe("Nom_delete");
+      expect(resultat[0].telephone).toBe("0616745678");
       expect(resultat[0].sexe).toBe("FEMME");
       done();
     });
@@ -187,7 +157,7 @@ describe("ModelUtilisateur Tests", () => {
         if (err) throw err; // lever l'erreur si err!=null
       }).toThrow("Aucun utilisateur avec cet email"); // elle passe si une exception est levée mais elle passe avec false si l'erreur n'est pas de type email not found
     }
-    ModelUtilisateur.read("testee@test.fr", testIf);
+    ModelUtilisateur.read("test_delete@example.com", testIf);
   });
 
 
@@ -197,22 +167,21 @@ describe("ModelUtilisateur Tests", () => {
         if (err) throw err; // lever l'erreur si err!=null
       }).toThrow("Aucun utilisateur avec cet email"); // elle passe si une exception est levée mais elle passe avec false si l'erreur n'est pas de type email not found
     }
-    ModelUtilisateur.delete("testeeeeee@test.fr", testIf);
+    ModelUtilisateur.delete("test_delete@example.com", testIf);
   });
 
   test("readall", (done) => {
     ModelUtilisateur.readall(function (err, resultat) {
       for (var i = 0; i < resultat.length; i++) {
-        if (resultat[i].email == "julie@gmail.com") {
-          expect(resultat[i].prenom).toBe("Julie");
-          expect(resultat[i].nom).toBe("Bonnet");
-          expect(resultat[i].password).toBe("julie123");
-          expect(resultat[i].statut).toBe(1);
-          expect(resultat[i].telephone).toBe("0612345678");
-          expect(resultat[i].adresse_utilisateur_lat).toBe(48.5826);
-          expect(resultat[i].adresse_utilisateur_long).toBe(7.7492);
-          expect(resultat[i].sexe).toBe("FEMME");
-          expect(resultat[i].type_utilisateur).toBe("RECRUTEUR");
+        if (resultat[i].email == "test_delete@example.com") {
+          expect(resultat[0].prenom).toBe("Prenom_delete");
+          expect(resultat[0].nom).toBe("Nom_delete");
+          expect(resultat[0].statut).toBe(1);
+          expect(resultat[0].telephone).toBe("0616745678");
+          expect(resultat[0].adresse_utilisateur_lat).toBe(48.8934);
+          expect(resultat[0].adresse_utilisateur_long).toBe(2.2778);
+          expect(resultat[0].sexe).toBe("FEMME");
+          expect(resultat[0].type_utilisateur).toBe("CANDIDAT");
         }
       }
       done();
@@ -220,14 +189,14 @@ describe("ModelUtilisateur Tests", () => {
   });
 
   test("TEST_MAIL_TRUE", (done) => {
-    ModelUtilisateur.TEST_MAIL("julie@gmail.com", function (resultat) {
+    ModelUtilisateur.TEST_MAIL("test_delete@example.com", function (resultat) {
       expect(resultat).toBe(true);
       done();
     });
   });
 
   test("TEST_MAIL_FALSE", (done) => {
-    ModelUtilisateur.TEST_MAIL("juliegmail.com", function (resultat) {
+    ModelUtilisateur.TEST_MAIL("test_delete--example.com", function (resultat) {
       expect(resultat).toBe(false);
       done();
     });
@@ -259,7 +228,6 @@ describe("ModelUtilisateur Tests", () => {
   });
 
   test("create user with no user added error", () => {
-    // Définir les valeurs des paramètres pour la création de l'utilisateur
     const email = "test@example.com";
     const password = "password123";
     const nom = "Doe";
@@ -269,26 +237,20 @@ describe("ModelUtilisateur Tests", () => {
     const ddn = "1990-01-01";
     const latitude = 0.0;
     const longitude = 0.0;
-  
-    // Définir une fonction de rappel de test
+
     function testCallback(err, success) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBeNull(); // Vérifier si err est null
       expect(success).toBe(false); // Vérifier si success est false
     }
-  
-    // Mock de la fonction db.query pour renvoyer les résultats de la création
+
     jest.spyOn(DB, 'query').mockImplementation((query, callback) => {
       callback(null, { affectedRows: 0 });
     });
-  
-    // Appeler la fonction create avec les paramètres et la fonction de rappel de test
+
     ModelUtilisateur.create(email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO Utilisateur"), expect.any(Function));
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
 
@@ -448,28 +410,22 @@ describe("ModelUtilisateur Tests", () => {
   test("updateNom user with error", () => {
 
     let fakeError = new Error("Erreur de requête");
-    // Définir une fonction de rappel de test
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBe(false); // Vérifie si resultat est false
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
     jest.spyOn(DB, 'query').mockImplementation((sql, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction updateNom avec l'email, le nouveau nom et la fonction de rappel de test
+
     ModelUtilisateur.updateNom("testee@test.com", "TT", testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith(
       "UPDATE Utilisateur SET nom = \"TT\" WHERE email = \"testee@test.com\";",
       expect.any(Function)
     );
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
 
@@ -494,28 +450,22 @@ describe("ModelUtilisateur Tests", () => {
   test("updatePrenom user with error", () => {
 
     let fakeError = new Error("Erreur de requête");
-    // Définir une fonction de rappel de test
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBe(false); // Vérifie si resultat est false
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
     jest.spyOn(DB, 'query').mockImplementation((sql, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction updateNom avec l'email, le nouveau nom et la fonction de rappel de test
+
     ModelUtilisateur.updatePrenom("testee@test.com", "TT", testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith(
       "UPDATE Utilisateur SET prenom = \"TT\" WHERE email = \"testee@test.com\";",
       expect.any(Function)
     );
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
 
@@ -541,28 +491,22 @@ describe("ModelUtilisateur Tests", () => {
   test("updateSexe user with error", () => {
 
     let fakeError = new Error("Erreur de requête");
-    // Définir une fonction de rappel de test
     function testCallback(err, resultat) {
-      // Vérifier si la fonction de rappel est appelée avec les arguments appropriés
       expect(err).toBe(fakeError); // Vérifie si err est l'erreur attendue
       expect(resultat).toBe(false); // Vérifie si resultat est false
     }
-  
-    // Mock de la fonction db.query pour renvoyer une erreur
+
     jest.spyOn(DB, 'query').mockImplementation((sql, callback) => {
       callback(fakeError, null);
     });
-  
-    // Appeler la fonction updateNom avec l'email, le nouveau nom et la fonction de rappel de test
+
     ModelUtilisateur.updateSexe("testee@test.com", "FEMME", testCallback);
-  
-    // Vérifier si la fonction db.query a été appelée avec les arguments appropriés
+
     expect(DB.query).toHaveBeenCalledWith(
       "UPDATE Utilisateur SET sexe = \"FEMME\" WHERE email = \"testee@test.com\";",
       expect.any(Function)
     );
-  
-    // Restaurer la fonction DB.query originale
+
     DB.query.mockRestore();
   });
 
