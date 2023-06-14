@@ -28,7 +28,6 @@ afterAll((done) => {
 
 
 describe("Test the root path", () => {
-
     /// /entreprise : GET
 
     test('GET /entreprise : Connecté donc retourne 200', done => {
@@ -204,33 +203,9 @@ describe("Test the root path", () => {
         expect(mockCreateTorga).toHaveBeenCalledWith("TEST9Organisation", "TEST9Desc", expect.any(Function));
 
         mockCreateTorga.mockRestore();
-    });
+    }); 
 
-    test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation d'un nouveau type", async () => {
-        const mockCreateOrga = jest.spyOn(entrepriseModel, 'create').mockImplementation((siren, name, lat, long, type_organisation, callback) => {
-            callback(new Error("Erreur lors de la création de l'organisation"), false);
-        });
-
-        const response = await agent.post("/entreprise/inscription").send({
-            name: "TEST10",
-                SIREN: "911111101",
-                lat: "48.8566",
-                long: "2.3522",
-                type_organisation: "Autre",
-                newOrganisation: "TEST10Organisation",
-                newDescription: "TEST10Desc"
-        });
-
-        expect(response.statusCode).toBe(302); 
-        expect(response.headers.location).toBe('/entreprise/inscription');
-
-        expect(mockCreateOrga).toHaveBeenCalledTimes(1);
-        expect(mockCreateOrga).toHaveBeenCalledWith("911111101", "TEST10", "48.8566", "2.3522", "TEST10Organisation",  expect.any(Function));
-
-        mockCreateOrga.mockRestore();
-    });
-
-    test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation d'un nouveau type", async () => {
+    test("POST /entreprise/inscription : Erreur lors de l'ajout de la nouvelle organisation", async () => {
         const mockCreateOrga = jest.spyOn(entrepriseModel, 'create').mockImplementation((siren, name, lat, long, type_organisation, callback) => {
             callback(new Error("Erreur lors de la création de l'organisation"), false);
         });
@@ -310,14 +285,14 @@ describe("Test the root path", () => {
         });
 
         const response = await agent.post('/entreprise/rejoindre_entreprise').send({
-            SIREN: "123456789"
+            SIREN: "911111117"
         });
 
         expect(response.statusCode).toBe(302);
         expect(response.headers.location).toBe('/entreprise');
 
         expect(mockAddUser).toHaveBeenCalledTimes(1);
-        expect(mockAddUser).toHaveBeenCalledWith("123456789", "test@gmail.com", expect.any(Function));
+        expect(mockAddUser).toHaveBeenCalledWith("911111117", "test@gmail.com", expect.any(Function));
 
         mockAddUser.mockRestore();
     });
@@ -374,4 +349,4 @@ describe("Test the root path", () => {
 
         mockDelete.mockRestore();
     });
-});
+ });

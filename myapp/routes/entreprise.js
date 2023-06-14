@@ -170,7 +170,7 @@ app.post('/inscription', function (req, res, next) {
                                         type_organisation = newType;
                                         entrepriseModel.createTypeOrganisation(newType, newDescription, function (err, result) {
                                             if (result == true) {
-                                                // console.log("Organisation créée");
+                                                console.log("Organisation créée");
                                                 entrepriseModel.create(siren, name, lat, long, type_organisation, function (err, result) {
                                                     if (result == true) {
                                                         // console.log("Entreprise créée");
@@ -181,7 +181,7 @@ app.post('/inscription', function (req, res, next) {
                                                     }
                                                 });
                                             } else {
-                                                // console.log("Erreur lors de la création du type d'organisation");
+                                                console.log("Erreur lors de la création du type d'organisation");
                                                 res.redirect('/entreprise/inscription');
                                             }
                                         });
