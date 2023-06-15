@@ -22,9 +22,7 @@ app.get('/gestion_utilisateur', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         userModel.readall(function (err, result) {
             if (err) {
-                // Gérer l'erreur si nécessaire
-                // console.log(err);
-                res.status(500).send("Une erreur s'est produite");
+                throw err;
             } else {
                 res.render('AdminGestionUsers', {
                     title: 'Liste des utilisateurs',
@@ -43,9 +41,7 @@ app.get('/gestion_entreprise', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         entrepriseModel.readall(function (err, result) {
             if (err) {
-                // Gérer l'erreur si nécessaire
-                // console.log(err);
-                res.status(500).send("Une erreur s'est produite");
+                throw err;
             } else {
                 res.render('AdminGestionEntreprise', {
                     title: 'Liste des Entreprises',
@@ -63,13 +59,12 @@ app.get('/gestion_entreprise', checkAdmin, function (req, res, next) {
 app.get('/gestion_new_entreprise', checkAdmin, function (req, res, next) {
     if (req.session.loggedin) {
         adminModel.getAllOrganisationCreation(function (err, result) {
-            // console.log(result);
-                res.render('AdminCreationEntreprise', {
-                    title: 'Liste des Entreprises',
-                    username: req.session.username,
-                    type_user: req.session.type_user,
-                    entreprises: result
-                });
+            res.render('AdminCreationEntreprise', {
+                title: 'Liste des Entreprises',
+                username: req.session.username,
+                type_user: req.session.type_user,
+                entreprises: result
+            });
         });
     } else {
         res.redirect('/login');
@@ -79,8 +74,6 @@ app.get('/gestion_new_entreprise', checkAdmin, function (req, res, next) {
 app.post('/passer_admin', checkAdmin, function (req, res, next) {
     adminModel.updateTypeUtilisateur(req.body.email, "ADMINISTRATEUR", function (err, result) {
         if (err) {
-            // Gérer l'erreur si nécessaire
-            // console.log(err);
             throw err;
         } else {
             res.redirect('/admin/gestion_utilisateur');
@@ -89,11 +82,9 @@ app.post('/passer_admin', checkAdmin, function (req, res, next) {
 });
 
 
-app.post('/delete_entreprise',checkAdmin,  function (req, res, next) {
+app.post('/delete_entreprise', checkAdmin, function (req, res, next) {
     entrepriseModel.delete(req.body.siren, function (err, result) {
         if (err) {
-            // Gérer l'erreur si nécessaire
-            // console.log(err);
             throw err;
         } else {
             res.redirect('/admin/gestion_entreprise');
@@ -101,10 +92,9 @@ app.post('/delete_entreprise',checkAdmin,  function (req, res, next) {
     });
 });
 
-app.post('/accept_entreprise',checkAdmin,  function (req, res, next) {
+app.post('/accept_entreprise', checkAdmin, function (req, res, next) {
     entrepriseModel.formulaire_accept(req.body.siren, req.body.user, function (err, result) {
         if (err) {
-            // console.log(err);
             throw err;
         } else {
             res.redirect('/admin/gestion_new_entreprise');

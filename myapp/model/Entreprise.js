@@ -6,10 +6,8 @@ module.exports = {
     readTypeOrganisation: function (callback) {
         db.query("SELECT * FROM Type_organisation;", function (err, results) {
             if (err) {
-                // console.log("Fonction readTypeOrganisation : Erreur lors de la récupération des types d'organisation")
                 callback(err, null);
             } else {
-                // console.log("Fonction readTypeOrganisation : Récupération des types d'organisation avec succès")
                 callback(null, results);
             }
         });
@@ -18,10 +16,8 @@ module.exports = {
     read: function (siren, callback) {
         db.query("SELECT * FROM Organisation WHERE siren = ?;", [siren], function (err, results) {
             if (err) {
-                // console.log("Fonction read : Erreur lors de la récupération de l'organisation")
                 callback(err, null);
             } else {
-                // console.log("Fonction read : Récupération de l'organisation avec succès")
                 callback(null, results);
             }
         });
@@ -30,10 +26,8 @@ module.exports = {
     readall: function (callback) {
         db.query("SELECT * FROM Organisation; ", function (err, results) {
             if (err) {
-                // console.log("Fonction readall : Erreur lors de la récupération des organisations")
                 callback(err, null);
             } else {
-                // console.log("Fonction readall : Récupération des organisations avec succès")
                 callback(null, results);
             }
         });
@@ -44,10 +38,8 @@ module.exports = {
     createTypeOrganisation: function (type_organisation, description, callback) {
         db.query("INSERT INTO Type_organisation VALUES (?, ?);", [type_organisation, description], function (err, results) {
             if (err) {
-                // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
                 callback(err, false);
             } else {
-                // console.log("Fonction createTypeOrganisation : Ajout du type d'organisation avec succès")
                 callback(null, true);
             }
         });
@@ -56,10 +48,8 @@ module.exports = {
     createTypeOrganisation: function (type_organisation, description, callback) {
         db.query("INSERT INTO Type_organisation VALUES (?, ?);", [type_organisation, description], function (err, results) {
             if (err) {
-                // console.log("Fonction createTypeOrganisation : Erreur lors de l'ajout du type d'organisation")
                 callback(err, false);
             } else {
-                // console.log("Fonction createTypeOrganisation : Ajout du type d'organisation avec succès")
                 callback(null, true);
             }
         });
@@ -68,10 +58,8 @@ module.exports = {
     create: function (siren, nom, siege_social_lat, siege_social_long, type_organisation, callback) {
         db.query("INSERT INTO Organisation VALUES (?, ?, ?, ?, ?);", [siren, nom, siege_social_lat, siege_social_long, type_organisation], function (err, results) {
             if (err) {
-                // console.log("Fonction create : Erreur lors de l'ajout de l'organisation")
                 callback(err, false);
             } else {
-                // console.log("Fonction create : Ajout de l'organisation avec succès")
                 callback(null, true);
             }
         });
@@ -82,10 +70,8 @@ module.exports = {
         var date_creation = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         db.query("INSERT INTO Formulaire (date_creation, email_utilisateur, siren_orga) VALUES (?, ?, ?);", [date_creation, email, siren], function (err, results) {
             if (err) {
-                // console.log("Fonction addUser : Erreur lors de l'ajout de l'utilisateur")
                 callback(err, null);
             } else {
-                // console.log("Fonction addUser : Ajout de l'utilisateur avec succès")
                 callback(null, true);
             }
         });
@@ -95,10 +81,8 @@ module.exports = {
     deleteTypeOrganisation: function (type_organisation, callback) {
         db.query("DELETE FROM Type_organisation WHERE nom = ?;", [type_organisation], function (err, results) {
             if (err) {
-                // console.log("Fonction deleteTypeOrganisation : Erreur lors de la suppression du type d'organisation")
                 callback(err, null);
             } else {
-                // console.log("Fonction deleteTypeOrganisation : Suppression du type d'organisation avec succès")
                 callback(null, true);
             }
         });
@@ -107,10 +91,8 @@ module.exports = {
     delete: function (siren, callback) {
         db.query("DELETE FROM Organisation WHERE siren = ?;", [siren], function (err, results) {
             if (err) {
-                // console.log("Fonction delete : Erreur lors de la suppression de l'organisation")
                 callback(err, false);
             } else {
-                // console.log("Fonction delete : Suppression de l'organisation avec succès")
                 callback(null, true);
             }
         });
@@ -122,13 +104,10 @@ module.exports = {
                   ON F.siren_orga = O.siren \
                   WHERE F.etat_formulaire='ACCEPTEE' AND F.email_utilisateur = ?", [email], function (err, results) {
             if (err) {
-                // console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(err, null);
             } else if (results.length > 0) {
-                // console.log("Fonction entrepriseRecruteur : Récupération des entreprises recruteurs avec succès")
                 callback(null, results);
             } else {
-                // console.log("Fonction entrepriseRecruteur : Erreur lors de la récupération des entreprises recruteurs")
                 callback(new TypeError("Aucune entreprise trouvée"), null);
             }
         });
@@ -150,13 +129,10 @@ module.exports = {
                     wHERE email_utilisateur = ? \
                   ) AND etat_formulaire = 'EN COURS';", [email], function (err, results) {
             if (err) {
-                // console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(err, null);
             } else if (results) {
-                // console.log("Fonction getAsking : Récupération des demandes avec succès")
                 callback(null, results);
             } else {
-                // console.log("Fonction getAsking : Erreur lors de la récupération des demandes")
                 callback(new TypeError("Aucune demande trouvée"), null);
             }
         });
@@ -167,15 +143,12 @@ module.exports = {
     formulaire_accept: function (siren, email, callback) {
         db.query("UPDATE Formulaire SET etat_formulaire = 'ACCEPTEE' WHERE siren_orga = ? AND email_utilisateur = ?;", [siren, email], function (err, results) {
             if (err) {
-                // console.log("Fonction formulaire_accept : Erreur lors de l'acceptation du formulaire")
                 callback(err, null);
             } else {
                 db.query("UPDATE Utilisateur SET type_utilisateur = 'RECRUTEUR' WHERE email = ?;", [email], function (err, results) {
                     if (err) {
-                        // console.log("Fonction formulaire_accept : Erreur lors de l'acceptation du formulaire")
                         callback(err, null);
                     } else {
-                        // console.log("Fonction formulaire_accept : Acceptation du formulaire avec succès")
                         callback(null, true);
                     }
                 });
@@ -184,7 +157,6 @@ module.exports = {
     },
 
     /// TEST
-
     // Test que la latitude et la longitude soient valides
     TEST_LATITUDE: function (latitude, callback) {
         // Vérification de la latitude

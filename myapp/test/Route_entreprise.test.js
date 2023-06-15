@@ -3,7 +3,7 @@ const app = require('../app');
 const entrepriseModel = require('../model/Entreprise');
 
 
-const agent = request.agent(app); // Crée un agent de test
+const agent = request.agent(app);
 
 beforeAll((done) => {
     agent
@@ -13,7 +13,6 @@ beforeAll((done) => {
         .end(function (err, res) {
             if (err) return done(err);
 
-            // Effectuez une nouvelle requête GET pour mettre à jour la session sur l'agent
             agent.get('/').expect(200, done);
         });
 });
@@ -28,8 +27,6 @@ afterAll((done) => {
 
 
 describe("Test the root path", () => {
-    /// /entreprise : GET
-
     test('GET /entreprise : Connecté donc retourne 200', done => {
         agent
             .get('/entreprise')
@@ -42,9 +39,6 @@ describe("Test the root path", () => {
             .expect(302, done);
     });
 
-    /// /entreprise/entreprise_recruteur : GET
-
-    /// /entreprise/inscription : GET
 
     test("GET /inscription : Connecté mais aucun Type d'organisation donc retourne 302", async () => {
         jest.spyOn(entrepriseModel, 'readTypeOrganisation').mockImplementation((callback) => {
@@ -53,7 +47,7 @@ describe("Test the root path", () => {
 
         const response = await agent.get('/entreprise/inscription');
 
-        expect(response.statusCode).toBe(302); // Modifier le code de statut en fonction de votre application
+        expect(response.statusCode).toBe(302);
         expect(response.headers.location).toBe('/entreprise');
 
         entrepriseModel.readTypeOrganisation.mockRestore();;
@@ -71,8 +65,6 @@ describe("Test the root path", () => {
             .expect(200, done);
     });
 
-
-    /// /entreprise/inscription : POST
 
     test("POST /entreprise/inscription : Connecté donc retourne 302", done => {
         agent
@@ -228,8 +220,6 @@ describe("Test the root path", () => {
         mockCreateOrga.mockRestore();
     });
 
-    /// /entreprise/delete_entreprise : GET
-
     test("GET /entreprise/delete_entreprise : Non connecté donc retourne 302", done => {
         request(app)
             .get("/entreprise/delete_entreprise")
@@ -242,8 +232,6 @@ describe("Test the root path", () => {
             .expect(200, done);
     });
 
-
-    /// /entreprise/rejoindre_entreprise : POST
 
     test("POST /entreprise/rejoindre_entreprise : Connecté mais SIREN Impossible donc retourne 302", done => {
         agent
@@ -312,8 +300,6 @@ describe("Test the root path", () => {
             });
     });
 
-
-    /// /entreprise/delete_entreprise : POST
 
     test("POST /entreprise/delete_entreprise : Connecté donc retourne 302 [Success]", done => {
         agent
