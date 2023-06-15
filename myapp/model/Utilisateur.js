@@ -1,4 +1,3 @@
-// Créer un fichier par table de la base de données
 var db = require('./ConnexionBDD.js');
 var pass = require('./Pass.js');
 
@@ -18,7 +17,6 @@ module.exports = {
 
     readall: function (callback) {
         db.query("SELECT * FROM Utilisateur;", function (err, results) {
-            // console.log(results);
             if (err) {
                 callback(err, null);
             } else {
@@ -34,28 +32,6 @@ module.exports = {
             } else {
                 callback(null, results);
             }
-        });
-    },
-
-
-    /// INSERT
-
-    create: function (email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, callback) {
-        var ladate = new Date();
-        var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
-        var lat = latitude;
-        var lng = longitude;
-        pass.generateHash(password, function (hash) {
-            rows = db.query("INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) \
-            VALUES(?, ?, ?, ?, ?, ?, true, ?, ?, ?, ?, 'CANDIDAT');", [email, hash, nom, prenom, ddn, date_creation, tel, lat, lng, sexe], function (err, results) {
-                if (err) {
-                    // console.log("Erreur : " + err.message);
-                    callback(err, false);
-                } else {
-                    // console.log("Utilisateur ajouté avec succès.");
-                    callback(err, true);
-                }
-            });
         });
     },
 
@@ -79,15 +55,35 @@ module.exports = {
         });
     },
 
+
+
+    /// INSERT
+
+    create: function (email, password, nom, prenom, tel, sexe, ddn, latitude, longitude, callback) {
+        var ladate = new Date();
+        var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
+        var lat = latitude;
+        var lng = longitude;
+        pass.generateHash(password, function (hash) {
+            rows = db.query("INSERT INTO Utilisateur (email, password, nom, prenom, date_naissance, date_creation, statut, telephone, adresse_utilisateur_lat, adresse_utilisateur_long, sexe, type_utilisateur) \
+            VALUES(?, ?, ?, ?, ?, ?, true, ?, ?, ?, ?, 'CANDIDAT');", [email, hash, nom, prenom, ddn, date_creation, tel, lat, lng, sexe], function (err, results) {
+                if (err) {
+                    callback(err, false);
+                } else {
+                    callback(err, true);
+                }
+            });
+        });
+    },
+
+    
     /// UPDATE
 
     updateNom: function (email, new_nom, callback) {
         rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =?", [new_nom, email], function (err, results) {
             if (err) {
-                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                // console.log("Nom modifié avec succès.");
                 callback(err, true);
             }
         });
@@ -96,10 +92,8 @@ module.exports = {
     updatePrenom: function (email, new_prenom, callback) {
         rows = db.query("UPDATE Utilisateur SET prenom = ? WHERE email = ?", [new_prenom, email], function (err, results) {
             if (err) {
-                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                // console.log("Prénom modifié avec succès.");
                 callback(err, true);
             }
         });
@@ -108,10 +102,8 @@ module.exports = {
     updateSexe: function (email, new_sexe, callback) {
         rows = db.query("UPDATE Utilisateur SET sexe = ?  WHERE email = ?", [new_sexe, email], function (err, results) {
             if (err) {
-                // console.log("Erreur : " + err.message);
                 callback(err, false);
             } else {
-                // console.log("Sexe modifié avec succès.");
                 callback(err, true);
             }
         }
@@ -126,7 +118,6 @@ module.exports = {
             if (err) {
                 callback(err, null);
             } else {
-                // Utilisateur supprimé avec succès
                 callback(null, "Utilisateur supprimé avec succès");
             } 
         });

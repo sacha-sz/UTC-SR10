@@ -121,18 +121,18 @@ describe("ModelUtilisateur Tests", () => {
 
   test("getInfos - success", (done) => {
     const email = "test_delete@example.com";
-  
+
     ModelUtilisateur.getInfos(email, function (err, results) {
       expect(err).toBeNull();
       expect(results).not.toBeNull();
       expect(results.length).toBeGreaterThan(0);
-      
+
       const userInfo = results[0];
       expect(userInfo.nom).toBe("Nom_delete");
       expect(userInfo.prenom).toBe("Prenom_delete");
       expect(userInfo.telephone).toBe("0616745678");
       expect(userInfo.type_utilisateur).toBe("CANDIDAT");
-  
+
       done();
     });
   });
@@ -182,23 +182,23 @@ describe("ModelUtilisateur Tests", () => {
 
   test("DELETE_USER with error", (done) => {
     const email = "test_error@example.com";
-  
+
     function cbDelete(err, resultat) {
       expect(err).toBeTruthy();
       expect(resultat).toBeNull();
       done();
     }
-  
+
     jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
       const error = new Error("Erreur de la requête delete");
       callback(error, null);
     });
-  
+
     ModelUtilisateur.delete(email, cbDelete);
     db.query.mockRestore();
   });
-  
-  
+
+
   test("updateNom - success", (done) => {
     const email = "test_delete@example.com";
     const newNom = "updateNom_test_delete";
@@ -229,18 +229,16 @@ describe("ModelUtilisateur Tests", () => {
   test("updateNom - success and error", (done) => {
     const email = "test_delete@example.com";
     const newNom = "updateNom_test_delete";
-  
-    // Test success case
+
     ModelUtilisateur.updateNom(email, newNom, function (err, result) {
       expect(err).toBeNull();
       expect(result).toBe(true);
-  
-      // Test error case
+
       jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
         const error = new Error("Erreur de la requête updateNom");
         callback(error, null);
       });
-  
+
       ModelUtilisateur.updateNom(email, newNom, function (err, result) {
         expect(err).toBeTruthy();
         expect(result).toBe(false);
@@ -249,22 +247,20 @@ describe("ModelUtilisateur Tests", () => {
       });
     });
   });
-  
+
   test("updatePrenom - success and error", (done) => {
     const email = "test_delete@example.com";
     const newPrenom = "updatePrenom_test_delete";
-  
-    // Test success case
+
     ModelUtilisateur.updatePrenom(email, newPrenom, function (err, result) {
       expect(err).toBeNull();
       expect(result).toBe(true);
-  
-      // Test error case
+
       jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
         const error = new Error("Erreur de la requête updatePrenom");
         callback(error, null);
       });
-  
+
       ModelUtilisateur.updatePrenom(email, newPrenom, function (err, result) {
         expect(err).toBeTruthy();
         expect(result).toBe(false);
@@ -277,18 +273,16 @@ describe("ModelUtilisateur Tests", () => {
   test("updateSexe - success and error", (done) => {
     const email = "test_delete@example.com";
     const newSexe = "HOMME";
-  
-    // Test success case
+
     ModelUtilisateur.updateSexe(email, newSexe, function (err, result) {
       expect(err).toBeNull();
       expect(result).toBe(true);
-  
-      // Test error case
+
       jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
         const error = new Error("Erreur de la requête updateSexe");
         callback(error, null);
       });
-  
+
       ModelUtilisateur.updateSexe(email, newSexe, function (err, result) {
         expect(err).toBeTruthy();
         expect(result).toBe(false);
@@ -298,22 +292,19 @@ describe("ModelUtilisateur Tests", () => {
     });
   });
 
-  
+
   test("getInfos - success and error", (done) => {
     const email = "test_delete@example.com";
-  
-    // Test success case
+
     ModelUtilisateur.getInfos(email, function (err, results) {
       expect(err).toBeNull();
       expect(results).not.toBeNull();
-      // Add your assertions for the successful result here
-  
-      // Test error case
+
       jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
         const error = new Error("Erreur de la requête getInfos");
         callback(error, null);
       });
-  
+
       ModelUtilisateur.getInfos(email, function (err, results) {
         expect(err).toBeTruthy();
         expect(results).toBeNull();
@@ -323,41 +314,41 @@ describe("ModelUtilisateur Tests", () => {
     });
   });
 
-  
-  
-  
+
+
+
   test("getLatLong - success", (done) => {
     const email = "test@example.com";
-  
+
     function cbGetLatLong(err, resultat) {
       expect(err).toBeNull();
-      expect(resultat).toEqual([{ adresse_utilisateur_lat: 48.8934,  adresse_utilisateur_long: 2.2778 }]);
+      expect(resultat).toEqual([{ adresse_utilisateur_lat: 48.8934, adresse_utilisateur_long: 2.2778 }]);
       done();
     }
-  
+
     jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
       const results = [{ adresse_utilisateur_lat: 48.8934, adresse_utilisateur_long: 2.2778 }];
       callback(null, results);
     });
-  
+
     ModelUtilisateur.getLatLong(email, cbGetLatLong);
     db.query.mockRestore();
   });
-  
+
   test("getLatLong - error", (done) => {
     const email = "test@example.com";
-  
+
     function cbGetLatLong(err, resultat) {
       expect(err).toBeTruthy();
       expect(resultat).toBeNull();
       done();
     }
-  
+
     jest.spyOn(db, "query").mockImplementation((query, values, callback) => {
       const error = new Error("Erreur de la requête getLatLong");
       callback(error, null);
     });
-  
+
     ModelUtilisateur.getLatLong(email, cbGetLatLong);
     db.query.mockRestore();
   });

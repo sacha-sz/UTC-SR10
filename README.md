@@ -63,7 +63,6 @@ Le projet SR10 est un projet visant la création d'un site web pour la gestion d
 │   ├── routes
 │   │   ├── admin.js
 │   │   ├── api.js
-│   │   ├── authentification.js
 │   │   └── ...
 │   ├── test
 │   │   ├── hello.test.js
