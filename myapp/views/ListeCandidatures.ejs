@@ -3,17 +3,17 @@
 
 <head>
     <%- include('./partials/head'); %>
-        <link rel="stylesheet" href="../CSS/utilisateur.css">
+    <link rel="stylesheet" href="../CSS/utilisateur.css">
 </head>
 
-<header>
-    <%- include('./partials/header'); %>
-</header>
-
 <body>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+
     <div class="container">
         <h1 class="text-center">Mes candidatures</h1>
-        <% if (candidatures.length===0) { %>
+        <% if (candidatures.length === 0) { %>
             <div class="container">
                 <div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
                     Il semble que vous n'ayez pas encore postulé à une offre d'emploi.
@@ -24,91 +24,81 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div class="text-center">
-                    <a href="/offre" class="btn btn-m" role="button"><img src="../IMG/yoda.png" alt="Yoda"> </a>
+                    <a href="/offre" class="btn btn-m" role="button"><img src="../IMG/yoda.png" alt="Yoda"></a>
                 </div>
             </div>
-            <% } else { %>
-                <% candidatures.forEach((candidature)=> { %>
-                    <div class="container-fluid media ml-5 mr-5 my-2">
-                        <div class="row">
-                            <div class="col">
-                                <div class="media-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="d-flex">
-                                                <div style="justify-content : center;">
-                                                    <h4 class="media-heading">
-                                                        <%= candidature.intitule %>
-                                                    </h4>
-                                                    <p> </p>
-                                                    <p> n° Offre: <%= candidature.id_offre %>
-                                                    </p>
-                                                    <p> Rythme : <%= candidature.rythme %>h/semaine
-                                                    </p>
-                                                    <p> Salaire : <%= candidature.salaire_min %> - <%=
-                                                                candidature.salaire_min %>
-                                                    </p>
-                                                    <p> Statut_poste : <%= candidature.statut_poste %>
-                                                    </p>
-                                                    <p>date_candidature : <span class="date"
-                                                            data-date="<%= candidature.date_candidature %>">
-                                                            <%= candidature.date_candidature %>
-                                                        </span>
-                                                    </p>
-                                                    <p>etat_candidature : 
-                                                        
-                                                        <% if (candidature.etat_candidature == "ACCEPTEE") {%> 
-                                                            <span class="badge bg-success">
-                                                                <%= candidature.etat_candidature %>
-                                                            </span>
-                                                        <% } else if (candidature.etat_candidature == "REFUSEE") {%> 
-                                                            <span class="badge bg-danger">
-                                                                <%= candidature.etat_candidature %>
-                                                            </span>
-                                                        <% } else if (candidature.etat_candidature == "EN_ATTENTE") {%>
-                                                            <span class="badge bg-warning text-dark">
-                                                                <%= candidature.etat_candidature %>
-                                                            </span>
-                                                        <% } %>
-                                                    </p>
-                                                </div>
-                                            </div>
+        <% } else { %>
+            <% candidatures.forEach((candidature) => { %>
+                <div class="container-fluid media ml-5 mr-5 my-2">
+                    <div class="row">
+                        <div class="col">
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-center">
+                                            <h4 class="media-heading">
+                                                <%= candidature.intitule %>
+                                            </h4>
                                         </div>
-                                        <div class = "col">
-                                            <div class="text-center">
-                                                <a href="/candidature/modifier/<%= candidature.id_offre %>/"
-                                                    class="btn btn-m" role="button" style="outline: olive; color: cornflowerblue;">
-                                                    Quoi ? Tu veux modifier les fichiers de la candidature ?
-                                                    clique ici !
-                                                    <img
-                                                        src="https://media.tenor.com/hmI7cBnXu9kAAAAC/referee-var.gif" alt="Referee"> </a>
-                                            </div>
-                                        </div>
+                                        <p>n° Offre: <%= candidature.id_offre %></p>
+                                        <p>Rythme : <%= candidature.rythme %>h/semaine</p>
+                                        <p>Salaire : <%= candidature.salaire_min %> - <%= candidature.salaire_max %></p>
+                                        <p>Statut_poste : <%= candidature.statut_poste %></p>
+                                        <p>date_candidature : <span class="date"
+                                                data-date="<%= candidature.date_candidature %>">
+                                                <%= candidature.date_candidature %>
+                                            </span></p>
+                                        <p>etat_candidature :
+                                            <% if (candidature.etat_candidature === "ACCEPTEE") { %>
+                                                <span class="badge bg-success">
+                                                    <%= candidature.etat_candidature %>
+                                                </span>
+                                            <% } else if (candidature.etat_candidature === "REFUSEE") { %>
+                                                <span class="badge bg-danger">
+                                                    <%= candidature.etat_candidature %>
+                                                </span>
+                                            <% } else if (candidature.etat_candidature === "EN_ATTENTE") { %>
+                                                <span class="badge bg-warning text-dark">
+                                                    <%= candidature.etat_candidature %>
+                                                </span>
+                                            <% } %>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="text-center">
+                                <a href="/candidature/modifier/<%= candidature.id_offre %>/"
+                                    class="btn btn-m" role="button" style="outline: olive; color: cornflowerblue;">
+                                    Quoi ? Tu veux modifier les fichiers de la candidature ? Clique ici !
+                                    <img src="https://media.tenor.com/hmI7cBnXu9kAAAAC/referee-var.gif" alt="Referee">
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <% }) %>
-                        <% } %>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <script>
-                                function formatDate(date) {
-                                    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                                    return date.toLocaleDateString('fr-FR', options);
-                                }
-                                window.onload = function () {
-                                    let dates = document.querySelectorAll('.date');
-                                    dates.forEach(function (dateElement) {
-                                        let date = new Date(dateElement.getAttribute('data-date'));
-                                        dateElement.innerHTML = formatDate(date);
-                                    });
-                                }
-                            </script>
+                </div>
+            <% }) %>
+        <% } %>
     </div>
+
     <%- include('./partials/footer'); %>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+        window.onload = function() {
+            let dates = document.querySelectorAll('.date');
+            dates.forEach(function(dateElement) {
+                let date = new Date(dateElement.getAttribute('data-date'));
+                dateElement.innerHTML = formatDate(date);
+            });
+        }
+    </script>
 </body>
 
 </html>
