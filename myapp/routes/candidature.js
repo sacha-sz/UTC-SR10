@@ -1,10 +1,10 @@
-const express = require('express');
-const candidatureModel = require('../model/Candidature');
-const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const request = require('request');
-const AdmZip = require('adm-zip');
+var express = require('express');
+var candidatureModel = require('../model/Candidature');
+var router = express.Router();
+var multer = require('multer');
+var path = require('path');
+var request = require('request');
+var AdmZip = require('adm-zip');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
