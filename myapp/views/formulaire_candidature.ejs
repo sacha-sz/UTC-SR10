@@ -25,8 +25,6 @@
 
                             <script>
                                 var frmFileUpload = document.getElementById('frmFileUpload');
-                        
-                                // On modifie le lien de redirection en fonction de l'offre
                                 var url = window.location.href;
                                 var id = url.substring(url.lastIndexOf('/') + 1);
                                 frmFileUpload.action = "/candidature/validation_candidature/" + id;

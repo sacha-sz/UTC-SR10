@@ -11,17 +11,12 @@
 </header>
 
 <body>
-    <!-- Chargement des fichiers JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    </div> -->
+    </div>
     <div id="projector"></div>
     <div class="mx-auto">
-
         <div class="container">
             <h1>404</h1>
-
             <h2>Nous ne parvenons pas à trouver cette page</h2>
             <div class="row">
                 <div class="col"></div>
@@ -44,7 +39,6 @@
 
 <script>
     const shadow = document.querySelector('.shadow');
-
     window.addEventListener('mousemove', (e) => {
         const x = e.clientX;
         const y = e.clientY;
@@ -52,7 +46,6 @@
     });
 
     const projector = document.querySelector("#projector");
-
     document.addEventListener("mousemove", (e) => {
         const x = e.clientX - projector.offsetWidth / 2;
         const y = e.clientY - projector.offsetHeight / 2;

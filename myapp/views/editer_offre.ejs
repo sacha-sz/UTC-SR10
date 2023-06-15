@@ -29,7 +29,6 @@
                 <div class="card-header text-center">
                     <h4>Modifiez votre profil</h4>
                 </div>
-
                         <div class="card-body">
                             <form method="POST" action="/offre/editer_offre/<%= offre.id %>" name="form_modif_profil">
                                 <% if (typeof offre.intitule !=='undefined' ) { %>
@@ -60,7 +59,6 @@
                                             placeholder="Votre ancienne Longitude : <%= offre.lieu_mission_long %>">
                                     </div>
                                 <% } %>
-                                <!-- Début -->
                                 <% if (typeof offre.rythme !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="rythme" class="form-label">Rythme :</label>
@@ -68,7 +66,6 @@
                                         placeholder="Ancien Rythme : <%= offre.rythme %>" step="0.5">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.salaire_min !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="salaire_min" class="form-label">Salaire minimum :</label>
@@ -76,7 +73,6 @@
                                         placeholder="Ancien Salaire min : <%= offre.salaire_min %>" step="1">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.salaire_max !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="salaire_max" class="form-label">Salaire maximum :</label>
@@ -84,7 +80,6 @@
                                         placeholder="Ancien Salaire min  : <%= offre.salaire_max %>" step="1">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.missions !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="missions" class="form-label">Missions :</label>
@@ -92,7 +87,6 @@
                                         placeholder="Anciennes missions : <%= offre.missions %>">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.activites !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="activites" class="form-label">Activités :</label>
@@ -100,7 +94,6 @@
                                         placeholder="Ancien Rythme : <%= offre.activites %>">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.competences_attendues !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="competences" class="form-label">Compétences :</label>
@@ -108,14 +101,12 @@
                                         placeholder="Anciennes Compétences : <%= offre.competences_attendues %>">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.date_validite !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="date_validite" class="form-label">Offre valable jusqu'au :</label>
                                     <input autofocus name="date_validite" type="date" class="form-control" id="date_validite">
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.indication_piece_jointes !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="indication_piece_jointes" class="form-label">Pièces Jointes :</label>
@@ -130,7 +121,6 @@
                                     </select>
                                 </div>
                                 <% } %>
-                                <!-- Gestion du statut -->
                                 <% if (typeof offre.etat !=='undefined' ) { %>
                                     <div class="mb-3">
                                         <label for="etat" class="form-label">etat :</label>
@@ -149,7 +139,6 @@
                                         </select>
                                     </div>
                                 <% } %>    
-
                                 <% if (typeof offre.SP_nom !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="statut" class="form-label">Statut :</label>
@@ -164,7 +153,6 @@
                                     </select>
                                 </div>
                                 <% } %>
-
                                 <% if (typeof offre.TM_nom !=='undefined' ) { %>
                                 <div class="mb-3">
                                     <label for="type_metier" class="form-label">Type métier de l'entreprise :</label>
@@ -179,16 +167,10 @@
                                     </select>
                                 </div>
                                 <% } %>
-
-
-                                <!-- Fin -->
                                 <br>
-
                                 <div class="row justify-content-between text-center" style="padding : 40px;">
                                     <button type="submit" value="Appliquer"
                                         class="btn btn-success btn-sm btn-block col-4">Appliquer</button></form>
-                                    
-
                                     <div class="dropend col-4 ">
                                         <button type="button"
                                             class="btn btn-danger btn-block btn-sm dropdown-toggle"

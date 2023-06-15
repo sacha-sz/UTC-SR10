@@ -13,11 +13,8 @@
 
 
 <body>
-    <!-- Barre de navigation -->
-
     <div class="container mt-4">
         <div class="row">
-            <!-- Barre de recherche et filtres -->
             <div class="col">
                 <form action="/offre" method="GET">
                     <div class="input-group mb-3">
@@ -27,7 +24,6 @@
                     </div>
                 </form>
             </div>
-            <!-- Tri -->
             <div class="col">
                 <select class="form-select" id="sort" onchange="sortResults(this.value)">
                     <option value="default" selected disabled>Trier par :</option>
@@ -37,7 +33,6 @@
                 </select>
             </div>
 
-            <!-- Offres d'emploi -->
             <% offres.forEach((offer)=> { %>
                 <div class="container-fluid media pl-5 my-2" data-date_validite="<%= offer.date_validite %>">
                     <div class="row">
@@ -91,9 +86,6 @@
         </div>
     </div>
 
-
-
-    <!-- Barre de navigation en bas -->
     <nav class="navbar navbar-inverse bg-body navbar-fixed-bottom" style="position: static">
         <div class="container-fluid d-flex justify-content-center mb-4">
             <div class="row">

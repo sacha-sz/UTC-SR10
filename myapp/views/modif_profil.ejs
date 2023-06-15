@@ -25,92 +25,87 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <% } %>
-
                         <div class="card-body ">
                             <form method="POST" action="/users/changed_infos" name="form_modif_profil">
-
                                 <% if (typeof nom !=='undefined' ) { %>
                                     <div class="mb-3">
                                         <label for="name" class="form-label"><strong>Nom :</strong></label>
                                         <input autofocus name="nom" type="text" class="form-control" id="name"
                                             placeholder="Votre ancien nom : <%= nom %>">
                                     </div>
-                                <% } %>
+                                    <% } %>
 
-                                <% if (typeof prenom !=='undefined' ) { %>
-                                    <div class="mb-3">
-                                        <label for="prenom" class="form-label"><strong>Prénom :</strong></label>
-                                        <input autofocus name="prenom" type="text" class="form-control"
-                                            id="prenom" placeholder="Votre ancien prénom : <%= prenom %>">
-                                    </div>
-                                <% } %>
-
-                                <% if (typeof tel !=='undefined' ) { %>
-                                    <div class="mb-3">
-                                        <label for="tel" class="form-label"><strong>Téléphone : </strong></label>
-                                        <input autofocus name="tel" type="text" class="form-control"
-                                            id="tel" placeholder="Votre ancien numéro : <%= tel %>">
-                                    </div>
-                                <% } %>
-
-                                <% if (typeof sexe !=='undefined' ) { %>
-                                    <div class="mb-3">
-                                        <label for="sexe" class="form-label"><strong>Sexe :</strong></label>
-
-                                    <div class="form-group container_icon_right">
-                                        <select class="form-control" id="sexe" name="sexe">
-                                            <option selected disabled>Votre ancien sexe :
-                                                <%= sexe %>
-                                            </option>
-                                            <option>Homme</option>
-                                            <option>Femme</option>
-                                            <option>Autre</option>
-                                        </select>
-                                        <span class="material-symbols-outlined icon_right">
-                                            arrow_drop_down
-                                        </span>
-                                    </div>
-                                </div>
-                                <% } %>
-                                <br>
-
-                                <div class="row justify-content-between text-center">
-                                    <button type="submit" value="Appliquer"
-                                        class="btn btn-success btn-sm btn-block col-4">Appliquer</button></form>
-                                    
-
-                                    <div class="dropend col-4 ">
-                                        <button type="button"
-                                            class="btn btn-danger btn-block btn-sm dropdown-toggle"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-offset="10,20"
-                                            aria-expanded="false"
-                                            data-bs-auto-close="outside">
-                                            Supprimer compte
-                                        </button>
-                                        <form class="dropdown-menu p-4" method="POST" action="/users/delete_user" name="form_delete_user">
-                                            <div class="mb-3 text-center">
-                                                <p>Toute suppression de votre compte est irréversible.</p>
-                                            </div>
-                                            <hr class="border border-danger border-2 opacity-50">
+                                        <% if (typeof prenom !=='undefined' ) { %>
                                             <div class="mb-3">
-                                                <label
-                                                    for="confirmation"
-                                                    class="form-label text-justify">Veuillez écrire : CONFIRMER</label>
-                                                <input type="text"
-                                                    class="form-control"
-                                                    id="confirmation"
-                                                    name="confirmation"
-                                                    placeholder="...">
+                                                <label for="prenom" class="form-label"><strong>Prénom :</strong></label>
+                                                <input autofocus name="prenom" type="text" class="form-control"
+                                                    id="prenom" placeholder="Votre ancien prénom : <%= prenom %>">
                                             </div>
-                                            <button type="submit" value="Supprimer"
-                                                class="btn btn-primary btn-danger"> Suppression</button>
-                                        </form>
+                                            <% } %>
+
+                                                <% if (typeof tel !=='undefined' ) { %>
+                                                    <div class="mb-3">
+                                                        <label for="tel" class="form-label"><strong>Téléphone :
+                                                            </strong></label>
+                                                        <input autofocus name="tel" type="text" class="form-control"
+                                                            id="tel" placeholder="Votre ancien numéro : <%= tel %>">
+                                                    </div>
+                                                    <% } %>
+
+                                                        <% if (typeof sexe !=='undefined' ) { %>
+                                                            <div class="mb-3">
+                                                                <label for="sexe" class="form-label"><strong>Sexe
+                                                                        :</strong></label>
+
+                                                                <div class="form-group container_icon_right">
+                                                                    <select class="form-control" id="sexe" name="sexe">
+                                                                        <option selected disabled>Votre ancien sexe :
+                                                                            <%= sexe %>
+                                                                        </option>
+                                                                        <option>Homme</option>
+                                                                        <option>Femme</option>
+                                                                        <option>Autre</option>
+                                                                    </select>
+                                                                    <span class="material-symbols-outlined icon_right">
+                                                                        arrow_drop_down
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+                                                                <br>
+
+                                                                <div class="row justify-content-between text-center">
+                                                                    <button type="submit" value="Appliquer"
+                                                                        class="btn btn-success btn-sm btn-block col-4">Appliquer</button>
+                            </form>
+
+
+                            <div class="dropend col-4 ">
+                                <button type="button" class="btn btn-danger btn-block btn-sm dropdown-toggle"
+                                    data-bs-toggle="dropdown" data-bs-offset="10,20" aria-expanded="false"
+                                    data-bs-auto-close="outside">
+                                    Supprimer compte
+                                </button>
+                                <form class="dropdown-menu p-4" method="POST" action="/users/delete_user"
+                                    name="form_delete_user">
+                                    <div class="mb-3 text-center">
+                                        <p>Toute suppression de votre compte est irréversible.</p>
                                     </div>
-                                </div>
+                                    <hr class="border border-danger border-2 opacity-50">
+                                    <div class="mb-3">
+                                        <label for="confirmation" class="form-label text-justify">Veuillez écrire :
+                                            CONFIRMER</label>
+                                        <input type="text" class="form-control" id="confirmation" name="confirmation"
+                                            placeholder="...">
+                                    </div>
+                                    <button type="submit" value="Supprimer" class="btn btn-primary btn-danger">
+                                        Suppression</button>
+                                </form>
+                            </div>
                         </div>
             </div>
         </div>
+    </div>
 </body>
 
 <%- include('./partials/footer'); %>

@@ -11,7 +11,6 @@
     <%- include('./partials/header'); %>
 </header>
 
-
 <body>
     <div class="container">
         <h1 class="text-center">Liste des candidats :</h1>
@@ -46,11 +45,9 @@
                                         <li style="margin-top: 10px;"><a href="/candidature/accepter/<%= candidat.id %>/<%= candidat.email_utilisateur %>/<%= candidat.id_offre %>">
                                             <button type="button" class="btn btn-outline-success">Accepter</button>
                                         </a></li>
-
                                         <li style="margin-top: 10px;"><a href="/candidature/refuser/<%= candidat.id %>/<%= candidat.email_utilisateur %>/<%= candidat.id_offre %>">
                                             <button type="button" class="btn btn-outline-danger">Refuser</button>
                                         </a></li>
-
                                         <li style="margin-top: 10px;"><a href="/candidature/telecharger/<%= candidat.id %>/<%= candidat.email_utilisateur %>">
                                             <button type="button" class="btn btn-outline-primary">Télécharger
                                                 Dossier</button>
