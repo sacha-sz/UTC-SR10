@@ -1,19 +1,27 @@
 # UTC-SR10
-:mailbox_with_mail: SR10 projet
 
 ## Explication du projet
 Le projet SR10 est un projet visant la création d'un site web pour la gestion des demandes d'embauche dans une entreprise.
+Nous avons travaillé sur la gestion d'offre d'emplois, la candidature et la gestion des candidatures.
+Nous avons également mis en place une section administrateur.
 
 ## Organisation du projet
-- **assets** : contient les images des diagrammes et les futurs images du site web
-- **doc** : contient les documents du projet (maquettes, sujet, ...)
-- **src** : contient le code source du projet
-  - **src/CSS** : contient les fichiers CSS
+- **assets** : contient les images des diagrammes et les futures images du site web
+- **doc** : contient les documents du projet : maquettes, sujet, MCD, MLD, ainsi que le rapport de sécurité présentant 3 failles que nous avons évitées
+- **src** : contient le code initial de notre projet :
+  - **src/JS** : contient les fichiers JavaScript
   - **src/HMTL** : contient les fichiers HTML
-  - **src/JS** : contient les fichiers JS
-  - **src/XXX** : contient les fichiers XXX
+  - **src/SQL** : contient les fichiers SQL de backup
+- **myapp** : contient le code Node de notre projet :
+  - **myapp/CSS**
+  - **myapp/JobHub** : contient le contenu VueJs
+  - **myapp/mesfichiers** : contient les différents CV, LM et autres fichiers déposé par les utilisateurs
+  - **myapp/model** : contient la partie Modèle de notre application
+  - **myapp/public** : contient les images présentes sur le site
+  - **myapp/routes** : contient la partie Contrôleur (par l'utilisation de route) de notre application
+  - **myapp/views** : contient la partie Vue de notre application
 
-## Arborecense
+## Arborescence
 ```
 .
 ├── README.md
@@ -92,3 +100,7 @@ Le projet SR10 est un projet visant la création d'un site web pour la gestion d
 
 ...
 ```
+
+## Collaborateurs
+- [sacha-sz](github.com/sacha-sz)
+- [Tobias](github.com/TobiasInfo)
